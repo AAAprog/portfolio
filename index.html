@@ -54,19 +54,14 @@
 <body>
   <!-- ───────── Loader ───────── -->
   <div class="loader" role="status" aria-label="Loading">
-    <div class="loader-inner">
+    <canvas class="loader-glass" aria-hidden="true"></canvas>
+    <div class="loader-ui">
       <div class="loader-top mono"><span>Ahmed Bawazir</span><span data-i18n="loader.role">Software Engineer · Riyadh</span></div>
-      <div class="loader-mark" aria-hidden="true"><span class="lm-a">a</span><span class="lm-b">b</span><span class="lm-dot"></span></div>
-      <ul class="loader-log mono" aria-hidden="true">
-        <li>› resolving <b>experience</b></li>
-        <li>› compiling <b>projects</b></li>
-        <li>› running <b>tests</b> <em>✓ passed</em></li>
-      </ul>
       <div class="loader-foot">
+        <span class="loader-skip mono" data-i18n="loader.skip">click anywhere to skip</span>
         <div class="loader-bar"><i></i></div>
         <span class="loader-pct mono">000</span>
       </div>
-      <p class="loader-skip mono" data-i18n="loader.skip">click anywhere to skip</p>
     </div>
   </div>
 
@@ -604,6 +599,7 @@
         </form>
         </div>
       </div>
+      <div class="signature" aria-hidden="true" data-cursor-hide><canvas></canvas></div>
       <footer class="footer container mono">
         <span>© <span class="year">2026</span> Ahmed Bawazir</span>
         <span data-i18n="footer.built">Hand-built, zero dependencies.</span>

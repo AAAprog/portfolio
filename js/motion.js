@@ -89,6 +89,7 @@ function initCursor() {
     const text = t.closest('input:not([type=range]), textarea');
     const lab = t.closest('[data-cursor]');
     const link = t.closest('a, button, label, input[type=range], [data-tilt], .bug-target');
+    el.classList.toggle('hidden', !!t.closest('[data-cursor-hide]'));
     el.classList.toggle('text', !!text);
     el.classList.toggle('link', !!link && !text);
     const key = !text && lab ? lab.dataset.cursor : '';
@@ -282,6 +283,12 @@ export function initMotion() {
   initMagnetic();
   initTilt();
   initRipple();
+  // Light that follows the pointer across bento cards (glass shine)
+  if (fine && !reduce) $$('.bento-card').forEach(c => c.addEventListener('pointermove', e => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--gx', (e.clientX - r.left) + 'px');
+    c.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+  }));
   const pinTick = initPin();
   const heroTick = initHeroFx();
   const marqTick = initMarquee();

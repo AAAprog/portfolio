@@ -1,6 +1,13 @@
-// Branded loader: tracks real readiness (fonts + window load), never shorter
-// than a beat nor longer than a few seconds, skippable, once per session.
+// Branded loader with a liquid-glass lens.
+// "ahmed bawazir." sits on the page; a glass lens glides across it and shows
+// "أحمد باوزير" through the glass. When the page is ready the lens swells to
+// fill the screen (the Arabic name takes over), then the curtain lifts.
+// Tracks real readiness (fonts + load), skippable, at most once a day.
 import { roll } from './roll.js';
+import { createGlass, wordmark } from './glass.js';
+
+const ease = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const out3 = t => 1 - Math.pow(1 - t, 3);
 
 export function initLoader() {
   const root = document.documentElement;
@@ -12,57 +19,85 @@ export function initLoader() {
   }
   const pct = el.querySelector('.loader-pct');
   const bar = el.querySelector('.loader-bar i');
-  const logs = [...el.querySelectorAll('.loader-log li')];
+  const canvas = el.querySelector('.loader-glass');
   roll(pct, '000', true);
 
-  const MIN = 950, MAX = 3000, t0 = performance.now();
-  let target = 0.15, shown = 0, finished = false, raf;
-  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+  const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
+  let fs = 100;
+  const glass = createGlass(canvas, {
+    tint: [1, 1, 1], glass: 0.07,
+    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'ahmed bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
+    drawReveal: (c, w, h) => wordmark(c, w, h, { text: 'أحمد باوزير', size: fs * 1.02, weight: 700, family: '"IBM Plex Sans Arabic"', color: '#ffffff' }),
+  });
+
+  const MIN = 1700, MAX = 4000, t0 = performance.now();
+  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
+  const fontsReady = (document.fonts ? Promise.all([
+    document.fonts.load('600 80px "Space Grotesk"'),
+    document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
+  ]) : Promise.resolve()).catch(() => {});
   const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise(r => addEventListener('load', r, { once: true }));
-  fonts.then(() => { target = Math.max(target, 0.6); });
+  fontsReady.then(() => { target = Math.max(target, 0.6); glass.layout(); });
   loaded.then(() => { target = Math.max(target, 0.85); });
-  const ready = Promise.all([fonts, loaded]);
+  glass.layout();
+  const onResize = () => glass.layout();
+  addEventListener('resize', onResize);
 
   return new Promise(resolve => {
+    const finish = () => {
+      el.classList.add('out');
+      root.classList.add('loader-out');
+      setTimeout(() => {
+        cancelAnimationFrame(raf);
+        removeEventListener('resize', onResize);
+        root.classList.remove('is-loading', 'loader-out');
+        root.classList.add('no-loader');
+        try { localStorage.setItem('ab-loaded', String(Date.now())); } catch {}
+        document.dispatchEvent(new Event('loader:done'));
+        el.remove();
+        resolve();
+      }, 850);
+    };
     const done = () => {
       if (finished) return;
       finished = true;
-      cancelAnimationFrame(raf);
       roll(pct, '100');
       bar.style.transform = 'scaleX(1)';
-      logs.forEach(l => l.classList.add('on'));
-      setTimeout(() => {
-        el.classList.add('out');
-        root.classList.add('loader-out');
-        setTimeout(() => {
-          root.classList.remove('is-loading', 'loader-out');
-          root.classList.add('no-loader');
-          try { localStorage.setItem('ab-loaded', String(Date.now())); } catch {}
-          document.dispatchEvent(new Event('loader:done'));
-          el.remove();
-          resolve();
-        }, 850);
-      }, 140);
+      expandStart = performance.now();
+      el.classList.add('expanding');
     };
 
     const tick = now => {
       const t = now - t0;
-      // Time-based floor so it always moves; real readiness lifts the target.
-      const floor = Math.min(0.9, t / MIN * 0.9);
-      const goal = Math.max(target, floor);
-      shown += (goal - shown) * 0.08;
-      const p = Math.min(99, Math.round(shown * 100));
-      roll(pct, String(p).padStart(3, '0'));
-      bar.style.transform = `scaleX(${shown.toFixed(3)})`;
-      logs.forEach((l, i) => l.classList.toggle('on', shown > 0.2 + i * 0.25));
-      if (t > MAX) return done();
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      const R = fs * 0.78;
+      // Glide in from the left and rest over the name, breathing slightly.
+      const g = ease(Math.min(1, t / 1500));
+      let x = -R + (w / 2 + R) * g + Math.sin(t / 520) * fs * 0.06 * g;
+      let y = h / 2 + Math.sin(t / 380) * fs * 0.05;
+      let r = R;
+      if (expandStart) {
+        const e = out3(Math.min(1, (now - expandStart) / 650));
+        x += (w / 2 - x) * e; y += (h / 2 - y) * e;
+        r = R + (Math.hypot(w, h) - R) * e;
+        if (e >= 1 && !el.classList.contains('out')) finish();
+      }
+      glass.setLens(x, y, r);
+
+      if (!finished) {
+        const floor = Math.min(0.9, (t / MIN) * 0.9);
+        shown += (Math.max(target, floor) - shown) * 0.08;
+        roll(pct, String(Math.min(99, Math.round(shown * 100))).padStart(3, '0'));
+        bar.style.transform = `scaleX(${shown.toFixed(3)})`;
+        if (t > MAX) done();
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 
-    ready.then(() => {
+    Promise.all([fontsReady, loaded]).then(() => {
       const wait = Math.max(0, MIN - (performance.now() - t0));
-      setTimeout(() => { target = 1; setTimeout(done, 160); }, wait);
+      setTimeout(() => { target = 1; setTimeout(done, 150); }, wait);
     });
     const onKey = e => { if (['Escape', 'Enter', ' '].includes(e.key)) { removeEventListener('keydown', onKey); done(); } };
     el.addEventListener('click', done);

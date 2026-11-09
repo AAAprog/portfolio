@@ -7,6 +7,7 @@ import { roll } from './roll.js';
 import { initStages } from './stage.js';
 import { initLoader } from './loader.js';
 import { initForm } from './form.js';
+import { initSignature } from './signature.js';
 
 initLoader();
 
@@ -355,6 +356,7 @@ modules = [
 ];
 initTerminal($('.term'));
 initForm($('.cform'), toast, L);
+initSignature($('.signature'));
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
 initMotion();
 onScroll();

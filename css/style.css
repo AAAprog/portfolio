@@ -967,23 +967,9 @@ body::after {
 .is-loading { overflow: hidden; }
 .is-loading body { overflow: hidden; }
 .loader.out { clip-path: inset(0 0 100% 0); }
-.loader-inner { width: min(560px, calc(100vw - 48px)); display: grid; gap: 28px; transition: opacity .35s ease, transform .5s var(--ease); }
-.loader.out .loader-inner { opacity: 0; transform: translateY(-30px); }
 .loader-top { display: flex; justify-content: space-between; gap: 16px; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .55; animation: lfade .6s ease both; }
 :root[lang="ar"] .loader-top { letter-spacing: 0; font-family: var(--font-sans); font-size: 13px; }
-.loader-mark { display: flex; align-items: flex-end; gap: .02em; font: 700 clamp(96px, 20vw, 168px)/.8 "Space Grotesk", sans-serif; letter-spacing: -.06em; direction: ltr; }
-.loader-mark .lm-a, .loader-mark .lm-b { display: inline-block; animation: lrise .9s cubic-bezier(.2,.8,.2,1) both; }
-.loader-mark .lm-b { animation-delay: .08s; }
-.lm-dot { width: .16em; height: .16em; border-radius: .03em; background: var(--accent); margin: 0 0 .06em .04em; animation: ldot 1.4s cubic-bezier(.3,1.6,.5,1) .35s both, lspin 2.4s cubic-bezier(.6,0,.4,1) 1.2s infinite; }
-@keyframes lrise { from { opacity: 0; transform: translateY(40%); filter: blur(8px); } }
-@keyframes ldot { from { transform: scale(0) rotate(-90deg); } }
-@keyframes lspin { 0%, 60% { transform: rotate(0); } 100% { transform: rotate(180deg); } }
 @keyframes lfade { from { opacity: 0; } }
-.loader-log { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 12.5px; direction: ltr; text-align: left; }
-.loader-log li { opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s var(--ease); color: color-mix(in srgb, var(--bg) 60%, transparent); }
-.loader-log li.on { opacity: 1; transform: none; }
-.loader-log b { color: var(--bg); font-weight: 500; }
-.loader-log em { font-style: normal; color: var(--ok); margin-left: 6px; }
 .loader-foot { display: flex; align-items: center; gap: 18px; }
 .loader-bar { flex: 1; height: 2px; background: color-mix(in srgb, var(--bg) 18%, transparent); overflow: hidden; border-radius: 2px; }
 .loader-bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
@@ -1080,6 +1066,61 @@ body::after {
 @media (max-width: 680px) {
   .sb-keys { display: none; }
 }
+
+
+/* ==========================================================================
+   Liquid glass: loader lens, footer signature, glass shine, floating nav
+   ========================================================================== */
+.loader-glass { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.loader-ui { position: absolute; inset: 0; padding: 28px var(--gutter) calc(28px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; transition: opacity .4s ease; }
+.loader.expanding .loader-ui, .loader.out .loader-ui { opacity: 0; }
+.loader-foot { display: grid; grid-template-columns: 1fr minmax(120px, 280px) auto; align-items: center; gap: 18px; }
+.loader-foot .loader-skip { text-align: start; animation: lfade .6s ease 1s both; }
+.loader-pct { font-size: 22px; }
+@media (max-width: 560px) { .loader-foot { grid-template-columns: 1fr auto; } .loader-foot .loader-skip { display: none; } }
+
+.signature { position: relative; height: clamp(150px, 22vw, 340px); margin-top: clamp(60px, 9vw, 120px); }
+.signature canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.signature + .footer { margin-top: 0; }
+.cursor.hidden { opacity: 0 !important; }
+
+/* Glass shine: a lit top edge, a faint inner floor, and a sweep of light on hover */
+:root { --glass-edge: rgba(255, 255, 255, .55); --glass-shine: inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(20, 22, 28, .05); }
+:root[data-theme="dark"] { --glass-edge: rgba(255, 255, 255, .1); --glass-shine: inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(255, 255, 255, .03); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --glass-edge: rgba(255, 255, 255, .1); --glass-shine: inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 rgba(255, 255, 255, .03); } }
+.card, .bento-card, .icon-btn, .tab, .chip, .eyebrow { box-shadow: var(--glass-shine), var(--shadow, none); }
+.icon-btn, .tab, .eyebrow { box-shadow: var(--glass-shine); }
+.btn-solid { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 8px 20px -10px rgba(0, 0, 0, .45); }
+.btn-solid::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .38) 48%, rgba(255, 255, 255, .08) 56%, transparent 70%);
+  transform: translateX(-120%); transition: transform .8s var(--ease);
+}
+.btn-solid:hover::before { transform: translateX(120%); }
+.bento-card, .project, .play { position: relative; }
+.bento-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, -20%), rgba(255, 255, 255, .5), transparent 45%);
+  opacity: 0; transition: opacity .4s; mix-blend-mode: soft-light;
+}
+.bento-card:hover::before { opacity: 1; }
+.bento-card > * { position: relative; z-index: 1; }
+
+/* Top bar morphs into a floating glass capsule once you scroll */
+.topbar {
+  left: 50%; right: auto; width: 100%; translate: -50% 0; top: 0;
+  transition: width .6s var(--ease), top .6s var(--ease), height .6s var(--ease), border-radius .6s var(--ease), padding .6s var(--ease),
+              background-color .4s, border-color .4s, box-shadow .4s, transform .6s var(--ease), opacity .6s ease;
+}
+.topbar.is-scrolled {
+  width: min(1080px, calc(100% - 24px)); top: 10px; height: 56px; border-radius: 999px; padding-inline: 10px 8px;
+  background: color-mix(in srgb, var(--surface) 62%, transparent);
+  border: 1px solid var(--line);
+  box-shadow: var(--glass-shine), 0 14px 40px -18px rgba(0, 0, 0, .35);
+  backdrop-filter: blur(18px) saturate(1.6); -webkit-backdrop-filter: blur(18px) saturate(1.6);
+}
+.topbar.is-scrolled .logo { padding-inline-start: 10px; }
+@media (max-width: 680px) { .topbar.is-scrolled { height: 52px; width: calc(100% - 16px); top: 8px; } }
 
 @media (max-width: 1020px) {
   .toplinks { display: none; }
