@@ -1106,6 +1106,25 @@ body::after {
 .bento-card:hover::before { opacity: 1; }
 .bento-card > * { position: relative; z-index: 1; }
 
+/* Handwritten signature, drawn like a pen: outline first, then the ink fills, then the flourish */
+.signmark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.sig-ink { fill: currentColor; fill-opacity: 0; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.sig-line { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.signmark.draw .sig-ink { animation: sigStroke 2.4s cubic-bezier(.55, .1, .35, 1) forwards, sigFill .9s ease 1.7s forwards; }
+.signmark.draw .sig-line { animation: sigStroke .8s cubic-bezier(.6, 0, .3, 1) 2.2s forwards; }
+.signmark.drawn .sig-ink { stroke-dashoffset: 0; fill-opacity: 1; stroke-width: 0; }
+.signmark.drawn .sig-line { stroke-dashoffset: 0; }
+@keyframes sigStroke { to { stroke-dashoffset: 0; } }
+@keyframes sigFill { to { fill-opacity: 1; stroke-width: 0; } }
+.signmark--hero {
+  width: clamp(220px, 26vw, 400px); color: var(--ink);
+  margin: -.16em 0 -.06em; margin-inline-start: clamp(0px, 4vw, 64px);
+  font-size: clamp(64px, 10.4vw, 160px); /* em units follow the title size */
+}
+.signmark--end { width: clamp(220px, 30vw, 420px); margin: clamp(8px, 2vw, 24px) auto clamp(24px, 4vw, 48px); color: var(--bg); }
+[dir="rtl"] .signmark svg { direction: ltr; }
+@media (max-width: 680px) { .signmark--hero { margin-inline-start: 0; } }
+
 /* Top bar morphs into a floating glass capsule once you scroll */
 .topbar {
   left: 50%; right: auto; width: 100%; translate: -50% 0; top: 0;

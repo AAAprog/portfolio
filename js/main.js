@@ -8,6 +8,7 @@ import { initStages } from './stage.js';
 import { initLoader } from './loader.js';
 import { initForm } from './form.js';
 import { initSignature } from './signature.js';
+import { initSignmarks } from './signmark.js';
 
 initLoader();
 
@@ -357,6 +358,7 @@ modules = [
 initTerminal($('.term'));
 initForm($('.cform'), toast, L);
 initSignature($('.signature'));
+initSignmarks();
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
 initMotion();
 onScroll();
