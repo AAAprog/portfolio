@@ -46,6 +46,11 @@ Hand-built with plain HTML, CSS and JavaScript modules. No framework, no build s
 - **Branded 404 page** (`404.html`, picked up automatically by GitHub Pages).
 - **Break this page.** A button in the hero, the `B` key, or shaking a phone drops everything on screen under gravity, using a small built-in physics loop. Pieces bounce, pile up and can be thrown. **Run tests to fix** puts every piece back and ends on «0 bugs».
 - **Easter eggs:** type `hire` anywhere on the page, or open DevTools for a note.
+- **Signature that writes itself:** «أحمد باوزير» in Ruq'ah script (shaped with HarfBuzz) writes right to left, lifts, then rewrites as «Ahmed Bawazir». It loops in the footer while visible.
+- **Voice commands** (mic button or `V`): e.g. «show projects / اعرض المشاريع», «contact / تواصل», «dark mode / الوضع الداكن», «Arabic / عربي», «CV / السيرة». Uses the Web Speech API and is hidden where the browser doesn't support it.
+- **Presentation mode** (`P` or the status-bar button): full screen, each section a slide, arrow keys to move, `Esc` to exit.
+- **Auto theme** (third state of the theme button): follows the room's light via the Ambient Light Sensor where the browser exposes it, otherwise the clock (dark 6 pm–6 am).
+- **The tab talks:** switch away and the title cycles short messages with a badge on the favicon; come back to «Welcome back 👋».
 - **English and Arabic**, with full right-to-left layout (`ع` / `EN` button).
 - **Light and dark themes** that follow the system setting and remember your choice.
 - Downloadable CV, a click-to-copy email, structured data for search engines, and an Open Graph image for link previews.

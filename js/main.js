@@ -10,6 +10,10 @@ import { initForm } from './form.js';
 import { initSignature } from './signature.js';
 import { initSignmarks } from './signmark.js';
 import { initChaos } from './chaos.js';
+import { initTabTalk } from './tabtalk.js';
+import { createAmbient } from './ambient.js';
+import { initVoice } from './voice.js';
+import { initPresent } from './present.js';
 
 initLoader();
 
@@ -74,10 +78,19 @@ function isDark() {
   return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 }
 // Theme switch: a circular View Transition that grows from the click point.
+// Theme cycles light → dark → auto (room light / clock).
+const ambient = createAmbient(t => applyTheme(t, null, true), src => toast(src === 'sensor' ? L().themeAutoSensor : L().themeAutoClock));
 function toggleTheme(origin) {
-  const next = isDark() ? 'light' : 'dark';
-  const go = () => { root.dataset.theme = next; store.set('ab-theme', next); hero && hero.refresh(); };
+  const mode = root.dataset.themeMode === 'auto' ? 'auto' : (isDark() ? 'dark' : 'light');
+  const next = mode === 'light' ? 'dark' : mode === 'dark' ? 'auto' : 'light';
+  if (next === 'auto') { root.dataset.themeMode = 'auto'; store.set('ab-theme-mode', 'auto'); ambient.start(); return; }
+  ambient.stop(); delete root.dataset.themeMode; store.set('ab-theme-mode', '');
   toast(next === 'dark' ? L().themeDark : L().themeLight);
+  applyTheme(next, origin);
+}
+function applyTheme(next, origin, quiet) {
+  if (root.dataset.theme === next && quiet) return;
+  const go = () => { root.dataset.theme = next; store.set('ab-theme', next); hero && hero.refresh(); };
   if (!document.startViewTransition || reduce) return go();
   const x = origin ? origin.x : innerWidth / 2, y = origin ? origin.y : innerHeight / 2;
   const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
@@ -235,6 +248,8 @@ const commands = () => {
     ['motion', c.motion, '◎', toggleMotion],
     ['keys', c.keys, '?', openKeys],
     ['break', c.break, 'B', () => chaos && chaos.break()],
+    ['present', c.present, 'P', () => present.toggle()],
+    ['voice', c.voice, 'V', () => voice ? voice.start() : toast(L().voiceNone)],
     ['top', c.top, '↑', go('hero')],
   ];
 };
@@ -295,6 +310,7 @@ document.addEventListener('click', e => {
   else if (a === 'palette') openPalette();
   else if (a === 'keys') openKeys();
   else if (a === 'break') chaos && chaos.break();
+  else if (a === 'present') present.toggle();
   else if (a === 'copy-email') copyEmail();
 });
 
@@ -339,6 +355,8 @@ addEventListener('keydown', e => {
   else if (k === 'm') toggleMotion();
   else if (k === 'c') copyEmail();
   else if (k === 'b') chaos && chaos.break();
+  else if (k === 'p') present.toggle();
+  else if (k === 'v') voice ? voice.start() : toast(L().voiceNone);
   else if (k === 'g') { const now = Date.now(); if (now - lastG < 500) scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); lastG = now; }
 });
 
@@ -364,6 +382,22 @@ initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
 var chaos = initChaos(L, toast);
+initTabTalk();
+var present = initPresent({ L, toast });
+var voice = initVoice({
+  button: $('.voice-btn'), L, toast,
+  run: id => {
+    const sec = { projects: 'projects', experience: 'experience', playground: 'playground', skills: 'skills', terminal: 'terminal', contact: 'contact', top: 'hero' }[id];
+    if (sec) return go(sec)();
+    if (id === 'dark' || id === 'light') { ambient.stop(); delete root.dataset.themeMode; store.set('ab-theme-mode', ''); return applyTheme(id); }
+    if (id === 'arabic' && root.lang !== 'ar') return switchLang();
+    if (id === 'english' && root.lang === 'ar') return switchLang();
+    if (id === 'cv') { const a = document.createElement('a'); a.href = 'assets/Ahmed_Bawazir_CV.pdf'; a.download = ''; a.click(); return; }
+    if (id === 'break') return chaos && chaos.break();
+    if (id === 'present') return present.toggle();
+  },
+});
+if (store.get('ab-theme-mode') === 'auto') { root.dataset.themeMode = 'auto'; ambient.start(); }
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
 initMotion();
 onScroll();

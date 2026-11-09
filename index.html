@@ -37,6 +37,7 @@
     // Apply saved theme/language before paint to avoid a flash.
     try {
       var t = localStorage.getItem('ab-theme'); if (t) document.documentElement.dataset.theme = t;
+      if (localStorage.getItem('ab-theme-mode') === 'auto') document.documentElement.dataset.themeMode = 'auto';
       var m = localStorage.getItem('ab-motion'); if (m === 'off') document.documentElement.dataset.motion = 'off';
       var l = localStorage.getItem('ab-lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; }
     } catch (e) {}
@@ -80,6 +81,7 @@
       <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
     <div class="top-actions">
+      <button class="icon-btn voice-btn" type="button" aria-label="Voice commands" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
       <button class="icon-btn" data-action="lang" aria-label="Switch language"><span class="lang-label">ع</span></button>
       <button class="icon-btn" data-action="theme" aria-label="Toggle theme">
         <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
@@ -617,6 +619,7 @@
     <span class="sb-spacer"></span>
     <span class="sb-item sb-ln">Ln <span class="sb-pct">0</span>%</span>
     <button class="sb-item sb-btn sb-motion" data-action="motion" type="button" aria-pressed="true"><span class="sb-motion-dot"></span><span data-i18n="sb.motion">Motion</span></button>
+    <button class="sb-item sb-btn sb-present" data-action="present" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span data-i18n="sb.present">Present</span></button>
     <button class="sb-item sb-btn sb-keys" data-action="keys" type="button" aria-label="Keyboard shortcuts"><kbd>?</kbd></button>
     <button class="sb-item sb-btn" data-action="palette" type="button" aria-label="Open command palette"><kbd>⌘K</kbd> <span class="sb-label" data-i18n="sb.cmd">Commands</span></button>
     <span class="sb-progress" aria-hidden="true"></span>
@@ -640,6 +643,8 @@
       <div><dt><kbd>M</kbd></dt><dd data-i18n="keys.motion">Animations on / off</dd></div>
       <div><dt><kbd>C</kbd></dt><dd data-i18n="keys.copy">Copy email</dd></div>
       <div><dt><kbd>B</kbd></dt><dd data-i18n="keys.break">Break the page (then fix it)</dd></div>
+      <div><dt><kbd>P</kbd></dt><dd data-i18n="keys.present">Presentation mode</dd></div>
+      <div><dt><kbd>V</kbd></dt><dd data-i18n="keys.voice">Voice commands</dd></div>
       <div><dt><kbd>G</kbd> <kbd>G</kbd></dt><dd data-i18n="keys.top">Back to top</dd></div>
       <div><dt><kbd>?</kbd></dt><dd data-i18n="keys.help">This panel</dd></div>
     </dl>

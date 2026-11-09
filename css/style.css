@@ -1107,7 +1107,10 @@ body::after {
 .bento-card > * { position: relative; z-index: 1; }
 
 /* Handwritten signature, drawn like a pen: outline first, then the ink fills, then the flourish */
-.signmark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.signmark { position: relative; aspect-ratio: 704 / 170; }
+.signmark svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; }
+.sig.still .sig-ink { stroke-dashoffset: 0; fill-opacity: 1; stroke-width: 0; }
+.sig.still .sig-line { stroke-dashoffset: 0; }
 .sig-ink { fill: currentColor; fill-opacity: 0; stroke: currentColor; stroke-width: 1.1; stroke-linejoin: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
 .sig-line { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
 .signmark.draw .sig-ink { animation: sigStroke 2.4s cubic-bezier(.55, .1, .35, 1) forwards, sigFill .9s ease 1.7s forwards; }
@@ -1121,10 +1124,48 @@ body::after {
   margin: -.16em 0 -.06em; margin-inline-start: clamp(0px, 4vw, 64px);
   font-size: clamp(64px, 10.4vw, 160px); /* em units follow the title size */
 }
-.signmark--end { width: clamp(120px, 12vw, 160px); margin: -6px 0 -10px; color: var(--bg); }
+.signmark--end { width: clamp(140px, 13vw, 180px); margin: -8px 0 -10px; color: var(--bg); }
 .footer { align-items: center; }
 [dir="rtl"] .signmark svg { direction: ltr; }
 @media (max-width: 680px) { .signmark--hero { margin-inline-start: 0; } }
+
+/* Voice commands */
+.voice-btn.on { background: var(--accent); color: var(--on-accent); border-color: var(--accent); box-shadow: 0 0 0 6px var(--accent-soft); }
+.voice-pill { position: fixed; top: 84px; left: 50%; z-index: 150; translate: -50% -16px; opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 12px; padding: 10px 18px 10px 14px; border-radius: 999px; max-width: calc(100vw - 32px);
+  background: rgba(10,10,10,.92); color: #f2f2f2; border: 1px solid rgba(255,255,255,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 20px 50px -14px rgba(0,0,0,.8);
+  backdrop-filter: blur(14px); font-size: 14px; transition: translate .4s var(--ease), opacity .3s; }
+.voice-pill.on { translate: -50% 0; opacity: 1; }
+.voice-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.voice-wave { display: flex; align-items: center; gap: 3px; height: 18px; }
+.voice-wave i { width: 3px; height: 100%; border-radius: 2px; background: var(--accent); animation: vw .9s ease-in-out infinite; }
+.voice-wave i:nth-child(2) { animation-delay: .15s; } .voice-wave i:nth-child(3) { animation-delay: .3s; } .voice-wave i:nth-child(4) { animation-delay: .45s; }
+@keyframes vw { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+/* Auto theme badge on the theme button */
+[data-theme-mode="auto"] [data-action="theme"] { position: relative; }
+[data-theme-mode="auto"] [data-action="theme"]::after { content: "A"; position: absolute; right: -3px; bottom: -3px; width: 15px; height: 15px; border-radius: 50%; background: var(--accent); color: var(--on-accent); font: 700 9px/15px var(--font-mono); text-align: center; }
+
+/* Presentation mode */
+.sb-present svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.presenting .topbar, .presenting .statusbar, .presenting .scroll-cue, .presenting .hero-hint { opacity: 0 !important; pointer-events: none; }
+.presenting body { padding-bottom: 0; }
+.presenting main > [data-section] { min-height: 100vh; min-height: 100svh; scroll-margin-top: 0; }
+.presenting .section { display: flex; flex-direction: column; justify-content: center; }
+.presenting .section > .container { width: 100%; }
+.present-hud { position: fixed; left: 50%; bottom: 22px; z-index: 160; translate: -50% 140%; opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 12px; padding: 6px; border-radius: 999px; font-size: 12.5px;
+  background: rgba(10,10,10,.88); color: #f2f2f2; border: 1px solid rgba(255,255,255,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 20px 50px -14px rgba(0,0,0,.8);
+  backdrop-filter: blur(14px); transition: translate .45s var(--ease), opacity .3s; }
+.presenting .present-hud { translate: -50% 0; opacity: 1; pointer-events: auto; }
+.ph-btn, .ph-exit { height: 34px; min-width: 34px; padding: 0 10px; border-radius: 999px; border: 0; background: rgba(255,255,255,.1); color: inherit; font: inherit; cursor: pointer; }
+.ph-btn:hover, .ph-exit:hover { background: var(--accent); color: #000; }
+.ph-count { color: #8e8e93; }
+.ph-name { min-width: 90px; font-weight: 600; }
+.ph-bar { width: 90px; height: 2px; background: rgba(255,255,255,.15); border-radius: 2px; overflow: hidden; }
+.ph-bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; transition: transform .4s var(--ease); }
+:root[lang="ar"] .ph-name { font-family: var(--font-sans); }
+@media (max-width: 680px) { .sb-present span, .ph-bar { display: none; } }
 
 /* Break this page */
 .btn-break { border: 1px dashed color-mix(in srgb, var(--accent) 70%, transparent); color: var(--accent); background: transparent; }
