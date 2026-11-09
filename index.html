@@ -70,7 +70,7 @@
   <!-- ───────── Top bar ───────── -->
   <header class="topbar" id="top">
     <a class="logo" href="#hero" aria-label="Ahmed Bawazir — home">
-      <span class="logo-mark">ab</span><span class="logo-dot"></span>
+      <span class="logo-mark">AB</span><span class="logo-dot"></span>
     </a>
     <nav class="toplinks" aria-label="Primary">
       <a href="#experience" data-i18n="nav.experience">Experience</a>
@@ -104,12 +104,12 @@
           <span class="line" data-i18n="hero.first">Ahmed</span>
           <span class="line line-2" data-i18n="hero.last">Bawazir<span class="accent">.</span></span>
         </h1>
-        <div class="signmark signmark--hero" data-signmark="hero"></div>
         <p class="hero-role mono"><span class="prompt">&gt;</span> <span class="typed" aria-live="polite">Software Engineer</span><span class="caret" aria-hidden="true"></span></p>
         <p class="hero-lede" data-i18n="hero.lede">I build software, configure enterprise systems, and break things on purpose — so your users never have to.</p>
         <div class="hero-ctas">
           <a class="btn btn-solid" href="#projects"><span data-i18n="cta.work">See my work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           <a class="btn btn-ghost" href="#playground"><span data-i18n="cta.play">Try the playground</span></a>
+          <button type="button" class="btn btn-break" data-action="break"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 9.5 9.5 4 8l4 5-3 6 6-3.5L15 21l.5-6.5L21 12l-6.5-1.5z"/></svg><span data-i18n="cta.break">Break this page</span></button>
         </div>
         <p class="hero-hint mono" data-i18n="hero.hint">↳ move your cursor over the letters — click to scatter</p>
       </div>
@@ -601,10 +601,9 @@
         </div>
       </div>
       <div class="signature" aria-hidden="true" data-cursor-hide><canvas></canvas></div>
-      <div class="signmark signmark--end" data-signmark="end"></div>
       <footer class="footer container mono">
-        <span>© <span class="year">2026</span> Ahmed Bawazir</span>
-        <span data-i18n="footer.built">Hand-built, zero dependencies.</span>
+        <span>© <span class="year">2026</span> Ahmed Bawazir · <span data-i18n="footer.rights">All rights reserved</span></span>
+        <div class="signmark signmark--end" data-signmark="end"></div>
         <a href="#hero" data-i18n="footer.top">Back to top ↑</a>
       </footer>
     </section>
@@ -640,6 +639,7 @@
       <div><dt><kbd>L</kbd></dt><dd data-i18n="keys.lang">Switch language</dd></div>
       <div><dt><kbd>M</kbd></dt><dd data-i18n="keys.motion">Animations on / off</dd></div>
       <div><dt><kbd>C</kbd></dt><dd data-i18n="keys.copy">Copy email</dd></div>
+      <div><dt><kbd>B</kbd></dt><dd data-i18n="keys.break">Break the page (then fix it)</dd></div>
       <div><dt><kbd>G</kbd> <kbd>G</kbd></dt><dd data-i18n="keys.top">Back to top</dd></div>
       <div><dt><kbd>?</kbd></dt><dd data-i18n="keys.help">This panel</dd></div>
     </dl>

@@ -44,6 +44,8 @@ Hand-built with plain HTML, CSS and JavaScript modules. No framework, no build s
 - **Keyboard shortcuts** (`?`): `T` theme, `L` language, `M` motion, `C` copy email, `G G` back to top, `⌘K` or `/` for the palette.
 - **Installable and offline-ready (PWA)**: a web manifest, app icons and a service worker (`sw.js`). Pages load network-first and assets use stale-while-revalidate. **Bump `VERSION` in `sw.js` whenever you deploy changes.**
 - **Branded 404 page** (`404.html`, picked up automatically by GitHub Pages).
+- **Break this page.** A button in the hero, the `B` key, or shaking a phone drops everything on screen under gravity, using a small built-in physics loop. Pieces bounce, pile up and can be thrown. **Run tests to fix** puts every piece back and ends on «0 bugs».
+- **Easter eggs:** type `hire` anywhere on the page, or open DevTools for a note.
 - **English and Arabic**, with full right-to-left layout (`ع` / `EN` button).
 - **Light and dark themes** that follow the system setting and remember your choice.
 - Downloadable CV, a click-to-copy email, structured data for search engines, and an Open Graph image for link previews.

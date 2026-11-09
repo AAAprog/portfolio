@@ -1,4 +1,4 @@
-// Footer signature: a full-width "ahmed bawazir." with a liquid-glass lens that
+// Footer signature: a full-width "Ahmed Bawazir." with a liquid-glass lens that
 // follows the pointer (or drifts on its own) and shows "أحمد باوزير" through it.
 import { createGlass, wordmark } from './glass.js';
 
@@ -15,7 +15,7 @@ export function initSignature(wrap) {
     const fg = getComputedStyle(root).getPropertyValue('--bg').trim(), accent = getComputedStyle(root).getPropertyValue('--accent').trim();
     glass = createGlass(canvas, {
       tint: [1, 1, 1], glass: 0.06,
-      drawBase: (c, w, h) => { fs = Math.min(w * 0.135, h * 0.78); wordmark(c, w, h, { text: 'ahmed bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: fg, alpha: 0.16, accent, dot: true, y: 0.42 }); },
+      drawBase: (c, w, h) => { fs = Math.min(w * 0.135, h * 0.78); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: fg, alpha: 0.16, accent, dot: true, y: 0.42 }); },
       drawReveal: (c, w, h) => wordmark(c, w, h, { text: 'أحمد باوزير', size: fs * 1.02, weight: 700, family: '"IBM Plex Sans Arabic"', color: fg, y: 0.42 }),
     });
     glass.layout();

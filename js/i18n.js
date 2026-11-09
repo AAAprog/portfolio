@@ -147,6 +147,9 @@ export const ar = {
   'contact.email': 'أرسل بريداً',
   'footer.built': 'مبني يدوياً، بلا مكتبات خارجية.',
   'footer.top': 'العودة للأعلى ↑',
+  'footer.rights': 'جميع الحقوق محفوظة',
+  'cta.break': 'اكسر الصفحة',
+  'keys.break': 'اكسر الصفحة (ثم أصلحها)',
 
   'sb.ok': '0 أخطاء',
   'sb.cmd': 'الأوامر',
@@ -159,6 +162,12 @@ export const ar = {
 export const dyn = {
   en: {
     formDone: 'Your email app should open with the message ready ✓',
+    chaosOff: 'Motion is off, so nothing breaks today.',
+    chaosBroken: 'Page broken · {n} pieces · drag them around',
+    chaosFix: 'Run tests to fix',
+    chaosFixing: 'running tests… {n}/{t} restored',
+    chaosDone: '✓ all tests passed · 0 bugs',
+    hireEgg: 'You typed the magic word. Taking you to my inbox…',
     hoursOpen: 'Within working hours: I usually reply today',
     hoursClosed: 'Outside working hours: I reply next working day',
     roles: ['Software Engineer', 'Oracle Fusion HCM Consultant', 'Full-stack Developer', 'Professional bug hunter'],
@@ -172,7 +181,7 @@ export const dyn = {
     themeDark: 'Dark theme', themeLight: 'Light theme',
     cmds: {
       experience: 'Go to Experience', projects: 'Go to Projects', playground: 'Go to Playground',
-      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal', motion: 'Turn animations on / off', keys: 'Keyboard shortcuts',
+      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal', motion: 'Turn animations on / off', keys: 'Keyboard shortcuts', break: 'Break this page',
       cv: 'Download CV (PDF)', email: 'Copy email address', mail: 'Write an email', linkedin: 'Open LinkedIn', github: 'Open GitHub',
       theme: 'Toggle light / dark theme', lang: 'التبديل إلى العربية', top: 'Back to top',
     },
@@ -195,6 +204,12 @@ export const dyn = {
   },
   ar: {
     formDone: 'سيفتح تطبيق البريد والرسالة جاهزة ✓',
+    chaosOff: 'الحركة متوقفة، فلن ينكسر شيء اليوم.',
+    chaosBroken: 'الصفحة انكسرت · {n} قطعة · اسحبها كما تريد',
+    chaosFix: 'شغّل الاختبارات للإصلاح',
+    chaosFixing: 'جارٍ تشغيل الاختبارات… {n}/{t}',
+    chaosDone: '✓ نجحت كل الاختبارات · 0 أخطاء',
+    hireEgg: 'كتبت الكلمة السحرية. سآخذك إلى بريدي…',
     hoursOpen: 'ضمن ساعات العمل: أرد عادةً في نفس اليوم',
     hoursClosed: 'خارج ساعات العمل: أرد في يوم العمل التالي',
     roles: ['مهندس برمجيات', 'استشاري Oracle Fusion HCM', 'مطوّر واجهات وخوادم', 'صيّاد أخطاء محترف'],
@@ -208,7 +223,7 @@ export const dyn = {
     themeDark: 'الوضع الداكن', themeLight: 'الوضع الفاتح',
     cmds: {
       experience: 'اذهب إلى الخبرات', projects: 'اذهب إلى المشاريع', playground: 'اذهب إلى العروض التفاعلية',
-      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية', motion: 'تشغيل / إيقاف الحركة', keys: 'اختصارات لوحة المفاتيح',
+      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية', motion: 'تشغيل / إيقاف الحركة', keys: 'اختصارات لوحة المفاتيح', break: 'اكسر الصفحة',
       cv: 'تحميل السيرة الذاتية (PDF)', email: 'نسخ البريد الإلكتروني', mail: 'كتابة بريد', linkedin: 'فتح LinkedIn', github: 'فتح GitHub',
       theme: 'تبديل الوضع الفاتح / الداكن', lang: 'Switch to English', top: 'العودة للأعلى',
     },

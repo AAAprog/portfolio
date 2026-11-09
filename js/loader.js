@@ -1,5 +1,5 @@
 // Branded loader with a liquid-glass lens.
-// "ahmed bawazir." sits on the page; a glass lens glides across it and shows
+// "Ahmed Bawazir." sits on the page; a glass lens glides across it and shows
 // "أحمد باوزير" through the glass. When the page is ready the lens swells to
 // fill the screen (the Arabic name takes over), then the curtain lifts.
 // Tracks real readiness (fonts + load), skippable, at most once a day.
@@ -26,7 +26,7 @@ export function initLoader() {
   let fs = 100;
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07,
-    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'ahmed bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
+    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
     drawReveal: (c, w, h) => wordmark(c, w, h, { text: 'أحمد باوزير', size: fs * 1.02, weight: 700, family: '"IBM Plex Sans Arabic"', color: '#ffffff' }),
   });
 

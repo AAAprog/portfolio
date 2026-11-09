@@ -1,4 +1,4 @@
-// Particle monogram: "ab" is sampled from text into points; each particle
+// Particle monogram: "AB" is sampled from text into points; each particle
 // springs to its home point, flees the pointer, and scatters on click.
 
 export function initHero(canvas) {
@@ -36,7 +36,7 @@ export function initHero(canvas) {
     o.fillStyle = '#000';
     o.textAlign = 'center'; o.textBaseline = 'middle';
     o.font = `700 ${size * 0.92}px "Space Grotesk", system-ui, sans-serif`;
-    o.fillText('ab', ow / 2, oh * 0.5);
+    o.fillText('AB', ow / 2, oh * 0.5);
     const data = o.getImageData(0, 0, ow, oh).data;
 
     const gap = mobile ? 7 : Math.max(6, Math.round(size / 85));

@@ -9,6 +9,7 @@ import { initLoader } from './loader.js';
 import { initForm } from './form.js';
 import { initSignature } from './signature.js';
 import { initSignmarks } from './signmark.js';
+import { initChaos } from './chaos.js';
 
 initLoader();
 
@@ -233,6 +234,7 @@ const commands = () => {
     ['lang', c.lang, 'ع/EN', switchLang],
     ['motion', c.motion, '◎', toggleMotion],
     ['keys', c.keys, '?', openKeys],
+    ['break', c.break, 'B', () => chaos && chaos.break()],
     ['top', c.top, '↑', go('hero')],
   ];
 };
@@ -292,6 +294,7 @@ document.addEventListener('click', e => {
   else if (a === 'motion') toggleMotion();
   else if (a === 'palette') openPalette();
   else if (a === 'keys') openKeys();
+  else if (a === 'break') chaos && chaos.break();
   else if (a === 'copy-email') copyEmail();
 });
 
@@ -335,6 +338,7 @@ addEventListener('keydown', e => {
   else if (k === 'l') switchLang();
   else if (k === 'm') toggleMotion();
   else if (k === 'c') copyEmail();
+  else if (k === 'b') chaos && chaos.break();
   else if (k === 'g') { const now = Date.now(); if (now - lastG < 500) scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); lastG = now; }
 });
 
@@ -359,6 +363,7 @@ initTerminal($('.term'));
 initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
+var chaos = initChaos(L, toast);
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
 initMotion();
 onScroll();
