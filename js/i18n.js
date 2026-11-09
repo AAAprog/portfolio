@@ -55,6 +55,11 @@ export const ar = {
   'proj.ufc': 'نظام متكامل لحجز الفعاليات بوحدات للمستخدم والمشرف، ومسارات حجز، ومنطق خلفي، وعمليات على قاعدة بيانات علائقية.',
   'proj.easycal': 'تطبيق أندرويد لتتبّع السعرات مبني بـ .NET MAUI: تطوير الواجهة، وتتبّع الأخطاء، والاختبار الوظيفي من البداية للنهاية.',
   'proj.private': 'تطبيق جوال · العرض عند الطلب',
+  'proj.more': 'المزيد على GitHub',
+
+  'term.kicker': 'الطرفية',
+  'term.title': 'أو اسأل الطرفية مباشرة.',
+  'term.sub': 'اكتب <code>help</code> لترى ما تعرفه. زر Tab يكمل الأمر، و↑ يعيد الأوامر السابقة.',
 
   'play.kicker': 'جرّب بنفسك',
   'play.title': 'لا تقرأ عنه. جرّبه.',
@@ -131,7 +136,7 @@ export const dyn = {
     themeDark: 'Dark theme', themeLight: 'Light theme',
     cmds: {
       experience: 'Go to Experience', projects: 'Go to Projects', playground: 'Go to Playground',
-      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact',
+      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal',
       cv: 'Download CV (PDF)', email: 'Copy email address', mail: 'Write an email', linkedin: 'Open LinkedIn', github: 'Open GitHub',
       theme: 'Toggle light / dark theme', lang: 'التبديل إلى العربية', top: 'Back to top',
     },
@@ -164,7 +169,7 @@ export const dyn = {
     themeDark: 'الوضع الداكن', themeLight: 'الوضع الفاتح',
     cmds: {
       experience: 'اذهب إلى الخبرات', projects: 'اذهب إلى المشاريع', playground: 'اذهب إلى العروض التفاعلية',
-      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل',
+      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية',
       cv: 'تحميل السيرة الذاتية (PDF)', email: 'نسخ البريد الإلكتروني', mail: 'كتابة بريد', linkedin: 'فتح LinkedIn', github: 'فتح GitHub',
       theme: 'تبديل الوضع الفاتح / الداكن', lang: 'Switch to English', top: 'العودة للأعلى',
     },

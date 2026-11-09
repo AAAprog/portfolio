@@ -31,7 +31,11 @@ export function initBugHunt(root, toast) {
     li.querySelector('.br-body').textContent = fmt(body, { q, shown: (q * 450 + 50).toLocaleString('en'), right: (q * 450).toLocaleString('en') });
     list.prepend(li);
     score.textContent = found.size;
-    if (found.size === 4) { scoreWrap.classList.add('done'); toast(t().allFound); }
+    if (found.size === 4) {
+      scoreWrap.classList.add('done'); toast(t().allFound);
+      const r = scoreWrap.getBoundingClientRect();
+      document.dispatchEvent(new CustomEvent('celebrate', { detail: { x: r.left + r.width / 2, y: r.top + r.height / 2 } }));
+    }
   };
 
   root.addEventListener('click', e => {

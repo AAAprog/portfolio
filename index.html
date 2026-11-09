@@ -72,6 +72,7 @@
     <section class="hero" id="hero" data-section="hero">
       <div class="hero-grid" aria-hidden="true"></div>
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-spot" aria-hidden="true"></div>
       <div class="container hero-inner">
         <p class="eyebrow mono"><span class="pulse"></span><span data-i18n="hero.status">Available for opportunities · Riyadh, KSA</span></p>
         <h1 class="hero-title">
@@ -108,7 +109,7 @@
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker mono">02 — <span data-i18n="exp.kicker">Experience</span></p>
-          <h2 data-i18n="exp.title">The commit history.</h2>
+          <h2 data-words data-i18n="exp.title">The commit history.</h2>
           <p class="section-sub" data-i18n="exp.sub">My career so far, written the way I'd write it in a repository: newest first.</p>
           <p class="mono gitcmd" aria-hidden="true">$ git log --career --graph</p>
         </header>
@@ -159,16 +160,17 @@
     </section>
 
     <!-- ───────── Projects ───────── -->
-    <section class="section" id="projects" data-section="projects">
-      <div class="container">
-        <header class="section-head reveal">
+    <section class="section projects-section" id="projects" data-section="projects">
+      <div class="pin"><div class="pin-sticky">
+      <div class="container pin-track">
+        <header class="section-head reveal project-intro">
           <p class="kicker mono">03 — <span data-i18n="proj.kicker">Selected projects</span></p>
-          <h2 data-i18n="proj.title">Things I've shipped.</h2>
+          <h2 data-words data-i18n="proj.title">Things I've shipped.</h2>
           <p class="section-sub" data-i18n="proj.sub">From an AI assistant for software engineers to a ticketing system and a mobile app.</p>
         </header>
 
         <div class="projects">
-          <article class="project card reveal project--codai">
+          <article data-tilt class="project card reveal project--codai">
             <div class="project-visual" aria-hidden="true">
               <svg class="uml" viewBox="0 0 320 200">
                 <g class="uml-box" style="--d:0s"><rect x="18" y="22" width="96" height="66" rx="6"/><line x1="18" y1="42" x2="114" y2="42"/><text x="66" y="36">Requirement</text><text class="t-sm" x="26" y="58">+ id: UUID</text><text class="t-sm" x="26" y="74">+ priority()</text></g>
@@ -183,11 +185,11 @@
               <p class="project-tags mono">SDLC · UML · Database design · AI</p>
               <h3>Codai <span class="badge" data-i18n="proj.fyp">Final-year project</span></h3>
               <p data-i18n="proj.codai">A web-based assistant for software engineers: requirements analysis, UML diagrams, database schema design, code generation and review, and test-case generation — in one place.</p>
-              <a class="link" href="https://codai-murex.vercel.app/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
+              <a data-cursor="open" class="link" href="https://codai-murex.vercel.app/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
             </div>
           </article>
 
-          <article class="project card reveal project--ufc">
+          <article data-tilt class="project card reveal project--ufc">
             <div class="project-visual" aria-hidden="true">
               <div class="ticket">
                 <div class="ticket-main">
@@ -202,11 +204,11 @@
               <p class="project-tags mono">HTML · CSS · PHP · MySQL</p>
               <h3 data-i18n="proj.ufc.title">UFC Ticketing</h3>
               <p data-i18n="proj.ufc">A full-stack event booking system with user and admin modules, booking workflows, back-end logic and relational database operations.</p>
-              <a class="link" href="https://aaaprog.github.io/ufc-event-system/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
+              <a data-cursor="open" class="link" href="https://aaaprog.github.io/ufc-event-system/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
             </div>
           </article>
 
-          <article class="project card reveal project--easycal">
+          <article data-tilt class="project card reveal project--easycal">
             <div class="project-visual" aria-hidden="true">
               <div class="phone">
                 <svg class="ring" viewBox="0 0 120 120">
@@ -224,8 +226,15 @@
               <span class="link link-muted" data-i18n="proj.private">Mobile app · demo on request</span>
             </div>
           </article>
+
+          <a class="project-end" href="https://github.com/aaaprog" target="_blank" rel="noopener" data-cursor="open">
+            <span class="project-end-ring" aria-hidden="true">↗</span>
+            <span class="project-end-text" data-i18n="proj.more">More on GitHub</span>
+          </a>
         </div>
       </div>
+      <div class="pin-progress" aria-hidden="true"><i></i></div>
+      </div></div>
     </section>
 
     <!-- ───────── Playground ───────── -->
@@ -233,13 +242,13 @@
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker mono">04 — <span data-i18n="play.kicker">Playground</span></p>
-          <h2 data-i18n="play.title">Don't read about it. Poke it.</h2>
+          <h2 data-words data-i18n="play.title">Don't read about it. Poke it.</h2>
           <p class="section-sub" data-i18n="play.sub">Three small demos of how I think: enterprise rules, validation logic, and a tester's eye.</p>
         </header>
 
         <div class="play-grid">
           <!-- Bug hunt -->
-          <div class="play card reveal play--bugs" id="bughunt">
+          <div class="play card reveal play--bugs" id="bughunt" data-cursor="hunt">
             <div class="play-head">
               <h3 data-i18n="bug.title">Bug hunt</h3>
               <p class="mono bug-score"><span class="found">0</span>/4 <span data-i18n="bug.found">found</span></p>
@@ -312,7 +321,7 @@
       <div class="container">
         <header class="section-head reveal">
           <p class="kicker mono">05 — <span data-i18n="skills.kicker">Toolbox</span></p>
-          <h2 data-i18n="skills.title">What's in the stack.</h2>
+          <h2 data-words data-i18n="skills.title">What's in the stack.</h2>
         </header>
         <div class="skill-tabs reveal" role="tablist" aria-label="Skill groups">
           <button role="tab" class="tab is-on" data-filter="all" aria-selected="true" data-i18n="skills.all">All</button>
@@ -344,7 +353,7 @@
       <div class="container journey">
         <header class="section-head reveal">
           <p class="kicker mono">06 — <span data-i18n="jour.kicker">Journey</span></p>
-          <h2 data-i18n="jour.title">Three cities, one direction.</h2>
+          <h2 data-words data-i18n="jour.title">Three cities, one direction.</h2>
           <p class="section-sub" data-i18n="jour.sub">Studied in Malaysia, worked remotely for a team in Qatar, and now building in Saudi Arabia.</p>
         </header>
         <div class="map card reveal">
@@ -366,14 +375,14 @@
       <div class="container cred-grid">
         <div class="reveal">
           <p class="kicker mono">07 — <span data-i18n="cred.kicker">Credentials</span></p>
-          <h2 data-i18n="cred.title">Certified &amp; bilingual.</h2>
+          <h2 data-words data-i18n="cred.title">Certified &amp; bilingual.</h2>
         </div>
         <ul class="certs reveal">
-          <li class="card"><span class="mono cert-org">Cisco</span>CCNA: Introduction to Networks</li>
-          <li class="card"><span class="mono cert-org">AI</span>Build Smarter AI with Embeddings</li>
-          <li class="card"><span class="mono cert-org">AI Singapore</span>AI4I® — Literacy in AI</li>
-          <li class="card"><span class="mono cert-org">AI Singapore</span>AI4I® — Foundations in AI</li>
-          <li class="card"><span class="mono cert-org">AI Singapore</span>AI4E® — Theory</li>
+          <li class="card" data-tilt><span class="mono cert-org">Cisco</span>CCNA: Introduction to Networks</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI</span>Build Smarter AI with Embeddings</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI Singapore</span>AI4I® — Literacy in AI</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI Singapore</span>AI4I® — Foundations in AI</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI Singapore</span>AI4E® — Theory</li>
         </ul>
         <div class="langs reveal">
           <div class="lang-row"><span lang="ar" class="lang-name">العربية</span><span class="meter"><i style="--w:100%"></i></span><span class="mono" data-i18n="cred.native">Native</span></div>
@@ -382,14 +391,41 @@
       </div>
     </section>
 
+    <!-- ───────── Terminal ───────── -->
+    <section class="section" id="terminal" data-section="terminal">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker mono">08 — <span data-i18n="term.kicker">Terminal</span></p>
+          <h2 data-words data-i18n="term.title">Or just ask the terminal.</h2>
+          <p class="section-sub" data-i18n="term.sub">Type <code>help</code> to see what it knows. Tab autocompletes, ↑ brings back history.</p>
+        </header>
+        <div class="term reveal" data-cursor="type">
+          <div class="term-bar"><span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span><span class="term-title mono">ahmed@riyadh: ~</span></div>
+          <div class="term-out mono" aria-live="polite"></div>
+          <form class="term-line mono" autocomplete="off">
+            <label for="term-in" class="term-ps">ahmed@riyadh:~$</label>
+            <input id="term-in" class="term-in" autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Terminal command" />
+          </form>
+        </div>
+        <div class="term-chips reveal" aria-label="Suggested commands">
+          <button type="button" class="tab" data-cmd="help">help</button>
+          <button type="button" class="tab" data-cmd="whoami">whoami</button>
+          <button type="button" class="tab" data-cmd="projects">projects</button>
+          <button type="button" class="tab" data-cmd="skills --hcm">skills --hcm</button>
+          <button type="button" class="tab" data-cmd="matrix">matrix</button>
+          <button type="button" class="tab tab-accent" data-cmd="sudo hire ahmed">sudo hire ahmed</button>
+        </div>
+      </div>
+    </section>
+
     <!-- ───────── Contact ───────── -->
     <section class="contact" id="contact" data-section="contact">
       <div class="container">
-        <p class="kicker mono">08 — <span data-i18n="contact.kicker">Contact</span></p>
-        <h2 class="contact-title" data-i18n="contact.title">Let's build something that doesn't break.</h2>
+        <p class="kicker mono">09 — <span data-i18n="contact.kicker">Contact</span></p>
+        <h2 class="contact-title" data-words data-i18n="contact.title">Let's build something that doesn't break.</h2>
         <p class="contact-sub" data-i18n="contact.sub">Open to software engineering, Oracle HCM and QA roles in Riyadh, or remote. The fastest way to reach me is email.</p>
         <div class="contact-actions">
-          <button class="email-btn" data-action="copy-email" type="button">
+          <button class="email-btn" data-action="copy-email" type="button" data-cursor="copy">
             <span class="mono email">aaa.bawazir0@gmail.com</span>
             <span class="copy-state mono" data-i18n="contact.copy">click to copy</span>
           </button>
@@ -431,6 +467,8 @@
   </div>
 
   <div class="toast mono" role="status" aria-live="polite"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor-ring"><span class="cursor-label"></span></span><span class="cursor-dot"></span></div>
+  <canvas class="confetti" aria-hidden="true"></canvas>
 
   <script type="module" src="js/main.js"></script>
 </body>

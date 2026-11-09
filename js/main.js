@@ -1,6 +1,8 @@
 import { ar, dyn } from './i18n.js';
 import { initHero } from './hero.js';
 import { initBugHunt, initAccrual, initRules } from './play.js';
+import { initMotion } from './motion.js';
+import { initTerminal } from './terminal.js';
 
 const root = document.documentElement;
 const $ = (s, c = document) => c.querySelector(s);
@@ -54,6 +56,7 @@ function applyLang(lang) {
   modules.forEach(m => m.relabel && m.relabel());
   hero && hero.refresh();
   store.set('ab-lang', lang);
+  document.dispatchEvent(new CustomEvent('langchange'));
 }
 
 /* ───────────── Theme ───────────── */
@@ -194,6 +197,7 @@ const commands = () => {
     ['skills', c.skills, '§', go('skills')],
     ['journey', c.journey, '§', go('journey')],
     ['credentials', c.credentials, '§', go('credentials')],
+    ['terminal', c.terminal, '>_', go('terminal')],
     ['contact', c.contact, '§', go('contact')],
     ['cv', c.cv, 'pdf', () => { const a = document.createElement('a'); a.href = 'assets/Ahmed_Bawazir_CV.pdf'; a.download = ''; a.click(); }],
     ['email', c.email, '⌘C', copyEmail],
@@ -269,5 +273,7 @@ modules = [
   initAccrual($('#accrual')),
   initRules($('#rules')),
 ];
+initTerminal($('.term'));
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
+initMotion();
 onScroll();

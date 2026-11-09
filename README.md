@@ -13,6 +13,17 @@ Hand-built with plain HTML, CSS and JavaScript modules. No framework, no build s
   - *Bug hunt*: a checkout with four planted bugs to find.
   - *Absence accrual simulator*: monthly accrual, a carry-over limit and days lost at year end, as configured in Oracle HCM absence plans.
   - *Validation rules, live*: new-hire form rules tested as you type.
+- **Live terminal.** Visitors can type `help`, `whoami`, `projects`, `skills --hcm`, `matrix` or `sudo hire ahmed`. Tab autocompletes and the arrow keys bring back history.
+- **Motion layer** (`js/motion.js`):
+  - a custom cursor that shows labels like "open" or "copy"
+  - buttons that pull towards the cursor
+  - project and certificate cards that tilt in 3D with a light glare
+  - headings that rise in word by word, and kicker labels that unscramble
+  - hero letters that drop in and react on hover, plus a spotlight and parallax in the hero
+  - a skills marquee that speeds up and skews with scroll speed
+  - projects that scroll sideways while pinned (desktop)
+  - button ripples and confetti
+  - all of it switches off when the visitor has reduced motion enabled
 - **English and Arabic**, with full right-to-left layout (`ع` / `EN` button).
 - **Light and dark themes** that follow the system setting and remember your choice.
 - Downloadable CV, a click-to-copy email, structured data for search engines, and an Open Graph image for link previews.
