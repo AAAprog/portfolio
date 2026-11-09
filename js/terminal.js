@@ -149,7 +149,7 @@ export function initTerminal(root) {
     const chars = 'アカサタナハマヤラワ0123456789ABHCMعربي';
     const t0 = performance.now();
     const f = now => {
-      ctx.fillStyle = 'rgba(8, 10, 14, .14)'; ctx.fillRect(0, 0, c.width, c.height);
+      ctx.fillStyle = 'rgba(0, 0, 0, .14)'; ctx.fillRect(0, 0, c.width, c.height);
       ctx.fillStyle = '#3ddc97'; ctx.font = `${fs}px JetBrains Mono, monospace`;
       drops.forEach((y, i) => {
         ctx.fillText(chars[(Math.random() * chars.length) | 0], i * fs, y * fs);
