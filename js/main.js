@@ -12,7 +12,7 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, v); } catch { /* private mode */ } },
 };
 const L = () => dyn[root.lang === 'ar' ? 'ar' : 'en'];
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
 
 /* ───────────── Toast ───────────── */
 const toastEl = $('.toast');
@@ -64,11 +64,34 @@ function isDark() {
   const t = root.dataset.theme;
   return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 }
-function toggleTheme() {
+// Theme switch: a circular View Transition that grows from the click point.
+function toggleTheme(origin) {
   const next = isDark() ? 'light' : 'dark';
   const go = () => { root.dataset.theme = next; store.set('ab-theme', next); hero && hero.refresh(); };
-  if (document.startViewTransition && !reduce) document.startViewTransition(go); else go();
   toast(next === 'dark' ? L().themeDark : L().themeLight);
+  if (!document.startViewTransition || reduce) return go();
+  const x = origin ? origin.x : innerWidth / 2, y = origin ? origin.y : innerHeight / 2;
+  const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  root.classList.add('vt-theme');
+  const vt = document.startViewTransition(go);
+  vt.ready.then(() => {
+    root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
+      { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' });
+  }).catch(() => {});
+  vt.finished.finally(() => root.classList.remove('vt-theme'));
+}
+// Language switch: a soft cross-fade View Transition.
+function switchLang() {
+  const next = root.lang === 'ar' ? 'en' : 'ar';
+  if (!document.startViewTransition || reduce) return applyLang(next);
+  document.startViewTransition(() => applyLang(next));
+}
+// Motion preference toggle (saved; reload applies it to every module cleanly).
+function toggleMotion() {
+  const off = root.dataset.motion !== 'off';
+  store.set('ab-motion', off ? 'off' : 'on');
+  try { sessionStorage.setItem('ab-scroll', String(scrollY)); } catch {}
+  location.reload();
 }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => hero && hero.refresh());
 
@@ -204,8 +227,9 @@ const commands = () => {
     ['mail', c.mail, '✉', () => { location.href = 'mailto:' + EMAIL; }],
     ['linkedin', c.linkedin, '↗', () => open('https://www.linkedin.com/in/ahmed-bawazir-14b472383/', '_blank', 'noopener')],
     ['github', c.github, '↗', () => open('https://github.com/aaaprog', '_blank', 'noopener')],
-    ['theme', c.theme, '◐', toggleTheme],
-    ['lang', c.lang, 'ع/EN', () => applyLang(root.lang === 'ar' ? 'en' : 'ar')],
+    ['theme', c.theme, '◐', () => toggleTheme()],
+    ['lang', c.lang, 'ع/EN', switchLang],
+    ['motion', c.motion, '◎', toggleMotion],
     ['top', c.top, '↑', go('hero')],
   ];
 };
@@ -227,10 +251,13 @@ function renderPalette() {
 }
 function openPalette() {
   lastFocus = document.activeElement;
-  pal.hidden = false; palInput.value = ''; palSel = 0; renderPalette();
-  requestAnimationFrame(() => palInput.focus());
+  palInput.value = ''; palSel = 0; renderPalette();
+  pal.showModal();
+  palInput.focus();
 }
-function closePalette() { pal.hidden = true; lastFocus && lastFocus.focus && lastFocus.focus(); }
+function closePalette() { if (pal.open) pal.close(); }
+pal.addEventListener('close', () => { lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true }); });
+pal.addEventListener('click', e => { if (e.target === pal) closePalette(); }); // click on ::backdrop
 function runPalette(i) { const item = palItems[i]; if (!item) return; closePalette(); item[3](); }
 palInput.addEventListener('input', () => { palSel = 0; renderPalette(); });
 palList.addEventListener('click', e => { const li = e.target.closest('li[data-i]'); if (li) runPalette(+li.dataset.i); });
@@ -245,12 +272,11 @@ pal.addEventListener('keydown', e => {
     renderPalette();
     const sel = $('li[aria-selected="true"]', palList); sel && sel.scrollIntoView({ block: 'nearest' });
   } else if (e.key === 'Enter') { e.preventDefault(); runPalette(palSel); }
-  else if (e.key === 'Escape') closePalette();
   else if (e.key === 'Tab') { e.preventDefault(); palInput.focus(); }
 });
 addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); pal.hidden ? openPalette() : closePalette(); }
-  else if (e.key === '/' && pal.hidden && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); openPalette(); }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); pal.open ? closePalette() : openPalette(); }
+  else if (e.key === '/' && !pal.open && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); openPalette(); }
 });
 
 /* ───────────── Global actions ───────────── */
@@ -258,14 +284,40 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('[data-action]');
   if (!btn) return;
   const a = btn.dataset.action;
-  if (a === 'theme') toggleTheme();
-  else if (a === 'lang') applyLang(root.lang === 'ar' ? 'en' : 'ar');
+  if (a === 'theme') toggleTheme(e.detail ? { x: e.clientX, y: e.clientY } : null);
+  else if (a === 'lang') switchLang();
+  else if (a === 'motion') toggleMotion();
   else if (a === 'palette') openPalette();
-  else if (a === 'palette-close') closePalette();
   else if (a === 'copy-email') copyEmail();
 });
 
+/* ───────────── Live Riyadh clock ───────────── */
+function initClock() {
+  const h = $('.clock-h'), m = $('.clock-m'), day = $('.clock-day'), status = $('.clock-status'), card = $('.b-clock');
+  if (!h) return;
+  const tz = 'Asia/Riyadh';
+  const timeFmt = new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  const partsFmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short', hour: 'numeric', hourCycle: 'h23' });
+  function tick() {
+    const now = new Date();
+    const [hh, mm] = timeFmt.format(now).split(':');
+    h.textContent = hh; m.textContent = mm;
+    const lang = root.lang === 'ar' ? 'ar' : 'en';
+    day.textContent = new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA-u-nu-latn' : 'en-GB', { timeZone: tz, weekday: 'long', day: 'numeric', month: 'short' }).format(now);
+    const p = Object.fromEntries(partsFmt.formatToParts(now).map(x => [x.type, x.value]));
+    const work = !['Fri', 'Sat'].includes(p.weekday) && +p.hour >= 8 && +p.hour < 18; // Saudi work week: Sun–Thu
+    card.classList.toggle('is-open', work);
+    status.textContent = work ? L().hoursOpen : L().hoursClosed;
+  }
+  tick();
+  setTimeout(() => { tick(); setInterval(tick, 60000); }, (60 - new Date().getSeconds()) * 1000);
+  document.addEventListener('langchange', tick);
+}
+
 /* ───────────── Boot ───────────── */
+try { const y = sessionStorage.getItem('ab-scroll'); if (y) { sessionStorage.removeItem('ab-scroll'); history.scrollRestoration = 'manual'; requestAnimationFrame(() => scrollTo(0, +y)); } } catch {}
+const mBtn = $('.sb-motion'); if (mBtn) mBtn.setAttribute('aria-pressed', String(root.dataset.motion !== 'off'));
+initClock();
 $$('.year').forEach(y => { y.textContent = new Date().getFullYear(); });
 const hero = initHero($('.hero-canvas'));
 modules = [

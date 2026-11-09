@@ -29,12 +29,13 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <script>
     // Apply saved theme/language before paint to avoid a flash.
     try {
       var t = localStorage.getItem('ab-theme'); if (t) document.documentElement.dataset.theme = t;
+      var m = localStorage.getItem('ab-motion'); if (m === 'off') document.documentElement.dataset.motion = 'off';
       var l = localStorage.getItem('ab-lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; }
     } catch (e) {}
   </script>
@@ -95,11 +96,47 @@
       <div class="container">
         <p class="kicker mono">01 — <span data-i18n="about.kicker">About</span></p>
         <p class="statement-text" data-split data-i18n="about.statement">Software engineering graduate who lives between code and configuration. I turn business rules into working systems — Oracle Fusion HCM, web apps, mobile apps — and then I hunt for the edge case nobody thought of.</p>
-        <div class="stats">
-          <div class="stat"><span class="stat-value" data-count="3.63" data-decimals="2">0</span><span class="stat-label" data-i18n="stats.cgpa">CGPA out of 4.00</span></div>
-          <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.countries">Countries worked &amp; studied in</span></div>
-          <div class="stat"><span class="stat-value" data-count="6">0</span><span class="stat-label" data-i18n="stats.hcm">Oracle HCM modules configured</span></div>
-          <div class="stat"><span class="stat-value" data-count="5">0</span><span class="stat-label" data-i18n="stats.certs">Certifications</span></div>
+        <div class="bento">
+          <article class="bento-card b-avail reveal">
+            <p class="b-label mono"><span class="pulse"></span><span data-i18n="bento.avail">Available now</span></p>
+            <h3 data-i18n="bento.availTitle">Open to full-time roles and freelance projects.</h3>
+            <p class="b-text" data-i18n="bento.availText">Software engineering, Oracle Fusion HCM and QA. On-site in Riyadh, hybrid or remote.</p>
+            <div class="b-actions">
+              <a class="btn btn-solid btn-sm" href="#contact"><span data-i18n="bento.cta">Get in touch</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              <a class="btn btn-ghost btn-sm" href="assets/Ahmed_Bawazir_CV.pdf" download data-i18n="cta.cv">Download CV</a>
+            </div>
+          </article>
+
+          <article class="bento-card b-clock reveal" aria-live="off">
+            <p class="b-label mono" data-i18n="bento.local">Local time · Riyadh</p>
+            <p class="b-time"><span class="clock-h">--</span><span class="colon">:</span><span class="clock-m">--</span></p>
+            <p class="b-text mono"><span class="clock-day">—</span> · UTC+3</p>
+            <p class="b-hours mono"><span class="dot"></span><span class="clock-status">—</span></p>
+          </article>
+
+          <article class="bento-card b-gpa reveal">
+            <p class="b-label mono">CGPA · UNITEN</p>
+            <div class="gauge">
+              <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="g-bg" cx="60" cy="60" r="50" pathLength="100"/><circle class="g-fg" cx="60" cy="60" r="50" pathLength="100"/></svg>
+              <p class="g-val"><span data-count="3.63" data-decimals="2">0</span><small>/ 4.00</small></p>
+            </div>
+            <p class="b-text" data-i18n="bento.gpa">B.CS (Hons.) Software Engineering</p>
+          </article>
+
+          <article class="bento-card b-focus reveal">
+            <p class="b-label mono" data-i18n="bento.focus">Current focus</p>
+            <h3>Oracle Fusion HCM</h3>
+            <ul class="b-chips mono">
+              <li>Core HR</li><li>Workforce Structures</li><li>Absence Management</li><li>DOR</li><li>Payroll</li><li>OTBI · BI Publisher</li><li>Groovy / ADF</li>
+            </ul>
+          </article>
+
+          <article class="bento-card b-nums reveal">
+            <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.countries">Countries worked &amp; studied in</span></div>
+            <div class="stat"><span class="stat-value" data-count="6">0</span><span class="stat-label" data-i18n="stats.hcm">Oracle HCM modules configured</span></div>
+            <div class="stat"><span class="stat-value" data-count="5">0</span><span class="stat-label" data-i18n="stats.certs">Certifications</span></div>
+            <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.projects">Shipped projects</span></div>
+          </article>
         </div>
       </div>
     </section>
@@ -452,19 +489,19 @@
     <span class="sb-item sb-file"><span>§ <span class="sb-section">hero</span>.ts</span></span>
     <span class="sb-spacer"></span>
     <span class="sb-item sb-ln">Ln <span class="sb-pct">0</span>%</span>
+    <button class="sb-item sb-btn sb-motion" data-action="motion" type="button" aria-pressed="true"><span class="sb-motion-dot"></span><span data-i18n="sb.motion">Motion</span></button>
     <button class="sb-item sb-btn" data-action="palette" type="button" aria-label="Open command palette"><kbd>⌘K</kbd> <span class="sb-label" data-i18n="sb.cmd">Commands</span></button>
     <span class="sb-progress" aria-hidden="true"></span>
   </div>
 
   <!-- ───────── Command palette ───────── -->
-  <div class="palette" hidden>
-    <div class="palette-backdrop" data-action="palette-close"></div>
-    <div class="palette-box" role="dialog" aria-modal="true" aria-label="Command palette">
+  <dialog class="palette" aria-label="Command palette">
+    <div class="palette-box">
       <input class="palette-input" type="text" placeholder="Type a command or section…" aria-label="Search commands" autocomplete="off" />
       <ul class="palette-list" role="listbox"></ul>
       <p class="palette-foot mono"><span>↑↓ <span data-i18n="pal.nav">navigate</span></span><span>↵ <span data-i18n="pal.run">run</span></span><span>esc <span data-i18n="pal.close">close</span></span></p>
     </div>
-  </div>
+  </dialog>
 
   <div class="toast mono" role="status" aria-live="polite"></div>
   <div class="cursor" aria-hidden="true"><span class="cursor-ring"><span class="cursor-label"></span></span><span class="cursor-dot"></span></div>

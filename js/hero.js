@@ -4,7 +4,7 @@
 export function initHero(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
   const hero = canvas.parentElement;
   let W = 0, H = 0, dpr = 1, parts = [], raf = 0, visible = true;
   const mouse = { x: -9999, y: -9999, active: false };

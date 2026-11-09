@@ -1,5 +1,5 @@
 // A small fake shell. Output is built with DOM nodes (never innerHTML from input).
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
 const EMAIL = 'aaa.bawazir0@gmail.com';
 
 export function initTerminal(root) {

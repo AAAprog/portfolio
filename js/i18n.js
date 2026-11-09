@@ -24,6 +24,15 @@ export const ar = {
   'stats.countries': 'دول عملت ودرست فيها',
   'stats.hcm': 'وحدات Oracle HCM هيّأتها',
   'stats.certs': 'شهادات مهنية',
+  'stats.projects': 'مشاريع منجزة',
+  'bento.avail': 'متاح الآن',
+  'bento.availTitle': 'منفتح على الوظائف بدوام كامل والمشاريع المستقلة.',
+  'bento.availText': 'هندسة البرمجيات وOracle Fusion HCM وضمان الجودة. حضورياً في الرياض أو هجين أو عن بُعد.',
+  'bento.cta': 'تواصل معي',
+  'bento.local': 'التوقيت المحلي · الرياض',
+  'bento.gpa': 'بكالوريوس هندسة البرمجيات (مرتبة الشرف)',
+  'bento.focus': 'التركيز الحالي',
+  'sb.motion': 'الحركة',
 
   'exp.kicker': 'الخبرات',
   'exp.title': 'سجلّ الالتزامات.',
@@ -125,6 +134,8 @@ export const ar = {
 // Strings created by scripts (both languages).
 export const dyn = {
   en: {
+    hoursOpen: 'Within working hours: I usually reply today',
+    hoursClosed: 'Outside working hours: I reply next working day',
     roles: ['Software Engineer', 'Oracle Fusion HCM Consultant', 'Full-stack Developer', 'Professional bug hunter'],
     copied: 'Email copied to clipboard ✓',
     copyFail: 'Copy failed. The address is aaa.bawazir0@gmail.com',
@@ -136,7 +147,7 @@ export const dyn = {
     themeDark: 'Dark theme', themeLight: 'Light theme',
     cmds: {
       experience: 'Go to Experience', projects: 'Go to Projects', playground: 'Go to Playground',
-      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal',
+      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal', motion: 'Turn animations on / off',
       cv: 'Download CV (PDF)', email: 'Copy email address', mail: 'Write an email', linkedin: 'Open LinkedIn', github: 'Open GitHub',
       theme: 'Toggle light / dark theme', lang: 'التبديل إلى العربية', top: 'Back to top',
     },
@@ -158,6 +169,8 @@ export const dyn = {
     days: 'd',
   },
   ar: {
+    hoursOpen: 'ضمن ساعات العمل: أرد عادةً في نفس اليوم',
+    hoursClosed: 'خارج ساعات العمل: أرد في يوم العمل التالي',
     roles: ['مهندس برمجيات', 'استشاري Oracle Fusion HCM', 'مطوّر واجهات وخوادم', 'صيّاد أخطاء محترف'],
     copied: 'تم نسخ البريد ✓',
     copyFail: 'تعذّر النسخ. العنوان هو aaa.bawazir0@gmail.com',
@@ -169,7 +182,7 @@ export const dyn = {
     themeDark: 'الوضع الداكن', themeLight: 'الوضع الفاتح',
     cmds: {
       experience: 'اذهب إلى الخبرات', projects: 'اذهب إلى المشاريع', playground: 'اذهب إلى العروض التفاعلية',
-      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية',
+      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية', motion: 'تشغيل / إيقاف الحركة',
       cv: 'تحميل السيرة الذاتية (PDF)', email: 'نسخ البريد الإلكتروني', mail: 'كتابة بريد', linkedin: 'فتح LinkedIn', github: 'فتح GitHub',
       theme: 'تبديل الوضع الفاتح / الداكن', lang: 'Switch to English', top: 'العودة للأعلى',
     },

@@ -6,7 +6,7 @@
 const root = document.documentElement;
 const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
 const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const isAr = () => root.lang === 'ar';
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -249,6 +249,30 @@ function initMarquee() {
   };
 }
 
+/* ───────────── Kinetic variable-weight type (hero) ───────────── */
+// Letters near the pointer ease from bold (700) to light (320) using the
+// variable 'wght' axis of Space Grotesk, a calm, typographic interaction.
+function initKinetic() {
+  if (!fine || reduce) return () => {};
+  const hero = $('.hero');
+  const p = { x: -1e4, y: -1e4 }, cur = new Map();
+  hero.addEventListener('pointermove', e => { p.x = e.clientX; p.y = e.clientY; });
+  hero.addEventListener('pointerleave', () => { p.x = p.y = -1e4; });
+  return () => {
+    const chars = hero.querySelectorAll('.hero-title .ch');
+    if (!chars.length) return;
+    chars.forEach(ch => {
+      const r = ch.getBoundingClientRect();
+      const d = Math.hypot(r.left + r.width / 2 - p.x, r.top + r.height / 2 - p.y);
+      const t = Math.pow(clamp(1 - d / 260, 0, 1), 1.6);
+      const target = 700 - 380 * t;
+      const w = lerp(cur.get(ch) ?? 700, target, 0.14);
+      cur.set(ch, w);
+      ch.style.fontVariationSettings = `'wght' ${w.toFixed(0)}`;
+    });
+  };
+}
+
 /* ───────────── Boot ───────────── */
 export function initMotion() {
   splitWords();
@@ -261,6 +285,7 @@ export function initMotion() {
   const pinTick = initPin();
   const heroTick = initHeroFx();
   const marqTick = initMarquee();
+  const kinTick = initKinetic();
 
   document.addEventListener('langchange', () => { splitWords(); splitHero(); });
   document.addEventListener('celebrate', e => confetti(e.detail && e.detail.x, e.detail && e.detail.y));
@@ -273,6 +298,7 @@ export function initMotion() {
     pinTick();
     heroTick(y);
     marqTick(vel);
+    if (scrollY < innerHeight) kinTick();
     requestAnimationFrame(loop);
   };
   requestAnimationFrame(loop);

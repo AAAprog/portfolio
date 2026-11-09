@@ -24,6 +24,14 @@ Hand-built with plain HTML, CSS and JavaScript modules. No framework, no build s
   - projects that scroll sideways while pinned (desktop)
   - button ripples and confetti
   - all of it switches off when the visitor has reduced motion enabled
+- **2026 platform features**, all used as progressive enhancement:
+  - a bento "at a glance" grid with a live Riyadh clock (it shows whether it is Saudi working hours) and an animated CGPA gauge, sized with container queries
+  - variable-font kinetic type in the hero (the weight eases with the cursor)
+  - View Transitions: a circular theme reveal from the button and a language cross-fade
+  - the command palette as a native `<dialog>` with `@starting-style` entrance and exit animations
+  - CSS scroll-driven animations (`animation-timeline: view()` / `scroll()`) where supported
+  - `text-wrap: balance / pretty` and a subtle grain texture
+  - an accessible **Motion** on/off switch in the status bar, saved per visitor
 - **English and Arabic**, with full right-to-left layout (`ع` / `EN` button).
 - **Light and dark themes** that follow the system setting and remember your choice.
 - Downloadable CV, a click-to-copy email, structured data for search engines, and an Open Graph image for link previews.
