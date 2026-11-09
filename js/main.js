@@ -10,7 +10,6 @@ import { initForm } from './form.js';
 import { initSignature } from './signature.js';
 import { initSignmarks } from './signmark.js';
 import { initChaos } from './chaos.js';
-import { initGlobe } from './globe.js';
 
 initLoader();
 
@@ -365,7 +364,6 @@ initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
 var chaos = initChaos(L, toast);
-initGlobe($('#journey'));
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
 initMotion();
 onScroll();
