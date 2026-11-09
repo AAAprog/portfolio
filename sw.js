@@ -1,6 +1,6 @@
 // Offline + fast repeat visits.
 // Pages: network-first (always fresh when online). Assets: stale-while-revalidate.
-const VERSION = 'ab-v1';
+const VERSION = 'ab-v2';
 const CORE = ['./', 'index.html', 'css/style.css', 'js/main.js', 'js/i18n.js', 'js/hero.js', 'js/play.js',
   'js/motion.js', 'js/terminal.js', 'js/roll.js', 'js/stage.js', 'js/loader.js', 'js/form.js',
   'favicon.svg', '404.html', 'manifest.webmanifest', 'assets/icon-192.png'];
