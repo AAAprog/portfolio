@@ -475,24 +475,25 @@
       </div>
     </section>
 
-    <!-- ───────── Journey ───────── -->
-    <section class="section" id="journey" data-section="journey">
-      <div class="container journey">
-        <header class="section-head reveal">
-          <p class="kicker mono">06 — <span data-i18n="jour.kicker">Journey</span></p>
-          <h2 data-words data-i18n="jour.title">Three cities, one direction.</h2>
-          <p class="section-sub" data-i18n="jour.sub">Studied in Malaysia, worked remotely for a team in Qatar, and now building in Saudi Arabia.</p>
-        </header>
-        <div class="map card reveal">
-          <svg viewBox="0 0 600 300" role="img" aria-label="Route from Kajang, Malaysia to Doha, Qatar to Riyadh, Saudi Arabia">
-            <defs><pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" class="map-dot"/></pattern></defs>
-            <rect width="600" height="300" fill="url(#dots)" opacity=".7"/>
-            <path class="route" d="M520 230 C 420 40, 220 40, 150 120"/>
-            <path class="route route-2" d="M150 120 C 135 100, 110 105, 100 130"/>
-            <g class="city" transform="translate(520 230)"><circle r="7"/><circle class="halo" r="7"/><text x="0" y="28" data-i18n="jour.kl">Kajang, MY</text><text class="yr" x="0" y="44">2023–26</text></g>
-            <g class="city" transform="translate(150 120)"><circle r="7"/><circle class="halo" r="7"/><text x="16" y="26" data-i18n="jour.doha">Doha, QA</text><text class="yr" x="16" y="42">2026 · remote</text></g>
-            <g class="city city--home" transform="translate(100 130)"><circle r="9"/><circle class="halo" r="9"/><text x="-4" y="-38" data-i18n="jour.ruh">Riyadh, SA</text><text class="yr" x="-4" y="-20">now</text></g>
-          </svg>
+    <!-- ───────── Journey (globe) ───────── -->
+    <section class="journey-sec" id="journey" data-section="journey">
+      <div class="journey-pin">
+        <div class="journey-stage">
+          <canvas class="globe" aria-hidden="true"></canvas>
+          <div class="container journey-copy">
+            <header class="section-head reveal">
+              <p class="kicker mono">06 — <span data-i18n="jour.kicker">Journey</span></p>
+              <h2 data-words data-i18n="jour.title">From Malaysia to Riyadh.</h2>
+              <p class="section-sub" data-i18n="jour.sub">Studied software engineering in Kajang, Malaysia. Now building in Riyadh, Saudi Arabia.</p>
+            </header>
+          </div>
+          <div class="journey-hud mono" aria-hidden="true">
+            <p class="hud-step" data-step="0"><span class="hud-dot"></span><span><b data-i18n="jour.kl">Kajang, Malaysia</b><small>2023–2026 · B.CS (Hons.)</small></span></p>
+            <p class="hud-step" data-step="1"><span class="hud-dot hud-dot--fly"></span><span><b><span class="hud-km">0</span> km</b><small data-i18n="jour.flight">Kajang → Riyadh</small></span></p>
+            <p class="hud-step" data-step="2"><span class="hud-dot hud-dot--home"></span><span><b data-i18n="jour.ruh">Riyadh, Saudi Arabia</b><small data-i18n="jour.now">Home base · now</small></span></p>
+          </div>
+          <p class="journey-coords mono" aria-hidden="true">24.71° N · 46.68° E</p>
+          <p class="sr-only">Route from Kajang, Malaysia to Riyadh, Saudi Arabia.</p>
         </div>
       </div>
     </section>
