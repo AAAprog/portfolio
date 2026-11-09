@@ -24,6 +24,13 @@ Hand-built with plain HTML, CSS and JavaScript modules. No framework, no build s
   - projects that scroll sideways while pinned (desktop)
   - button ripples and confetti
   - all of it switches off when the visitor has reduced motion enabled
+- **Live product demos (faux UI).** Each project card, plus an Oracle HCM approval, is a small looping demo driven by a scripted cursor (`js/stage.js`). The demos follow a few rules:
+  - only the words the story needs are real text, and the rest are placeholder lines
+  - windows are cropped on purpose
+  - every change has a cause (the cursor)
+  - each loop ends exactly where it began
+  - they pause when off screen, and show a still final state when reduced motion is on
+- **Rolling digits** (`js/roll.js`) for the stats, the clock, the CGPA and the demo numbers. Only the digits that change move.
 - **2026 platform features**, all used as progressive enhancement:
   - a bento "at a glance" grid with a live Riyadh clock (it shows whether it is Saudi working hours) and an animated CGPA gauge, sized with container queries
   - variable-font kinetic type in the hero (the weight eases with the cursor)

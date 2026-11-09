@@ -3,6 +3,8 @@ import { initHero } from './hero.js';
 import { initBugHunt, initAccrual, initRules } from './play.js';
 import { initMotion } from './motion.js';
 import { initTerminal } from './terminal.js';
+import { roll } from './roll.js';
+import { initStages } from './stage.js';
 
 const root = document.documentElement;
 const $ = (s, c = document) => c.querySelector(s);
@@ -120,20 +122,14 @@ const io = new IntersectionObserver(entries => {
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 $$('.reveal, .project, .map, .langs').forEach(el => io.observe(el));
 
-/* ───────────── Counters ───────────── */
+/* ───────────── Counters (rolling digits) ───────────── */
+const fmtCount = el => parseFloat(el.dataset.count).toFixed(+(el.dataset.decimals || 0));
+$$('[data-count]').forEach(el => roll(el, fmtCount(el).replace(/\d/g, '0'), true));
 const cio = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (!e.isIntersecting) return;
     cio.unobserve(e.target);
-    const el = e.target, to = parseFloat(el.dataset.count), dec = +(el.dataset.decimals || 0);
-    if (reduce) { el.textContent = to.toFixed(dec); return; }
-    const t0 = performance.now(), dur = 1400;
-    const f = now => {
-      const p = Math.min(1, (now - t0) / dur), eased = 1 - Math.pow(1 - p, 4);
-      el.textContent = (to * eased).toFixed(dec);
-      if (p < 1) requestAnimationFrame(f);
-    };
-    requestAnimationFrame(f);
+    roll(e.target, fmtCount(e.target), reduce);
   });
 }, { threshold: 0.6 });
 $$('[data-count]').forEach(el => cio.observe(el));
@@ -296,12 +292,13 @@ function initClock() {
   const h = $('.clock-h'), m = $('.clock-m'), day = $('.clock-day'), status = $('.clock-status'), card = $('.b-clock');
   if (!h) return;
   const tz = 'Asia/Riyadh';
+  let first = true;
   const timeFmt = new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
   const partsFmt = new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short', hour: 'numeric', hourCycle: 'h23' });
   function tick() {
     const now = new Date();
     const [hh, mm] = timeFmt.format(now).split(':');
-    h.textContent = hh; m.textContent = mm;
+    roll(h, hh, first || reduce); roll(m, mm, first || reduce); first = false;
     const lang = root.lang === 'ar' ? 'ar' : 'en';
     day.textContent = new Intl.DateTimeFormat(lang === 'ar' ? 'ar-SA-u-nu-latn' : 'en-GB', { timeZone: tz, weekday: 'long', day: 'numeric', month: 'short' }).format(now);
     const p = Object.fromEntries(partsFmt.formatToParts(now).map(x => [x.type, x.value]));
@@ -318,6 +315,7 @@ function initClock() {
 try { const y = sessionStorage.getItem('ab-scroll'); if (y) { sessionStorage.removeItem('ab-scroll'); history.scrollRestoration = 'manual'; requestAnimationFrame(() => scrollTo(0, +y)); } } catch {}
 const mBtn = $('.sb-motion'); if (mBtn) mBtn.setAttribute('aria-pressed', String(root.dataset.motion !== 'off'));
 initClock();
+initStages();
 $$('.year').forEach(y => { y.textContent = new Date().getFullYear(); });
 const hero = initHero($('.hero-canvas'));
 modules = [
