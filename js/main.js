@@ -221,7 +221,6 @@ const commands = () => {
     ['projects', c.projects, '§', go('projects')],
     ['playground', c.playground, '§', go('playground')],
     ['skills', c.skills, '§', go('skills')],
-    ['journey', c.journey, '§', go('journey')],
     ['credentials', c.credentials, '§', go('credentials')],
     ['terminal', c.terminal, '>_', go('terminal')],
     ['contact', c.contact, '§', go('contact')],
