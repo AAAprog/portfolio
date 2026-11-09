@@ -117,7 +117,10 @@ export function initHero(canvas) {
   }).observe(hero);
 
   const start = () => { sample(); reduce ? draw() : (raf = requestAnimationFrame(step)); };
-  (document.fonts && document.fonts.load) ? document.fonts.load('700 100px "Space Grotesk"').then(start, start) : start();
+  const boot = () => (document.fonts && document.fonts.load) ? document.fonts.load('700 100px "Space Grotesk"').then(start, start) : start();
+  // Wait for the loader curtain so the particles assemble in view.
+  if (document.documentElement.classList.contains('is-loading')) document.addEventListener('loader:done', boot, { once: true });
+  else boot();
 
   return {
     refresh() { colors = readColors(); sample(); if (reduce) draw(); },

@@ -8,6 +8,8 @@
   <meta name="theme-color" content="#0c0e13" media="(prefers-color-scheme: dark)" />
   <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Ahmed Bawazir — Software Engineer" />
   <meta property="og:description" content="I build software, configure enterprise systems, and break things on purpose — so users never have to." />
@@ -38,9 +40,36 @@
       var m = localStorage.getItem('ab-motion'); if (m === 'off') document.documentElement.dataset.motion = 'off';
       var l = localStorage.getItem('ab-lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; }
     } catch (e) {}
+    // Branded loader: once per session, never with reduced motion. Safety net if scripts fail.
+    (function () {
+      var d = document.documentElement, seen = false;
+      try { seen = Date.now() - (+localStorage.getItem('ab-loaded') || 0) < 864e5; } catch (e) {} // once a day
+      var still = matchMedia('(prefers-reduced-motion: reduce)').matches || d.dataset.motion === 'off';
+      if (seen || still) { d.classList.add('no-loader'); return; }
+      d.classList.add('is-loading');
+      setTimeout(function () { d.classList.remove('is-loading'); d.classList.add('no-loader'); }, 6000);
+    })();
   </script>
 </head>
 <body>
+  <!-- ───────── Loader ───────── -->
+  <div class="loader" role="status" aria-label="Loading">
+    <div class="loader-inner">
+      <div class="loader-top mono"><span>Ahmed Bawazir</span><span data-i18n="loader.role">Software Engineer · Riyadh</span></div>
+      <div class="loader-mark" aria-hidden="true"><span class="lm-a">a</span><span class="lm-b">b</span><span class="lm-dot"></span></div>
+      <ul class="loader-log mono" aria-hidden="true">
+        <li>› resolving <b>experience</b></li>
+        <li>› compiling <b>projects</b></li>
+        <li>› running <b>tests</b> <em>✓ passed</em></li>
+      </ul>
+      <div class="loader-foot">
+        <div class="loader-bar"><i></i></div>
+        <span class="loader-pct mono">000</span>
+      </div>
+      <p class="loader-skip mono" data-i18n="loader.skip">click anywhere to skip</p>
+    </div>
+  </div>
+
   <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
 
   <!-- ───────── Top bar ───────── -->
@@ -526,6 +555,7 @@
         <p class="kicker mono">09 — <span data-i18n="contact.kicker">Contact</span></p>
         <h2 class="contact-title" data-words data-i18n="contact.title">Let's build something that doesn't break.</h2>
         <p class="contact-sub" data-i18n="contact.sub">Open to software engineering, Oracle HCM and QA roles in Riyadh, or remote. The fastest way to reach me is email.</p>
+        <div class="contact-grid">
         <div class="contact-actions">
           <button class="email-btn" data-action="copy-email" type="button" data-cursor="copy">
             <span class="mono email">aaa.bawazir0@gmail.com</span>
@@ -537,6 +567,41 @@
             <a class="btn btn-ghost" href="https://github.com/aaaprog" target="_blank" rel="noopener">GitHub ↗</a>
             <a class="btn btn-ghost" href="assets/Ahmed_Bawazir_CV.pdf" download data-i18n="cta.cv">Download CV</a>
           </div>
+        </div>
+
+        <form class="cform" novalidate aria-labelledby="cform-title">
+          <div class="cform-head">
+            <p id="cform-title" class="cform-title" data-i18n="form.title">Write to me</p>
+            <p class="cform-note mono" data-i18n="form.note">Opens your email app, pre-filled.</p>
+          </div>
+          <fieldset class="cform-topics">
+            <legend class="mono" data-i18n="form.topic">Topic</legend>
+            <label class="topic"><input type="radio" name="topic" value="Full-time role" checked /><span data-i18n="form.t1">Full-time role</span></label>
+            <label class="topic"><input type="radio" name="topic" value="Freelance project" /><span data-i18n="form.t2">Freelance project</span></label>
+            <label class="topic"><input type="radio" name="topic" value="Oracle HCM" /><span>Oracle HCM</span></label>
+            <label class="topic"><input type="radio" name="topic" value="Just saying hi" /><span data-i18n="form.t4">Just saying hi</span></label>
+          </fieldset>
+          <div class="field">
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder=" " required maxlength="80" />
+            <label for="f-name" data-i18n="form.name">Your name</label>
+            <span class="field-err mono" data-i18n="form.errName">Please add your name.</span>
+          </div>
+          <div class="field">
+            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="80" />
+            <label for="f-company" data-i18n="form.company">Company (optional)</label>
+          </div>
+          <div class="field">
+            <textarea id="f-msg" name="message" rows="4" placeholder=" " required maxlength="1000"></textarea>
+            <label for="f-msg" data-i18n="form.msg">Message</label>
+            <span class="field-err mono" data-i18n="form.errMsg">A short message helps — at least 10 characters.</span>
+            <span class="field-count mono"><span class="cnt">0</span>/1000</span>
+          </div>
+          <button class="btn cform-submit" type="submit">
+            <span class="cs-idle" data-i18n="form.send">Compose email</span>
+            <span class="cs-busy" aria-hidden="true"><span class="spinner"></span><span data-i18n="form.opening">Opening your email app…</span></span>
+            <span class="cs-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg><span data-i18n="form.done">Ready in your email app</span></span>
+          </button>
+        </form>
         </div>
       </div>
       <footer class="footer container mono">
@@ -555,6 +620,7 @@
     <span class="sb-spacer"></span>
     <span class="sb-item sb-ln">Ln <span class="sb-pct">0</span>%</span>
     <button class="sb-item sb-btn sb-motion" data-action="motion" type="button" aria-pressed="true"><span class="sb-motion-dot"></span><span data-i18n="sb.motion">Motion</span></button>
+    <button class="sb-item sb-btn sb-keys" data-action="keys" type="button" aria-label="Keyboard shortcuts"><kbd>?</kbd></button>
     <button class="sb-item sb-btn" data-action="palette" type="button" aria-label="Open command palette"><kbd>⌘K</kbd> <span class="sb-label" data-i18n="sb.cmd">Commands</span></button>
     <span class="sb-progress" aria-hidden="true"></span>
   </div>
@@ -566,6 +632,19 @@
       <ul class="palette-list" role="listbox"></ul>
       <p class="palette-foot mono"><span>↑↓ <span data-i18n="pal.nav">navigate</span></span><span>↵ <span data-i18n="pal.run">run</span></span><span>esc <span data-i18n="pal.close">close</span></span></p>
     </div>
+  </dialog>
+
+  <dialog class="keys" aria-labelledby="keys-title">
+    <div class="keys-head"><p id="keys-title" data-i18n="keys.title">Keyboard shortcuts</p><button type="button" class="icon-btn keys-close" aria-label="Close">×</button></div>
+    <dl class="keys-list">
+      <div><dt><kbd>⌘</kbd><kbd>K</kbd> <span class="or">/</span> <kbd>/</kbd></dt><dd data-i18n="keys.pal">Command palette</dd></div>
+      <div><dt><kbd>T</kbd></dt><dd data-i18n="keys.theme">Toggle light / dark</dd></div>
+      <div><dt><kbd>L</kbd></dt><dd data-i18n="keys.lang">Switch language</dd></div>
+      <div><dt><kbd>M</kbd></dt><dd data-i18n="keys.motion">Animations on / off</dd></div>
+      <div><dt><kbd>C</kbd></dt><dd data-i18n="keys.copy">Copy email</dd></div>
+      <div><dt><kbd>G</kbd> <kbd>G</kbd></dt><dd data-i18n="keys.top">Back to top</dd></div>
+      <div><dt><kbd>?</kbd></dt><dd data-i18n="keys.help">This panel</dd></div>
+    </dl>
   </dialog>
 
   <div class="toast mono" role="status" aria-live="polite"></div>

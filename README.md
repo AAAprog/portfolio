@@ -39,6 +39,11 @@ Hand-built with plain HTML, CSS and JavaScript modules. No framework, no build s
   - CSS scroll-driven animations (`animation-timeline: view()` / `scroll()`) where supported
   - `text-wrap: balance / pretty` and a subtle grain texture
   - an accessible **Motion** on/off switch in the status bar, saved per visitor
+- **Branded loader.** It tracks real readiness (fonts and page load), lasts about a second, can be skipped, shows at most once a day, and never shows with reduced motion. The hero entrance plays as the curtain lifts.
+- **Contact form** with floating labels, topic chips, validation, a character counter and loading/success states. It composes a pre-filled email in the visitor's mail app, with no backend and no data collection.
+- **Keyboard shortcuts** (`?`): `T` theme, `L` language, `M` motion, `C` copy email, `G G` back to top, `⌘K` or `/` for the palette.
+- **Installable and offline-ready (PWA)**: a web manifest, app icons and a service worker (`sw.js`). Pages load network-first and assets use stale-while-revalidate. **Bump `VERSION` in `sw.js` whenever you deploy changes.**
+- **Branded 404 page** (`404.html`, picked up automatically by GitHub Pages).
 - **English and Arabic**, with full right-to-left layout (`ع` / `EN` button).
 - **Light and dark themes** that follow the system setting and remember your choice.
 - Downloadable CV, a click-to-copy email, structured data for search engines, and an Open Graph image for link previews.

@@ -5,6 +5,10 @@ import { initMotion } from './motion.js';
 import { initTerminal } from './terminal.js';
 import { roll } from './roll.js';
 import { initStages } from './stage.js';
+import { initLoader } from './loader.js';
+import { initForm } from './form.js';
+
+initLoader();
 
 const root = document.documentElement;
 const $ = (s, c = document) => c.querySelector(s);
@@ -226,6 +230,7 @@ const commands = () => {
     ['theme', c.theme, '◐', () => toggleTheme()],
     ['lang', c.lang, 'ع/EN', switchLang],
     ['motion', c.motion, '◎', toggleMotion],
+    ['keys', c.keys, '?', openKeys],
     ['top', c.top, '↑', go('hero')],
   ];
 };
@@ -284,6 +289,7 @@ document.addEventListener('click', e => {
   else if (a === 'lang') switchLang();
   else if (a === 'motion') toggleMotion();
   else if (a === 'palette') openPalette();
+  else if (a === 'keys') openKeys();
   else if (a === 'copy-email') copyEmail();
 });
 
@@ -311,6 +317,30 @@ function initClock() {
   document.addEventListener('langchange', tick);
 }
 
+/* ───────────── Keyboard shortcuts ───────────── */
+const keysDlg = $('.keys');
+function openKeys() { if (!keysDlg.open) keysDlg.showModal(); }
+keysDlg.addEventListener('click', e => { if (e.target === keysDlg || e.target.closest('.keys-close')) keysDlg.close(); });
+let lastG = 0;
+addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
+  if (/input|textarea|select/i.test(document.activeElement.tagName) || document.activeElement.isContentEditable) return;
+  if (pal.open || root.classList.contains('is-loading')) return;
+  const k = e.key.toLowerCase();
+  if (e.key === '?') { e.preventDefault(); keysDlg.open ? keysDlg.close() : openKeys(); }
+  else if (keysDlg.open) return;
+  else if (k === 't') toggleTheme();
+  else if (k === 'l') switchLang();
+  else if (k === 'm') toggleMotion();
+  else if (k === 'c') copyEmail();
+  else if (k === 'g') { const now = Date.now(); if (now - lastG < 500) scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); lastG = now; }
+});
+
+/* ───────────── Offline / installable (service worker) ───────────── */
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+
 /* ───────────── Boot ───────────── */
 try { const y = sessionStorage.getItem('ab-scroll'); if (y) { sessionStorage.removeItem('ab-scroll'); history.scrollRestoration = 'manual'; requestAnimationFrame(() => scrollTo(0, +y)); } } catch {}
 const mBtn = $('.sb-motion'); if (mBtn) mBtn.setAttribute('aria-pressed', String(root.dataset.motion !== 'off'));
@@ -324,6 +354,7 @@ modules = [
   initRules($('#rules')),
 ];
 initTerminal($('.term'));
+initForm($('.cform'), toast, L);
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
 initMotion();
 onScroll();

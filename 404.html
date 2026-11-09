@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — Ahmed Bawazir</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #f3f1ec; --surface: #fbfaf7; --ink: #14161c; --muted: #5f6472; --line: rgba(20,22,28,.12); --accent: #ff5a1f; --ok: #188a5c; --grid: rgba(20,22,28,.06); color-scheme: light; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #0c0e13; --surface: #141821; --ink: #eceef3; --muted: #9198a8; --line: rgba(236,238,243,.1); --accent: #ff6a2f; --ok: #3ddc97; --grid: rgba(236,238,243,.05); color-scheme: dark; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 24px 16px; background: var(--bg); color: var(--ink); font: 16px/1.6 "Inter", system-ui, sans-serif;
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 48px 48px; }
+    main { width: min(620px, 100%); }
+    .code { font: 700 clamp(110px, 26vw, 200px)/.85 "Space Grotesk", sans-serif; letter-spacing: -.06em; display: flex; align-items: flex-end; }
+    .code i { width: .14em; height: .14em; border-radius: .03em; background: var(--accent); margin: 0 0 .06em .05em; animation: spin 2.4s cubic-bezier(.6,0,.4,1) infinite; }
+    @keyframes spin { 0%, 60% { transform: rotate(0); } 100% { transform: rotate(180deg); } }
+    h1 { font: 600 clamp(26px, 4vw, 34px)/1.15 "Space Grotesk", sans-serif; letter-spacing: -.02em; margin: 28px 0 10px; }
+    p { margin: 0; color: var(--muted); }
+    .ar { font-family: "IBM Plex Sans Arabic", sans-serif; margin-top: 4px; }
+    pre { margin: 28px 0; padding: 16px 18px; border-radius: 14px; background: #0b0d12; color: #d7dae2; font: 13px/1.7 "JetBrains Mono", monospace; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    .e { color: #ff6b6b; } .d { color: #7d8496; } .k { color: #ff8a5c; } .ok { color: #3ddc97; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; }
+    a.btn { display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 20px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; border: 1px solid var(--line); color: var(--ink); transition: background-color .25s, color .25s, border-color .25s; }
+    a.btn.solid { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    a.btn.solid:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    a.btn:not(.solid):hover { border-color: var(--ink); }
+    @media (prefers-reduced-motion: reduce) { .code i { animation: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="code" aria-hidden="true">404<i></i></div>
+    <h1>This route threw an exception.</h1>
+    <p>The page you're looking for doesn't exist, or it moved.</p>
+    <p class="ar" lang="ar" dir="rtl">الصفحة غير موجودة أو تم نقلها.</p>
+    <pre><span class="e">RouteNotFoundError</span>: no page at <span class="k" id="path">/</span>
+    <span class="d">at Router.resolve (portfolio.js:404)</span>
+<span class="ok">✓ suggested fix:</span> head back to the homepage</pre>
+    <div class="row">
+      <a class="btn solid" href="/">← Back home</a>
+      <a class="btn" href="/#projects">Projects</a>
+      <a class="btn" href="mailto:aaa.bawazir0@gmail.com">Report it</a>
+    </div>
+  </main>
+  <script>
+    document.getElementById('path').textContent = location.pathname;
+    // Works at a domain root or under /<repo>/ on GitHub Pages.
+    var base = location.pathname.split('/').filter(Boolean)[0];
+    if (location.hostname.endsWith('github.io') && base) document.querySelectorAll('a[href^="/"]').forEach(function (a) { a.href = '/' + base + a.getAttribute('href'); });
+  </script>
+</body>
+</html>
