@@ -56,9 +56,21 @@ export function initVoice({ button, L, run, toast }) {
       if (id) { run(id); toast('✓ ' + (L().voiceDone[id] || id)); }
       else toast(L().voiceMiss);
     };
-    rec.onerror = e => { if (e.error === 'not-allowed' || e.error === 'service-not-allowed') toast(L().voiceDenied); };
-    rec.onend = () => { listening = false; button.setAttribute('aria-pressed', 'false'); button.classList.remove('on'); setTimeout(() => pill.classList.remove('on'), 500); };
-    try { rec.start(); } catch { listening = false; }
+    let heard = false, failed = false;
+    const say = msg => { text.textContent = msg; pill.classList.add('on'); };
+    rec.onresult = (orig => e => { heard = true; orig(e); })(rec.onresult);
+    rec.onerror = e => {
+      failed = true;
+      console.warn('[voice] error:', e.error, e.message || '');
+      const m = L().voiceErr[e.error];
+      if (m) say(m); else if (e.error !== 'aborted') say(L().voiceErr.other + ' (' + e.error + ')');
+    };
+    rec.onend = () => {
+      listening = false; button.setAttribute('aria-pressed', 'false'); button.classList.remove('on');
+      if (!heard && !failed) say(L().voiceErr['no-speech']);
+      setTimeout(() => pill.classList.remove('on'), heard ? 600 : 4500);
+    };
+    try { rec.start(); } catch (err) { listening = false; failed = true; console.warn('[voice] start failed', err); say(L().voiceErr.other); }
   }
   button.addEventListener('click', start);
   return { start };
