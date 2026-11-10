@@ -65,7 +65,7 @@ python3 -m http.server 8000
 ## Deploy (GitHub Pages)
 
 Settings → Pages → *Deploy from a branch* → pick the branch and `/ (root)`.
-All paths are relative, so it also works under `https://aaaprog.github.io/WebCv/`.
+All paths are relative, so it also works under `https://aaaprog.github.io/portfolio/`.
 
 ## Editing content
 
