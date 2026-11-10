@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ahmed Bawazir — Software Engineer &amp; Oracle Fusion HCM Consultant</title>
+  <meta name="description" content="Ahmed Bawazir — software engineer in Riyadh. Oracle Fusion HCM configuration, full-stack web and mobile development, and a tester's eye for edge cases." />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f3f1ec" media="(prefers-color-scheme: light)" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Ahmed Bawazir — Software Engineer" />
+  <meta property="og:description" content="I build software, configure enterprise systems, and break things on purpose — so users never have to." />
+  <meta property="og:image" content="https://aaaprog.github.io/portfolio/assets/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://aaaprog.github.io/portfolio/" />
+  <meta property="og:site_name" content="Ahmed Bawazir" />
+  <meta name="twitter:image" content="https://aaaprog.github.io/portfolio/assets/og.png" />
+  <link rel="canonical" href="https://aaaprog.github.io/portfolio/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ahmed Bawazir",
+    "jobTitle": "Software Engineer & Oracle Fusion HCM Consultant",
+    "address": { "@type": "PostalAddress", "addressLocality": "Riyadh", "addressCountry": "SA" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Universiti Tenaga Nasional" },
+    "email": "mailto:aaa.bawazir0@gmail.com",
+    "url": "https://aaaprog.github.io/portfolio/",
+    "sameAs": ["https://www.linkedin.com/in/ahmed-bawazir-14b472383/", "https://github.com/aaaprog"],
+    "knowsAbout": ["Software engineering", "Oracle Fusion HCM", "Absence Management", "Software testing", "React", "Next.js", "SQL", "UML"],
+    "knowsLanguage": ["ar", "en"]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    // Apply saved theme/language before paint to avoid a flash.
+    try {
+      var t = localStorage.getItem('ab-theme'); if (t) document.documentElement.dataset.theme = t;
+      if (localStorage.getItem('ab-theme-mode') === 'auto') document.documentElement.dataset.themeMode = 'auto';
+      var m = localStorage.getItem('ab-motion'); if (m === 'off') document.documentElement.dataset.motion = 'off';
+      var l = localStorage.getItem('ab-lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; }
+    } catch (e) {}
+    // Branded loader: on every visit (skipped only when the visitor asked for reduced motion). Safety net if scripts fail.
+    (function () {
+      var d = document.documentElement;
+      var still = matchMedia('(prefers-reduced-motion: reduce)').matches || d.dataset.motion === 'off';
+      if (still) { d.classList.add('no-loader'); return; }
+      d.classList.add('is-loading');
+      setTimeout(function () { d.classList.remove('is-loading'); d.classList.add('no-loader'); }, 6000);
+    })();
+  </script>
+  <style>
+    /* Critical: the loader is black from the very first frame, before any stylesheet arrives */
+    html.is-loading, html.is-loading body { background: #000; color: #f2f2f2; }
+    html.is-loading .loader { position: fixed; inset: 0; z-index: 200; background: #000; }
+  </style>
+</head>
+<body>
+  <!-- ───────── Loader ───────── -->
+  <div class="loader" role="status" aria-label="Loading">
+    <canvas class="loader-glass" aria-hidden="true"></canvas>
+    <div class="loader-ui">
+      <div class="loader-top mono"><span>Ahmed Bawazir</span><span data-i18n="loader.role">Software Engineer · Riyadh</span></div>
+      <div class="loader-foot">
+        <span class="loader-skip mono" data-i18n="loader.skip">click anywhere to skip</span>
+        <div class="loader-bar"><i></i></div>
+        <span class="loader-pct mono">000</span>
+      </div>
+    </div>
+  </div>
+
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+  <!-- ───────── Top bar ───────── -->
+  <header class="topbar" id="top">
+    <a class="logo" href="#hero" aria-label="Ahmed Bawazir — home">
+      <span class="logo-mark">AB</span><span class="logo-dot"></span>
+    </a>
+    <nav class="toplinks" aria-label="Primary">
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#playground" data-i18n="nav.playground">Playground</a>
+      <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn voice-btn" type="button" aria-label="Voice commands" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
+      <button class="icon-btn" data-action="lang" aria-label="Switch language"><span class="lang-label">ع</span></button>
+      <button class="icon-btn" data-action="theme" aria-label="Toggle theme">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+      <a class="btn btn-solid btn-sm" href="assets/Ahmed_Bawazir_CV.pdf" download>
+        <span data-i18n="cta.cv">Download CV</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ───────── Hero ───────── -->
+    <section class="hero" id="hero" data-section="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-spot" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <p class="eyebrow mono"><span class="pulse"></span><span data-i18n="hero.status">Available for opportunities · Riyadh, KSA</span></p>
+        <h1 class="hero-title">
+          <span class="line" data-i18n="hero.first">Ahmed</span>
+          <span class="line line-2" data-i18n="hero.last">Bawazir<span class="accent">.</span></span>
+        </h1>
+        <p class="hero-role mono"><span class="prompt">&gt;</span> <span class="typed" aria-live="polite">Software Engineer</span><span class="caret" aria-hidden="true"></span></p>
+        <p class="hero-lede" data-i18n="hero.lede">I build software, configure enterprise systems, and break things on purpose — so your users never have to.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="#projects"><span data-i18n="cta.work">See my work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="btn btn-ghost" href="#playground"><span data-i18n="cta.play">Try the playground</span></a>
+          <button type="button" class="btn btn-break" data-action="break"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 9.5 9.5 4 8l4 5-3 6 6-3.5L15 21l.5-6.5L21 12l-6.5-1.5z"/></svg><span data-i18n="cta.break">Break this page</span></button>
+        </div>
+        <p class="hero-hint mono" data-i18n="hero.hint">↳ move your cursor over the letters — click to scatter</p>
+      </div>
+      <a class="scroll-cue mono" href="#about" aria-label="Scroll to about"><span data-i18n="hero.scroll">scroll</span><span class="scroll-line"></span></a>
+    </section>
+
+    <!-- ───────── Statement ───────── -->
+    <section class="statement" id="about" data-section="about">
+      <div class="container">
+        <p class="kicker mono">01 — <span data-i18n="about.kicker">About</span></p>
+        <p class="statement-text" data-split data-i18n="about.statement">Software engineering graduate who lives between code and configuration. I turn business rules into working systems — Oracle Fusion HCM, web apps, mobile apps — and then I hunt for the edge case nobody thought of.</p>
+        <div class="bento">
+          <article class="bento-card b-avail reveal">
+            <p class="b-label mono"><span class="pulse"></span><span data-i18n="bento.avail">Available now</span></p>
+            <h3 data-i18n="bento.availTitle">Open to full-time roles and freelance projects.</h3>
+            <p class="b-text" data-i18n="bento.availText">Software engineering, Oracle Fusion HCM and QA. On-site in Riyadh, hybrid or remote.</p>
+            <div class="b-actions">
+              <a class="btn btn-solid btn-sm" href="#contact"><span data-i18n="bento.cta">Get in touch</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              <a class="btn btn-ghost btn-sm" href="assets/Ahmed_Bawazir_CV.pdf" download data-i18n="cta.cv">Download CV</a>
+            </div>
+          </article>
+
+          <article class="bento-card b-clock reveal" aria-live="off">
+            <p class="b-label mono" data-i18n="bento.local">Local time · Riyadh</p>
+            <p class="b-time"><span class="clock-h">--</span><span class="colon">:</span><span class="clock-m">--</span></p>
+            <p class="b-text mono"><span class="clock-day">—</span> · UTC+3</p>
+            <p class="b-hours mono"><span class="dot"></span><span class="clock-status">—</span></p>
+          </article>
+
+          <article class="bento-card b-gpa reveal">
+            <p class="b-label mono">CGPA · UNITEN</p>
+            <div class="gauge">
+              <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="g-bg" cx="60" cy="60" r="50" pathLength="100"/><circle class="g-fg" cx="60" cy="60" r="50" pathLength="100"/></svg>
+              <p class="g-val"><span data-count="3.63" data-decimals="2">0</span><small>/ 4.00</small></p>
+            </div>
+            <p class="b-text" data-i18n="bento.gpa">B.CS (Hons.) Software Engineering</p>
+          </article>
+
+          <article class="bento-card b-focus reveal">
+            <div class="b-focus-copy">
+            <p class="b-label mono" data-i18n="bento.focus">Current focus</p>
+            <h3>Oracle Fusion HCM</h3>
+            <ul class="b-chips mono">
+              <li>Core HR</li><li>Workforce Structures</li><li>Absence Management</li><li>DOR</li><li>Payroll</li><li>OTBI · BI Publisher</li><li>Groovy / ADF</li>
+            </ul>
+            </div>
+            <div class="stage b-focus-stage" data-stage="hcm" data-ok="0" aria-hidden="true">
+              <div class="stage-canvas">
+                <div class="win" style="left:18px;top:18px;width:480px;height:290px">
+                  <div class="win-bar"><i></i><i></i><i></i><span class="win-url">hcm / approvals</span></div>
+                  <div class="win-body">
+                    <div class="hc-req">
+                      <span class="hc-av"></span>
+                      <span class="hc-who"><i style="--w:70%"></i><b>Annual leave · 3 days</b></span>
+                      <span class="hc-pill"><span class="p-wait">Pending</span><span class="p-ok">Approved</span></span>
+                    </div>
+                    <p class="hc-balance">Balance <span class="hc-bal">21.0</span> days</p>
+                    <div class="hc-actions">
+                      <span class="st-btn st-primary" data-at="approve">Approve</span>
+                      <span class="st-btn">Reject</span>
+                      <span class="st-btn hc-undo" data-at="undo">Undo</span>
+                    </div>
+                    <div class="hc-more">
+                      <div class="hc-req hc-ph"><span class="hc-av"></span><span class="hc-who"><i style="--w:55%"></i><i style="--w:35%"></i></span><span class="hc-chip"></span></div>
+                      <div class="hc-req hc-ph"><span class="hc-av"></span><span class="hc-who"><i style="--w:62%"></i><i style="--w:28%"></i></span><span class="hc-chip"></span></div>
+                    </div>
+                  </div>
+                </div>
+                <span class="st-cursor"><svg viewBox="0 0 24 24"><path d="M5 3.2 19.4 12l-6.3 1.6 3.6 6.6-2.6 1.4-3.6-6.7L5.8 19.6Z"/></svg></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="bento-card b-nums reveal">
+            <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.countries">Countries worked &amp; studied in</span></div>
+            <div class="stat"><span class="stat-value" data-count="6">0</span><span class="stat-label" data-i18n="stats.hcm">Oracle HCM modules configured</span></div>
+            <div class="stat"><span class="stat-value" data-count="5">0</span><span class="stat-label" data-i18n="stats.certs">Certifications</span></div>
+            <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.projects">Shipped projects</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Experience (git log) ───────── -->
+    <section class="section" id="experience" data-section="experience">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker mono">02 — <span data-i18n="exp.kicker">Experience</span></p>
+          <h2 data-words data-i18n="exp.title">The commit history.</h2>
+          <p class="section-sub" data-i18n="exp.sub">My career so far, written the way I'd write it in a repository: newest first.</p>
+          <p class="mono gitcmd" aria-hidden="true">$ git log --career --graph</p>
+        </header>
+
+        <ol class="gitlog">
+          <li class="commit reveal">
+            <div class="commit-graph" aria-hidden="true"><span class="commit-dot"></span></div>
+            <div class="commit-body card">
+              <p class="commit-meta mono"><span class="hash">a3f9c21</span> <span class="ref">HEAD → riyadh</span> <span class="date" data-i18n="exp.1.date">Jun 2026 – Aug 2026</span></p>
+              <h3><span class="type mono">feat(hcm):</span> <span data-i18n="exp.1.role">Oracle Fusion HCM Consultant Intern</span> <span class="at">@ Macquires</span></h3>
+              <p class="commit-place" data-i18n="exp.1.place">Riyadh, Saudi Arabia · On-site</p>
+              <ul class="commit-list">
+                <li data-i18n="exp.1.b1">Configured and tested Oracle Fusion HCM across Core HR, Workforce Structures, Absence Management, Documents of Record, Payroll and reporting.</li>
+                <li data-i18n="exp.1.b2">Built DFFs, value sets, SQL-based defaults, validation rules and Groovy/ADF triggers to meet business requirements.</li>
+                <li data-i18n="exp.1.b3">Configured absence plans, accruals, eligibility, balances, approvals and absence-to-payroll integration.</li>
+                <li data-i18n="exp.1.b4">Ran end-to-end functional testing, troubleshooting, validation and documentation of HCM configurations and business processes.</li>
+              </ul>
+              <p class="diffstat mono"><span class="plus">+ Core HR</span> <span class="plus">+ Absence</span> <span class="plus">+ DOR</span> <span class="plus">+ Payroll</span> <span class="plus">+ OTBI</span></p>
+            </div>
+          </li>
+          <li class="commit reveal">
+            <div class="commit-graph" aria-hidden="true"><span class="commit-dot"></span></div>
+            <div class="commit-body card">
+              <p class="commit-meta mono"><span class="hash">7be14d0</span> <span class="ref ref-muted">remote/doha</span> <span class="date" data-i18n="exp.2.date">Feb 2026 – May 2026</span></p>
+              <h3><span class="type mono">fix(qa):</span> <span data-i18n="exp.2.role">Software Engineer · Part-time</span> <span class="at">@ Sifr IDE</span></h3>
+              <p class="commit-place" data-i18n="exp.2.place">Doha, Qatar · Remote</p>
+              <ul class="commit-list">
+                <li data-i18n="exp.2.b1">Tested interfaces, workflows and business logic to surface functional issues, edge cases and inconsistent behaviour.</li>
+                <li data-i18n="exp.2.b2">Reproduced defects and supported debugging and root-cause analysis by isolating issues and validating expected behaviour.</li>
+                <li data-i18n="exp.2.b3">Proposed practical fixes to improve reliability, functionality and the overall user experience.</li>
+              </ul>
+              <p class="diffstat mono"><span class="minus">− bugs</span> <span class="minus">− edge cases</span> <span class="plus">+ reliability</span></p>
+            </div>
+          </li>
+          <li class="commit reveal">
+            <div class="commit-graph" aria-hidden="true"><span class="commit-dot commit-dot--root"></span></div>
+            <div class="commit-body card">
+              <p class="commit-meta mono"><span class="hash">1c0de23</span> <span class="ref ref-muted">origin/kajang</span> <span class="date">2023 – 2026</span></p>
+              <h3><span class="type mono">init(edu):</span> <span data-i18n="exp.3.role">B.CS (Hons.) in Software Engineering</span> <span class="at">@ Universiti Tenaga Nasional</span></h3>
+              <p class="commit-place" data-i18n="exp.3.place">Kajang, Malaysia · CGPA 3.63 / 4.00</p>
+              <ul class="commit-list">
+                <li data-i18n="exp.3.b1">SDLC, UML, OOP, MVVM, database design and requirements analysis, applied in a final-year project that automates them (Codai).</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───────── Projects ───────── -->
+    <section class="section projects-section" id="projects" data-section="projects">
+      <div class="pin"><div class="pin-sticky">
+      <div class="container pin-track">
+        <header class="section-head reveal project-intro">
+          <p class="kicker mono">03 — <span data-i18n="proj.kicker">Selected projects</span></p>
+          <h2 data-words data-i18n="proj.title">Things I've shipped.</h2>
+          <p class="section-sub" data-i18n="proj.sub">From an AI assistant for software engineers to a ticketing system and a mobile app.</p>
+        </header>
+
+        <div class="projects">
+          <article data-tilt class="project card reveal project--codai">
+            <div class="project-visual" aria-hidden="true">
+              <div class="stage" data-stage="codai" data-gen="0" data-tab="diagram">
+                <div class="stage-canvas">
+                  <div class="win" style="left:26px;top:26px;width:430px;height:300px">
+                    <div class="win-bar"><i></i><i></i><i></i><span class="win-url">codai.app/new</span></div>
+                    <div class="win-body">
+                      <div class="cd-prompt"><span class="cd-field">Library system: members borrow books</span><span class="st-btn st-primary" data-at="gen">Generate</span></div>
+                      <div class="cd-tabs"><span class="cd-tab t-diagram" data-at="diagram">Diagram</span><span class="cd-tab t-tests" data-at="tests">Tests</span><span class="cd-reset" data-at="reset">↺</span></div>
+                      <div class="cd-out">
+                        <div class="cd-empty"><i style="--w:62%"></i><i style="--w:44%"></i><i style="--w:52%"></i></div>
+                        <div class="cd-diagram">
+                          <svg class="cd-links" viewBox="0 0 360 110"><path d="M92 36H126"/><path d="M218 36H252"/><path d="M172 64V92H300V64"/></svg>
+                          <div class="umlb" style="left:0;--i:0"><b>Member</b><i style="--w:70%"></i><i style="--w:50%"></i></div>
+                          <div class="umlb" style="left:126px;--i:1"><b>Loan</b><i style="--w:60%"></i><i style="--w:75%"></i></div>
+                          <div class="umlb" style="left:252px;--i:2"><b>Book</b><i style="--w:66%"></i><i style="--w:48%"></i></div>
+                        </div>
+                        <ul class="cd-tests">
+                          <li style="--i:0"><span class="tick">✓</span><span>Member can't borrow a 6th book</span><em>pass</em></li>
+                          <li style="--i:1"><span class="tick">✓</span><i style="--w:58%"></i><em>pass</em></li>
+                          <li style="--i:2"><span class="tick">✓</span><i style="--w:46%"></i><em>pass</em></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="st-cursor"><svg viewBox="0 0 24 24"><path d="M5 3.2 19.4 12l-6.3 1.6 3.6 6.6-2.6 1.4-3.6-6.7L5.8 19.6Z"/></svg></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-tags mono">SDLC · UML · Database design · AI</p>
+              <h3>Codai <span class="badge" data-i18n="proj.fyp">Final-year project</span></h3>
+              <p data-i18n="proj.codai">A web-based assistant for software engineers: requirements analysis, UML diagrams, database schema design, code generation and review, and test-case generation — in one place.</p>
+              <a data-cursor="open" class="link" href="https://codai-murex.vercel.app/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
+            </div>
+          </article>
+
+          <article data-tilt class="project card reveal project--ufc">
+            <div class="project-visual" aria-hidden="true">
+              <div class="stage" data-stage="ufc" data-sel="0" data-booked="0">
+                <div class="stage-canvas">
+                  <div class="win" style="left:22px;top:22px;width:440px;height:300px">
+                    <div class="win-bar"><i></i><i></i><i></i><span class="win-url">tickets / fight-night</span></div>
+                    <div class="win-body">
+                      <p class="uf-title">Fight Night · Section 104</p>
+                      <i class="ph" style="--w:34%"></i>
+                      <div class="uf-ring">OCTAGON</div>
+                      <div class="uf-seats"></div>
+                    </div>
+                  </div>
+                  <div class="uf-bar"><span><span class="uf-count">0</span> seat · SAR <span class="uf-price">0</span></span><span class="st-btn st-primary uf-book" data-at="book"><span class="b-idle">Book</span><span class="b-done">✓ Booked</span></span></div>
+                  <div class="uf-ticket"><span class="uf-tick">✓</span><span><b>Booked</b><small>Row F · Seat 12</small></span><span class="uf-close" data-at="close">×</span></div>
+                  <span class="st-cursor"><svg viewBox="0 0 24 24"><path d="M5 3.2 19.4 12l-6.3 1.6 3.6 6.6-2.6 1.4-3.6-6.7L5.8 19.6Z"/></svg></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-tags mono">HTML · CSS · PHP · MySQL</p>
+              <h3 data-i18n="proj.ufc.title">UFC Ticketing</h3>
+              <p data-i18n="proj.ufc">A full-stack event booking system with user and admin modules, booking workflows, back-end logic and relational database operations.</p>
+              <a data-cursor="open" class="link" href="https://aaaprog.github.io/ufc-event-system/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
+            </div>
+          </article>
+
+          <article data-tilt class="project card reveal project--easycal">
+            <div class="project-visual" aria-hidden="true">
+              <div class="stage" data-stage="easycal" data-added="0">
+                <div class="stage-canvas">
+                  <div class="phone2" style="left:150px;top:20px">
+                    <div class="ph-notch"></div>
+                    <p class="ec-h">Today</p>
+                    <div class="ec-ring">
+                      <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="50" pathLength="100"/><circle class="fg" cx="60" cy="60" r="50" pathLength="100"/></svg>
+                      <p><span class="ec-kcal">1,320</span><small>of 2,200 kcal</small></p>
+                    </div>
+                    <span class="st-btn st-primary ec-add" data-at="add">+ Add meal</span>
+                    <ul class="ec-list">
+                      <li class="ec-new"><span>Grilled chicken</span><em>320</em><span class="ec-x" data-at="remove">×</span></li>
+                      <li><i style="--w:55%"></i><em class="ph-n"></em></li>
+                      <li><i style="--w:40%"></i><em class="ph-n"></em></li>
+                    </ul>
+                  </div>
+                  <div class="ec-toast"><b>+320</b> kcal logged</div>
+                  <span class="st-cursor"><svg viewBox="0 0 24 24"><path d="M5 3.2 19.4 12l-6.3 1.6 3.6 6.6-2.6 1.4-3.6-6.7L5.8 19.6Z"/></svg></span>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-tags mono">C# · .NET MAUI · Android</p>
+              <h3>EasyCal</h3>
+              <p data-i18n="proj.easycal">An Android calorie-tracking app built with .NET MAUI: UI development, debugging and functional testing end to end.</p>
+              <span class="link link-muted" data-i18n="proj.private">Mobile app · demo on request</span>
+            </div>
+          </article>
+
+          <a class="project-end" href="https://github.com/aaaprog" target="_blank" rel="noopener" data-cursor="open">
+            <span class="project-end-ring" aria-hidden="true">↗</span>
+            <span class="project-end-text" data-i18n="proj.more">More on GitHub</span>
+          </a>
+        </div>
+      </div>
+      <div class="pin-progress" aria-hidden="true"><i></i></div>
+      </div></div>
+    </section>
+
+    <!-- ───────── Playground ───────── -->
+    <section class="section section-alt" id="playground" data-section="playground">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker mono">04 — <span data-i18n="play.kicker">Playground</span></p>
+          <h2 data-words data-i18n="play.title">Don't read about it. Poke it.</h2>
+          <p class="section-sub" data-i18n="play.sub">Three small demos of how I think: enterprise rules, validation logic, and a tester's eye.</p>
+        </header>
+
+        <div class="play-grid">
+          <!-- Bug hunt -->
+          <div class="play card reveal play--bugs" id="bughunt">
+            <div class="play-head">
+              <h3 data-i18n="bug.title">Bug hunt</h3>
+              <p class="mono bug-score"><span class="found">0</span>/4 <span data-i18n="bug.found">found</span></p>
+            </div>
+            <p class="play-desc" data-i18n="bug.desc">This checkout has four bugs I planted. Click anything that looks wrong; try the buttons too.</p>
+            <div class="checkout" role="group" aria-label="Buggy checkout">
+              <div class="co-row">
+                <div>
+                  <p class="co-event">Fight Night · Riyadh</p>
+                  <button class="co-date bug-target" data-bug="date" type="button">Sat, 31 Feb 2027 · 8:00 PM</button>
+                </div>
+                <span class="co-price mono">SAR 450</span>
+              </div>
+              <div class="co-row">
+                <span data-i18n="bug.qty">Tickets</span>
+                <div class="stepper">
+                  <button type="button" class="step" data-step="-1" aria-label="Fewer tickets">−</button>
+                  <output class="qty mono">2</output>
+                  <button type="button" class="step" data-step="1" aria-label="More tickets">+</button>
+                </div>
+              </div>
+              <div class="co-row co-total">
+                <span data-i18n="bug.total">Total</span>
+                <button class="mono bug-target total" data-bug="total" type="button">SAR 950</button>
+              </div>
+              <button type="button" class="btn btn-solid co-cta bug-target" data-bug="typo">Confrim booking</button>
+            </div>
+            <ol class="bug-reports" aria-live="polite"></ol>
+          </div>
+
+          <!-- Absence accrual -->
+          <div class="play card reveal play--accrual" id="accrual">
+            <div class="play-head">
+              <h3 data-i18n="acc.title">Absence accrual simulator</h3>
+              <span class="mono chip">Oracle HCM</span>
+            </div>
+            <p class="play-desc" data-i18n="acc.desc">The kind of plan rule I configure: monthly accrual, a year-end carry-over limit, and what happens to days over it.</p>
+            <div class="controls">
+              <label><span data-i18n="acc.rate">Accrual / month</span><output class="mono" data-out="rate">2.5 d</output><input type="range" name="rate" min="1" max="3" step="0.25" value="2.5" /></label>
+              <label><span data-i18n="acc.cap">Carry-over limit</span><output class="mono" data-out="cap">10 d</output><input type="range" name="cap" min="0" max="30" step="1" value="10" /></label>
+              <label><span data-i18n="acc.taken">Leave taken (month 7)</span><output class="mono" data-out="taken">8 d</output><input type="range" name="taken" min="0" max="20" step="1" value="8" /></label>
+            </div>
+            <svg class="chart" viewBox="0 0 360 150" role="img" aria-label="Monthly absence balance over 24 months"></svg>
+            <div class="acc-summary mono">
+              <span><span data-i18n="acc.balance">Balance after 24 months</span> <strong class="acc-bal">0</strong></span>
+              <span class="acc-lost-wrap"><span data-i18n="acc.lost">Forfeited at year end</span> <strong class="acc-lost">0</strong></span>
+            </div>
+          </div>
+
+          <!-- Validation rules -->
+          <div class="play card reveal play--rules" id="rules">
+            <div class="play-head">
+              <h3 data-i18n="rule.title">Validation rules, live</h3>
+              <span class="mono chip">DFF · Value set</span>
+            </div>
+            <p class="play-desc" data-i18n="rule.desc">A new-hire form with the kind of rules I write behind the scenes. Edit the fields and watch the tests.</p>
+            <form class="rule-form" novalidate>
+              <label><span data-i18n="rule.emp">Employee number</span><input name="emp" value="E-1042" autocomplete="off" spellcheck="false" /></label>
+              <label><span data-i18n="rule.hire">Hire date</span><input name="hire" type="date" /></label>
+              <label><span data-i18n="rule.prob">Probation ends</span><input name="prob" type="date" /></label>
+            </form>
+            <ul class="tests mono" aria-live="polite"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Skills ───────── -->
+    <section class="section" id="skills" data-section="skills">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker mono">05 — <span data-i18n="skills.kicker">Toolbox</span></p>
+          <h2 data-words data-i18n="skills.title">What's in the stack.</h2>
+        </header>
+        <div class="skill-tabs reveal" role="tablist" aria-label="Skill groups">
+          <button role="tab" class="tab is-on" data-filter="all" aria-selected="true" data-i18n="skills.all">All</button>
+          <button role="tab" class="tab" data-filter="code" aria-selected="false" data-i18n="skills.code">Code</button>
+          <button role="tab" class="tab" data-filter="data" aria-selected="false" data-i18n="skills.data">Data</button>
+          <button role="tab" class="tab" data-filter="hcm" aria-selected="false">Oracle HCM</button>
+          <button role="tab" class="tab" data-filter="eng" aria-selected="false" data-i18n="skills.eng">Engineering</button>
+        </div>
+        <div class="skills reveal">
+          <div class="skill-group" data-group="code"><h3 data-i18n="skills.lang">Languages</h3><p>Java · C++ · C# · JavaScript · PHP · HTML · CSS</p></div>
+          <div class="skill-group" data-group="code"><h3 data-i18n="skills.front">Front-end &amp; web</h3><p>React · Next.js · Tailwind CSS · Responsive UI</p></div>
+          <div class="skill-group" data-group="code"><h3 data-i18n="skills.back">Back-end &amp; APIs</h3><p>Node.js · PHP · REST APIs · Firebase Cloud Functions</p></div>
+          <div class="skill-group" data-group="data"><h3 data-i18n="skills.db">Databases</h3><p>PostgreSQL · MySQL · SQLite · Oracle · SQL Server · Supabase</p></div>
+          <div class="skill-group" data-group="hcm"><h3>Oracle Fusion HCM</h3><p>Core HR · Workforce Structures · Absence Management · DOR · Payroll · DFF · Value Sets · Groovy/ADF · OTBI · BI Publisher</p></div>
+          <div class="skill-group" data-group="eng"><h3 data-i18n="skills.se">Software engineering</h3><p>SDLC · UML · OOP · MVVM · Requirements analysis · Functional testing · Debugging</p></div>
+          <div class="skill-group" data-group="data eng"><h3 data-i18n="skills.tools">Tools &amp; analytics</h3><p>VS Code · Visual Studio · Docker · Figma · Tableau · Text analytics · Data visualisation</p></div>
+        </div>
+      </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track mono">
+          <span>React</span><span>Oracle HCM</span><span>Next.js</span><span>PostgreSQL</span><span>Groovy</span><span>C#</span><span>.NET MAUI</span><span>Docker</span><span>Supabase</span><span>UML</span><span>Java</span><span>Tableau</span>
+          <span>React</span><span>Oracle HCM</span><span>Next.js</span><span>PostgreSQL</span><span>Groovy</span><span>C#</span><span>.NET MAUI</span><span>Docker</span><span>Supabase</span><span>UML</span><span>Java</span><span>Tableau</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Journey ───────── -->
+    <section class="section" id="journey" data-section="journey">
+      <div class="container journey">
+        <header class="section-head reveal">
+          <p class="kicker mono">06 — <span data-i18n="jour.kicker">Journey</span></p>
+          <h2 data-words data-i18n="jour.title">Three cities, one direction.</h2>
+          <p class="section-sub" data-i18n="jour.sub">Studied in Malaysia, worked remotely for a team in Qatar, and now building in Saudi Arabia.</p>
+        </header>
+        <div class="map card reveal">
+          <svg viewBox="0 0 600 300" role="img" aria-label="Route from Kajang, Malaysia to Doha, Qatar to Riyadh, Saudi Arabia">
+            <defs><pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" class="map-dot"/></pattern></defs>
+            <rect width="600" height="300" fill="url(#dots)" opacity=".7"/>
+            <path class="route" d="M520 230 C 420 40, 220 40, 150 120"/>
+            <path class="route route-2" d="M150 120 C 135 100, 110 105, 100 130"/>
+            <g class="city" transform="translate(520 230)"><circle r="7"/><circle class="halo" r="7"/><text x="0" y="28" data-i18n="jour.kl">Kajang, MY</text><text class="yr" x="0" y="44">2023–26</text></g>
+            <g class="city" transform="translate(150 120)"><circle r="7"/><circle class="halo" r="7"/><text x="16" y="26" data-i18n="jour.doha">Doha, QA</text><text class="yr" x="16" y="42">2026 · remote</text></g>
+            <g class="city city--home" transform="translate(100 130)"><circle r="9"/><circle class="halo" r="9"/><text x="-4" y="-38" data-i18n="jour.ruh">Riyadh, SA</text><text class="yr" x="-4" y="-20">now</text></g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Credentials ───────── -->
+    <section class="section" id="credentials" data-section="credentials">
+      <div class="container cred-grid">
+        <div class="reveal">
+          <p class="kicker mono">07 — <span data-i18n="cred.kicker">Credentials</span></p>
+          <h2 data-words data-i18n="cred.title">Certified &amp; bilingual.</h2>
+        </div>
+        <ul class="certs reveal">
+          <li class="card" data-tilt><span class="mono cert-org">Cisco</span>CCNA: Introduction to Networks</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI</span>Build Smarter AI with Embeddings</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI Singapore</span>AI4I® — Literacy in AI</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI Singapore</span>AI4I® — Foundations in AI</li>
+          <li class="card" data-tilt><span class="mono cert-org">AI Singapore</span>AI4E® — Theory</li>
+        </ul>
+        <div class="langs reveal">
+          <div class="lang-row"><span lang="ar" class="lang-name">العربية</span><span class="meter"><i style="--w:100%"></i></span><span class="mono" data-i18n="cred.native">Native</span></div>
+          <div class="lang-row"><span class="lang-name">English</span><span class="meter"><i style="--w:85%"></i></span><span class="mono" data-i18n="cred.pro">Professional</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Terminal ───────── -->
+    <section class="section" id="terminal" data-section="terminal">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker mono">08 — <span data-i18n="term.kicker">Terminal</span></p>
+          <h2 data-words data-i18n="term.title">Or just ask the terminal.</h2>
+          <p class="section-sub" data-i18n="term.sub">Type <code>help</code> to see what it knows. Tab autocompletes, ↑ brings back history.</p>
+        </header>
+        <div class="term reveal" data-cursor="type">
+          <div class="term-bar"><span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span><span class="term-title mono">ahmed@riyadh: ~</span></div>
+          <div class="term-out mono" aria-live="polite"></div>
+          <form class="term-line mono" autocomplete="off">
+            <label for="term-in" class="term-ps">ahmed@riyadh:~$</label>
+            <input id="term-in" class="term-in" autocomplete="off" spellcheck="false" autocapitalize="off" aria-label="Terminal command" />
+          </form>
+        </div>
+        <div class="term-chips reveal" aria-label="Suggested commands">
+          <button type="button" class="tab" data-cmd="help">help</button>
+          <button type="button" class="tab" data-cmd="whoami">whoami</button>
+          <button type="button" class="tab" data-cmd="projects">projects</button>
+          <button type="button" class="tab" data-cmd="skills --hcm">skills --hcm</button>
+          <button type="button" class="tab" data-cmd="matrix">matrix</button>
+          <button type="button" class="tab tab-accent" data-cmd="sudo hire ahmed">sudo hire ahmed</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Contact ───────── -->
+    <section class="contact" id="contact" data-section="contact">
+      <div class="container">
+        <p class="kicker mono">09 — <span data-i18n="contact.kicker">Contact</span></p>
+        <h2 class="contact-title" data-words data-i18n="contact.title">Let's build something that doesn't break.</h2>
+        <p class="contact-sub" data-i18n="contact.sub">Open to software engineering, Oracle HCM and QA roles in Riyadh, or remote. The fastest way to reach me is email.</p>
+        <div class="contact-grid">
+        <div class="contact-actions">
+          <button class="email-btn" data-action="copy-email" type="button" data-cursor="copy">
+            <span class="mono email">aaa.bawazir0@gmail.com</span>
+            <span class="copy-state mono" data-i18n="contact.copy">click to copy</span>
+          </button>
+          <div class="contact-links">
+            <a class="btn btn-solid" href="mailto:aaa.bawazir0@gmail.com"><span data-i18n="contact.email">Send an email</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/ahmed-bawazir-14b472383/" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a class="btn btn-ghost" href="https://github.com/aaaprog" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="btn btn-ghost" href="assets/Ahmed_Bawazir_CV.pdf" download data-i18n="cta.cv">Download CV</a>
+          </div>
+        </div>
+
+        <form class="cform" novalidate aria-labelledby="cform-title">
+          <div class="cform-head">
+            <p id="cform-title" class="cform-title" data-i18n="form.title">Write to me</p>
+            <p class="cform-note mono" data-i18n="form.note">Opens your email app, pre-filled.</p>
+          </div>
+          <fieldset class="cform-topics">
+            <legend class="mono" data-i18n="form.topic">Topic</legend>
+            <label class="topic"><input type="radio" name="topic" value="Full-time role" checked /><span data-i18n="form.t1">Full-time role</span></label>
+            <label class="topic"><input type="radio" name="topic" value="Freelance project" /><span data-i18n="form.t2">Freelance project</span></label>
+            <label class="topic"><input type="radio" name="topic" value="Oracle HCM" /><span>Oracle HCM</span></label>
+            <label class="topic"><input type="radio" name="topic" value="Just saying hi" /><span data-i18n="form.t4">Just saying hi</span></label>
+          </fieldset>
+          <div class="field">
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder=" " required maxlength="80" />
+            <label for="f-name" data-i18n="form.name">Your name</label>
+            <span class="field-err mono" data-i18n="form.errName">Please add your name.</span>
+          </div>
+          <div class="field">
+            <input id="f-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="80" />
+            <label for="f-company" data-i18n="form.company">Company (optional)</label>
+          </div>
+          <div class="field">
+            <textarea id="f-msg" name="message" rows="4" placeholder=" " required maxlength="1000"></textarea>
+            <label for="f-msg" data-i18n="form.msg">Message</label>
+            <span class="field-err mono" data-i18n="form.errMsg">A short message helps — at least 10 characters.</span>
+            <span class="field-count mono"><span class="cnt">0</span>/1000</span>
+          </div>
+          <button class="btn cform-submit" type="submit">
+            <span class="cs-idle" data-i18n="form.send">Compose email</span>
+            <span class="cs-busy" aria-hidden="true"><span class="spinner"></span><span data-i18n="form.opening">Opening your email app…</span></span>
+            <span class="cs-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg><span data-i18n="form.done">Ready in your email app</span></span>
+          </button>
+        </form>
+        </div>
+      </div>
+      <div class="signature" aria-hidden="true" data-cursor-hide><canvas></canvas></div>
+      <footer class="footer container mono">
+        <span>© <span class="year">2026</span> Ahmed Bawazir · <span data-i18n="footer.rights">All rights reserved</span></span>
+        <div class="signmark signmark--end" data-signmark="end"></div>
+        <a href="#hero" data-i18n="footer.top">Back to top ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <!-- ───────── Status bar (IDE-style) ───────── -->
+  <div class="statusbar mono" role="navigation" aria-label="Page status">
+    <span class="sb-item sb-branch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="8" r="2"/><path d="M6 7v10M18 10c0 4-6 3-12 7"/></svg>main</span>
+    <span class="sb-item sb-ok"><span class="pulse"></span><span data-i18n="sb.ok">0 bugs</span></span>
+    <span class="sb-item sb-file"><span>§ <span class="sb-section">hero</span>.ts</span></span>
+    <span class="sb-spacer"></span>
+    <span class="sb-item sb-ln">Ln <span class="sb-pct">0</span>%</span>
+    <button class="sb-item sb-btn sb-motion" data-action="motion" type="button" aria-pressed="true"><span class="sb-motion-dot"></span><span data-i18n="sb.motion">Motion</span></button>
+    <button class="sb-item sb-btn sb-present" data-action="present" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span data-i18n="sb.present">Present</span></button>
+    <button class="sb-item sb-btn sb-keys" data-action="keys" type="button" aria-label="Keyboard shortcuts"><kbd>?</kbd></button>
+    <button class="sb-item sb-btn" data-action="palette" type="button" aria-label="Open command palette"><kbd>⌘K</kbd> <span class="sb-label" data-i18n="sb.cmd">Commands</span></button>
+    <span class="sb-progress" aria-hidden="true"></span>
+  </div>
+
+  <!-- ───────── Command palette ───────── -->
+  <dialog class="palette" aria-label="Command palette">
+    <div class="palette-box">
+      <input class="palette-input" type="text" placeholder="Type a command or section…" aria-label="Search commands" autocomplete="off" />
+      <ul class="palette-list" role="listbox"></ul>
+      <p class="palette-foot mono"><span>↑↓ <span data-i18n="pal.nav">navigate</span></span><span>↵ <span data-i18n="pal.run">run</span></span><span>esc <span data-i18n="pal.close">close</span></span></p>
+    </div>
+  </dialog>
+
+  <dialog class="keys" aria-labelledby="keys-title">
+    <div class="keys-head"><p id="keys-title" data-i18n="keys.title">Keyboard shortcuts</p><button type="button" class="icon-btn keys-close" aria-label="Close">×</button></div>
+    <dl class="keys-list">
+      <div><dt><kbd>⌘</kbd><kbd>K</kbd> <span class="or">/</span> <kbd>/</kbd></dt><dd data-i18n="keys.pal">Command palette</dd></div>
+      <div><dt><kbd>T</kbd></dt><dd data-i18n="keys.theme">Toggle light / dark</dd></div>
+      <div><dt><kbd>L</kbd></dt><dd data-i18n="keys.lang">Switch language</dd></div>
+      <div><dt><kbd>M</kbd></dt><dd data-i18n="keys.motion">Animations on / off</dd></div>
+      <div><dt><kbd>C</kbd></dt><dd data-i18n="keys.copy">Copy email</dd></div>
+      <div><dt><kbd>B</kbd></dt><dd data-i18n="keys.break">Break the page (then fix it)</dd></div>
+      <div><dt><kbd>P</kbd></dt><dd data-i18n="keys.present">Presentation mode</dd></div>
+      <div><dt><kbd>V</kbd></dt><dd data-i18n="keys.voice">Voice commands</dd></div>
+      <div><dt><kbd>G</kbd> <kbd>G</kbd></dt><dd data-i18n="keys.top">Back to top</dd></div>
+      <div><dt><kbd>?</kbd></dt><dd data-i18n="keys.help">This panel</dd></div>
+    </dl>
+  </dialog>
+
+  <div class="toast mono" role="status" aria-live="polite"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor-ring"><span class="cursor-label"></span></span><span class="cursor-dot"></span></div>
+  <canvas class="confetti" aria-hidden="true"></canvas>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
