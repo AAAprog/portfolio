@@ -961,7 +961,7 @@ body::after {
 .loader { display: none; }
 .is-loading .loader {
   display: grid; position: fixed; inset: 0; z-index: 200; place-items: center;
-  background: var(--ink); color: var(--bg); cursor: pointer;
+  background: #000; color: #f2f2f2; cursor: pointer; /* fixed: never follows the theme */
   clip-path: inset(0 0 0 0); transition: clip-path .85s cubic-bezier(.76,0,.24,1);
 }
 .is-loading { overflow: hidden; }
@@ -971,7 +971,7 @@ body::after {
 :root[lang="ar"] .loader-top { letter-spacing: 0; font-family: var(--font-sans); font-size: 13px; }
 @keyframes lfade { from { opacity: 0; } }
 .loader-foot { display: flex; align-items: center; gap: 18px; }
-.loader-bar { flex: 1; height: 2px; background: color-mix(in srgb, var(--bg) 18%, transparent); overflow: hidden; border-radius: 2px; }
+.loader-bar { flex: 1; height: 2px; background: rgba(255, 255, 255, .18); overflow: hidden; border-radius: 2px; }
 .loader-bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
 [dir="rtl"] .loader-bar i { transform-origin: right; }
 .loader-pct { font-size: 28px; font-weight: 500; letter-spacing: -.02em; min-width: 3ch; text-align: end; font-variant-numeric: tabular-nums; }

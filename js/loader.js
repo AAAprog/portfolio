@@ -2,7 +2,7 @@
 // "Ahmed Bawazir." sits on the page; a glass lens glides across it and shows
 // "أحمد باوزير" through the glass. When the page is ready the lens swells to
 // fill the screen (the Arabic name takes over), then the curtain lifts.
-// Tracks real readiness (fonts + load), skippable, at most once a day.
+// Tracks real readiness (fonts + load), skippable, shown on every visit.
 import { roll } from './roll.js';
 import { createGlass, wordmark } from './glass.js';
 
@@ -52,7 +52,6 @@ export function initLoader() {
         removeEventListener('resize', onResize);
         root.classList.remove('is-loading', 'loader-out');
         root.classList.add('no-loader');
-        try { localStorage.setItem('ab-loaded', String(Date.now())); } catch {}
         document.dispatchEvent(new Event('loader:done'));
         el.remove();
         resolve();

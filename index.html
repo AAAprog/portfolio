@@ -48,16 +48,20 @@
       var m = localStorage.getItem('ab-motion'); if (m === 'off') document.documentElement.dataset.motion = 'off';
       var l = localStorage.getItem('ab-lang'); if (l === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; }
     } catch (e) {}
-    // Branded loader: once per session, never with reduced motion. Safety net if scripts fail.
+    // Branded loader: on every visit (skipped only when the visitor asked for reduced motion). Safety net if scripts fail.
     (function () {
-      var d = document.documentElement, seen = false;
-      try { seen = Date.now() - (+localStorage.getItem('ab-loaded') || 0) < 864e5; } catch (e) {} // once a day
+      var d = document.documentElement;
       var still = matchMedia('(prefers-reduced-motion: reduce)').matches || d.dataset.motion === 'off';
-      if (seen || still) { d.classList.add('no-loader'); return; }
+      if (still) { d.classList.add('no-loader'); return; }
       d.classList.add('is-loading');
       setTimeout(function () { d.classList.remove('is-loading'); d.classList.add('no-loader'); }, 6000);
     })();
   </script>
+  <style>
+    /* Critical: the loader is black from the very first frame, before any stylesheet arrives */
+    html.is-loading, html.is-loading body { background: #000; color: #f2f2f2; }
+    html.is-loading .loader { position: fixed; inset: 0; z-index: 200; background: #000; }
+  </style>
 </head>
 <body>
   <!-- ───────── Loader ───────── -->
