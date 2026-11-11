@@ -149,6 +149,8 @@ export const ar = {
   'footer.top': 'العودة للأعلى ↑',
   'footer.rights': 'جميع الحقوق محفوظة',
   'cta.break': 'اكسر الصفحة',
+  'cta.intro': 'شاهد التعريف · 85ث',
+  'sb.intro': 'التعريف',
   'sb.present': 'عرض',
   'keys.present': 'وضع العرض التقديمي',
   'keys.voice': 'الأوامر الصوتية',
@@ -202,7 +204,7 @@ export const dyn = {
     themeDark: 'Dark theme', themeLight: 'Light theme',
     cmds: {
       experience: 'Go to Experience', projects: 'Go to Projects', playground: 'Go to Playground',
-      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal', motion: 'Turn animations on / off', keys: 'Keyboard shortcuts', break: 'Break this page', present: 'Presentation mode', voice: 'Voice commands',
+      skills: 'Go to Skills', journey: 'Go to Journey', credentials: 'Go to Credentials', contact: 'Go to Contact', terminal: 'Open the terminal', motion: 'Turn animations on / off', keys: 'Keyboard shortcuts', intro: 'Watch the intro film', break: 'Break this page', present: 'Presentation mode', voice: 'Voice commands',
       cv: 'Download CV (PDF)', email: 'Copy email address', mail: 'Write an email', linkedin: 'Open LinkedIn', github: 'Open GitHub',
       theme: 'Toggle light / dark theme', lang: 'التبديل إلى العربية', top: 'Back to top',
     },
@@ -262,7 +264,7 @@ export const dyn = {
     themeDark: 'الوضع الداكن', themeLight: 'الوضع الفاتح',
     cmds: {
       experience: 'اذهب إلى الخبرات', projects: 'اذهب إلى المشاريع', playground: 'اذهب إلى العروض التفاعلية',
-      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية', motion: 'تشغيل / إيقاف الحركة', keys: 'اختصارات لوحة المفاتيح', break: 'اكسر الصفحة', present: 'وضع العرض التقديمي', voice: 'الأوامر الصوتية',
+      skills: 'اذهب إلى المهارات', journey: 'اذهب إلى الرحلة', credentials: 'اذهب إلى الشهادات', contact: 'اذهب إلى التواصل', terminal: 'افتح الطرفية', motion: 'تشغيل / إيقاف الحركة', keys: 'اختصارات لوحة المفاتيح', intro: 'شاهد فيلم التعريف', break: 'اكسر الصفحة', present: 'وضع العرض التقديمي', voice: 'الأوامر الصوتية',
       cv: 'تحميل السيرة الذاتية (PDF)', email: 'نسخ البريد الإلكتروني', mail: 'كتابة بريد', linkedin: 'فتح LinkedIn', github: 'فتح GitHub',
       theme: 'تبديل الوضع الفاتح / الداكن', lang: 'Switch to English', top: 'العودة للأعلى',
     },
