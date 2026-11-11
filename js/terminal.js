@@ -98,10 +98,6 @@ export function initTerminal(root) {
     echo: args => [args.join(' ')],
     theme: () => { document.querySelector('[data-action=theme]').click(); return [[ok('✓ '), 'theme toggled']]; },
     lang: () => { document.querySelector('[data-action=lang]').click(); return [[ok('✓ '), 'language toggled · تم تبديل اللغة']]; },
-    bugs: () => {
-      const n = document.querySelector('#bughunt .found')?.textContent || '0';
-      return [[`bug hunt: ${n}/4 found `], [dim(n === '4' ? 'flawless. ' : 'scroll up to the playground and keep looking 🐞')]];
-    },
     exit: () => [[dim('There is no escape. Try '), acc('contact'), dim(' instead.')]],
     history: () => history.map((h, i) => `  ${String(i + 1).padStart(3)}  ${h}`),
     clear: () => { out.innerHTML = ''; return []; },

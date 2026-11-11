@@ -87,7 +87,6 @@
     <nav class="toplinks" aria-label="Primary">
       <a href="#experience" data-i18n="nav.experience">Experience</a>
       <a href="#projects" data-i18n="nav.projects">Projects</a>
-      <a href="#playground" data-i18n="nav.playground">Playground</a>
       <a href="#skills" data-i18n="nav.skills">Skills</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
@@ -121,7 +120,6 @@
         <p class="hero-lede" data-i18n="hero.lede">I build software, configure enterprise systems, and break things on purpose — so your users never have to.</p>
         <div class="hero-ctas">
           <a class="btn btn-solid" href="#projects"><span data-i18n="cta.work">See my work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          <a class="btn btn-ghost" href="#playground"><span data-i18n="cta.play">Try the playground</span></a>
           <button type="button" class="btn btn-ghost btn-intro" data-action="intro"><span class="intro-dot" aria-hidden="true">▶</span><span data-i18n="cta.intro">Watch the intro · 85s</span></button>
           <button type="button" class="btn btn-break" data-action="break"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 9.5 9.5 4 8l4 5-3 6 6-3.5L15 21l.5-6.5L21 12l-6.5-1.5z"/></svg><span data-i18n="cta.break">Break this page</span></button>
         </div>
@@ -378,84 +376,6 @@
       </div></div>
     </section>
 
-    <!-- ───────── Playground ───────── -->
-    <section class="section section-alt" id="playground" data-section="playground">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker mono">04 — <span data-i18n="play.kicker">Playground</span></p>
-          <h2 data-words data-i18n="play.title">Don't read about it. Poke it.</h2>
-          <p class="section-sub" data-i18n="play.sub">Three small demos of how I think: enterprise rules, validation logic, and a tester's eye.</p>
-        </header>
-
-        <div class="play-grid">
-          <!-- Bug hunt -->
-          <div class="play card reveal play--bugs" id="bughunt">
-            <div class="play-head">
-              <h3 data-i18n="bug.title">Bug hunt</h3>
-              <p class="mono bug-score"><span class="found">0</span>/4 <span data-i18n="bug.found">found</span></p>
-            </div>
-            <p class="play-desc" data-i18n="bug.desc">This checkout has four bugs I planted. Click anything that looks wrong; try the buttons too.</p>
-            <div class="checkout" role="group" aria-label="Buggy checkout">
-              <div class="co-row">
-                <div>
-                  <p class="co-event">Fight Night · Riyadh</p>
-                  <button class="co-date bug-target" data-bug="date" type="button">Sat, 31 Feb 2027 · 8:00 PM</button>
-                </div>
-                <span class="co-price mono">SAR 450</span>
-              </div>
-              <div class="co-row">
-                <span data-i18n="bug.qty">Tickets</span>
-                <div class="stepper">
-                  <button type="button" class="step" data-step="-1" aria-label="Fewer tickets">−</button>
-                  <output class="qty mono">2</output>
-                  <button type="button" class="step" data-step="1" aria-label="More tickets">+</button>
-                </div>
-              </div>
-              <div class="co-row co-total">
-                <span data-i18n="bug.total">Total</span>
-                <button class="mono bug-target total" data-bug="total" type="button">SAR 950</button>
-              </div>
-              <button type="button" class="btn btn-solid co-cta bug-target" data-bug="typo">Confrim booking</button>
-            </div>
-            <ol class="bug-reports" aria-live="polite"></ol>
-          </div>
-
-          <!-- Absence accrual -->
-          <div class="play card reveal play--accrual" id="accrual">
-            <div class="play-head">
-              <h3 data-i18n="acc.title">Absence accrual simulator</h3>
-              <span class="mono chip">Oracle HCM</span>
-            </div>
-            <p class="play-desc" data-i18n="acc.desc">The kind of plan rule I configure: monthly accrual, a year-end carry-over limit, and what happens to days over it.</p>
-            <div class="controls">
-              <label><span data-i18n="acc.rate">Accrual / month</span><output class="mono" data-out="rate">2.5 d</output><input type="range" name="rate" min="1" max="3" step="0.25" value="2.5" /></label>
-              <label><span data-i18n="acc.cap">Carry-over limit</span><output class="mono" data-out="cap">10 d</output><input type="range" name="cap" min="0" max="30" step="1" value="10" /></label>
-              <label><span data-i18n="acc.taken">Leave taken (month 7)</span><output class="mono" data-out="taken">8 d</output><input type="range" name="taken" min="0" max="20" step="1" value="8" /></label>
-            </div>
-            <svg class="chart" viewBox="0 0 360 150" role="img" aria-label="Monthly absence balance over 24 months"></svg>
-            <div class="acc-summary mono">
-              <span><span data-i18n="acc.balance">Balance after 24 months</span> <strong class="acc-bal">0</strong></span>
-              <span class="acc-lost-wrap"><span data-i18n="acc.lost">Forfeited at year end</span> <strong class="acc-lost">0</strong></span>
-            </div>
-          </div>
-
-          <!-- Validation rules -->
-          <div class="play card reveal play--rules" id="rules">
-            <div class="play-head">
-              <h3 data-i18n="rule.title">Validation rules, live</h3>
-              <span class="mono chip">DFF · Value set</span>
-            </div>
-            <p class="play-desc" data-i18n="rule.desc">A new-hire form with the kind of rules I write behind the scenes. Edit the fields and watch the tests.</p>
-            <form class="rule-form" novalidate>
-              <label><span data-i18n="rule.emp">Employee number</span><input name="emp" value="E-1042" autocomplete="off" spellcheck="false" /></label>
-              <label><span data-i18n="rule.hire">Hire date</span><input name="hire" type="date" /></label>
-              <label><span data-i18n="rule.prob">Probation ends</span><input name="prob" type="date" /></label>
-            </form>
-            <ul class="tests mono" aria-live="polite"></ul>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ───────── Skills ───────── -->
     <section class="section" id="skills" data-section="skills">

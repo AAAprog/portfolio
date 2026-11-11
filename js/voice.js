@@ -1,10 +1,10 @@
 // Voice commands (Web Speech API). A short, fixed list in English and Arabic.
-// Hidden where the browser has no speech recognition.
+import { voiceOut } from './speak.js';
+// AB answers out loud. Hidden where the browser has no speech recognition.
 
 const COMMANDS = [
   { id: 'projects', words: ['project', 'work', 'مشاريع', 'المشاريع', 'أعمال', 'اعمال'] },
   { id: 'experience', words: ['experience', 'career', 'خبرات', 'الخبرات', 'خبرة'] },
-  { id: 'playground', words: ['playground', 'play', 'demo', 'جرب', 'العروض'] },
   { id: 'skills', words: ['skill', 'stack', 'مهارات', 'المهارات'] },
   { id: 'terminal', words: ['terminal', 'console', 'الطرفية', 'طرفية'] },
   { id: 'contact', words: ['contact', 'email', 'hire', 'تواصل', 'اتصال', 'ايميل', 'بريد', 'وظف'] },
@@ -15,6 +15,11 @@ const COMMANDS = [
   { id: 'english', words: ['english', 'انجليزي', 'إنجليزي', 'الإنجليزية'] },
   { id: 'cv', words: ['cv', 'resume', 'سيرة', 'السيرة'] },
   { id: 'break', words: ['break', 'اكسر', 'كسر'] },
+  { id: 'who', words: ['who is', 'who are', 'about ahmed', 'tell me about', 'introduce', 'مين', 'من هو', 'من انت', 'عرفني', 'عن أحمد', 'عن احمد'] },
+  { id: 'study', words: ['study', 'studied', 'university', 'degree', 'education', 'gpa', 'درس', 'دراسة', 'جامعة', 'تخرج', 'المعدل'] },
+  { id: 'where', words: ['where', 'live', 'based', 'location', 'وين', 'أين', 'يسكن', 'مكان'] },
+  { id: 'hello', words: ['hello', 'hi ab', 'hey', 'مرحبا', 'هلا', 'السلام'] },
+  { id: 'intro', words: ['intro', 'video', 'film', 'فيديو', 'المقطع', 'الفيلم', 'التعريف'] },
   { id: 'present', words: ['present', 'presentation', 'slides', 'عرض تقديمي', 'العرض'] },
 ];
 
@@ -46,6 +51,7 @@ export function initVoice({ button, L, run, toast }) {
     pill.classList.add('on');
   };
   function start(retry) {
+    voiceOut.stop();
     if (listening && retry !== true) return stop();
     rec = new SR();
     rec.lang = root.lang === 'ar' ? 'ar-SA' : 'en-US';
@@ -57,7 +63,7 @@ export function initVoice({ button, L, run, toast }) {
     const act = transcripts => {
       for (const t of transcripts) {
         const id = match(t);
-        if (id) { done = true; run(id); say('✓ ' + (L().voiceDone[id] || id)); try { rec.stop(); } catch {} return true; }
+        if (id) { done = true; const ans = (L().abSay || {})[id]; if (ans) { say(ans); voiceOut.speak(ans); } else { say('✓ ' + (L().voiceDone[id] || id)); voiceOut.speak((L().abOk || '') + ' ' + (L().voiceDone[id] || '')); } run(id); try { rec.stop(); } catch {} return true; }
       }
       return false;
     };
@@ -69,7 +75,7 @@ export function initVoice({ button, L, run, toast }) {
       last = alts[0];
       text.textContent = '“' + last + '”';
       if (act(alts)) return;                 // act as soon as a command word is heard
-      if (res.isFinal) { done = true; say(L().voiceMiss, true); }
+      if (res.isFinal) { done = true; say(L().voiceMiss, true); voiceOut.speak(L().voiceMiss); }
     };
     rec.onerror = e => {
       failed = true;

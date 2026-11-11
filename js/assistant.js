@@ -1,3 +1,4 @@
+import { voiceOut } from './speak.js';
 // AB — a small greeting assistant, and Video mode (the intro film, full screen).
 // The bubble appears once, a moment after the loader, types its message, and
 // offers three choices. Dismissing it is remembered. Video mode loads the film
@@ -15,14 +16,14 @@ const store = {
 const TXT = {
   en: {
     hi: "Hi, I'm AB, Ahmed Bawazir's assistant. Want to get to know Ahmed in 85 seconds?",
-    watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
+    ask: '🎤 Ask me', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
     close: 'Close', name: 'AB · assistant',
     vtitle: 'From Kuala Lumpur to Riyadh', talk: "Let's talk ↗", replay: '↺ Replay',
     mute: 'Sound on', unmute: 'Sound off', cc: 'Captions',
   },
   ar: {
     hi: 'هلا، أنا AB، مساعد أحمد باوزير. تبي تتعرّف على أحمد في 85 ثانية؟',
-    watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
+    ask: '🎤 اسألني', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
     close: 'إغلاق', name: 'AB · المساعد',
     vtitle: 'من كوالالمبور إلى الرياض', talk: 'لنتحدث ↗', replay: '↺ إعادة',
     mute: 'تشغيل الصوت', unmute: 'كتم الصوت', cc: 'الترجمة',
@@ -137,7 +138,7 @@ function createVideoMode() {
 }
 
 /* ───────── AB bubble ───────── */
-export function initAssistant({ goProjects }) {
+export function initAssistant({ goProjects, ask }) {
   const video = createVideoMode();
   document.querySelectorAll('[data-action="intro"]').forEach(b => b.addEventListener('click', () => video.open()));
 
@@ -146,21 +147,26 @@ export function initAssistant({ goProjects }) {
   bubble.setAttribute('aria-live', 'polite');
   bubble.innerHTML = `
     <div class="abot-head"><span class="abot-av">AB</span><span class="abot-name mono"></span>
-      <button type="button" class="abot-x" aria-label="Close">✕</button></div>
+      <button type="button" class="abot-snd" aria-label="Voice">🔊</button><button type="button" class="abot-x" aria-label="Close">✕</button></div>
     <p class="abot-msg"><span class="abot-text"></span><span class="abot-caret"></span></p>
     <div class="abot-actions">
       <button type="button" class="btn btn-solid btn-sm abot-watch"></button>
       <button type="button" class="btn btn-ghost btn-sm abot-proj"></button>
+      <button type="button" class="btn btn-ghost btn-sm abot-ask"></button>
       <button type="button" class="abot-later"></button>
     </div>`;
   document.body.append(bubble);
   const text = bubble.querySelector('.abot-text');
+  const snd = bubble.querySelector('.abot-snd');
+  if (!voiceOut.ok) snd.hidden = true;
   const label = () => {
     const t = L();
     bubble.querySelector('.abot-name').textContent = t.name;
     bubble.querySelector('.abot-watch').textContent = t.watch;
     bubble.querySelector('.abot-proj').textContent = t.projects;
     bubble.querySelector('.abot-later').textContent = t.later;
+    bubble.querySelector('.abot-ask').textContent = t.ask;
+    snd.textContent = voiceOut.muted ? '🔇' : '🔊';
     bubble.querySelector('.abot-x').setAttribute('aria-label', t.close);
     if (bubble.classList.contains('typed')) text.textContent = t.hi;
   };
@@ -171,12 +177,14 @@ export function initAssistant({ goProjects }) {
   document.body.append(pill);
   let typedOnce = false;
   const collapse = () => { store.set(KEY, '1'); bubble.classList.remove('on'); setTimeout(() => pill.classList.add('on'), 250); };
-  const expand = () => { pill.classList.remove('on'); bubble.classList.add('on'); if (!typedOnce) type(); };
+  const expand = () => { pill.classList.remove('on'); bubble.classList.add('on'); voiceOut.speak(L().hi); if (!typedOnce) type(); };
   pill.addEventListener('click', expand);
-  bubble.querySelector('.abot-watch').addEventListener('click', () => { collapse(); video.open(); });
+  bubble.querySelector('.abot-watch').addEventListener('click', () => { voiceOut.stop(); collapse(); video.open(); });
   bubble.querySelector('.abot-proj').addEventListener('click', () => { collapse(); goProjects(); });
-  bubble.querySelector('.abot-later').addEventListener('click', collapse);
-  bubble.querySelector('.abot-x').addEventListener('click', collapse);
+  bubble.querySelector('.abot-later').addEventListener('click', () => { voiceOut.stop(); collapse(); });
+  bubble.querySelector('.abot-ask').addEventListener('click', () => { voiceOut.stop(); ask && ask(); });
+  snd.addEventListener('click', () => { voiceOut.setMuted(!voiceOut.muted); label(); if (!voiceOut.muted) voiceOut.speak(L().hi); });
+  bubble.querySelector('.abot-x').addEventListener('click', () => { voiceOut.stop(); collapse(); });
   document.addEventListener('langchange', () => { label(); pill.setAttribute('aria-label', L().name); });
   label(); pill.setAttribute('aria-label', L().name);
 
