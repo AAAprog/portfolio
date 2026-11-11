@@ -207,31 +207,52 @@
     <div class="tag" style="left:150px; top:690px;">OTBI · BI Publisher</div>
   </div>
 
-  <!-- 8 · Projects -->
-  <div class="layer" id="s8" style="left:0; top:0; width:1920px; height:1080px;">
-    <div class="win" id="ufc" style="left:150px; top:170px; width:760px; height:500px;">
-      <div class="bar"><i></i><i></i><i></i><b>tickets / fight-night</b></div>
-      <div style="padding:30px 36px;">
-        <div style="font:600 28px Inter,sans-serif;">UFC Ticketing <span style="color:#8e8e93; font-weight:400; font-size:22px;">· Section 104</span></div>
-        <div style="margin:22px 0; display:grid; grid-template-columns:repeat(12,34px); gap:12px;" id="seats"></div>
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 14px 14px 22px; border-radius:16px; border:1px solid rgba(255,255,255,.14); font-size:22px;">1 seat · SAR 450<span id="booked" style="padding:12px 20px; border-radius:12px; background:#f2f2f2; color:#000; font-weight:600;">Book</span></div>
+  <!-- 8 · Projects: UFC alone (real UI), then EasyCal, then the unreleased ones -->
+  <div class="layer" id="s8u" style="left:0; top:0; width:1920px; height:1080px;">
+    <div style="position:absolute; left:150px; top:150px; width:520px;">
+      <div class="kicker">Full-stack · PHP · MySQL</div>
+      <div class="big" style="margin-top:14px;">UFC Ticketing</div>
+      <div class="sub" style="margin-top:14px;">Member and admin modules, booking workflows and live seat capacity.</div>
+      <div id="ufcSteps" class="mono" style="margin-top:40px; display:flex; flex-direction:column; gap:16px; font-size:20px; color:#6e6e73;">
+        <div>01 · Home</div><div>02 · Member sign-in</div><div>03 · Book an event</div><div>04 · Booking confirmed</div>
       </div>
     </div>
-    <div class="win" id="ecal" style="left:1010px; top:130px; width:340px; height:640px; border-radius:46px; border:10px solid #1d1d1f; padding:56px 28px 0;">
-      <div style="font:600 26px Inter,sans-serif;">Today</div>
-      <div style="position:relative; width:230px; height:230px; margin:26px auto;">
-        <svg width="230" height="230" viewBox="0 0 120 120" style="transform:rotate(-90deg)"><circle cx="60" cy="60" r="50" fill="none" stroke="#1f1f21" stroke-width="10"/><circle id="calRing" cx="60" cy="60" r="50" fill="none" stroke="#ff6a2f" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/></svg>
-        <div style="position:absolute; inset:0; display:grid; place-content:center; text-align:center;"><div id="kcal" style="font:700 44px 'Space Grotesk',sans-serif;">0</div><div class="mono" style="font-size:15px; color:#8e8e93;">of 2,200 kcal</div></div>
+    <div class="win" id="ufcWin" style="left:720px; top:150px; width:1060px; height:708px;">
+      <div class="bar"><i></i><i></i><i></i><b>aaaprog.github.io/ufc-event-system</b></div>
+      <div style="position:relative; width:1060px; height:662px; overflow:hidden; background:#000;">
+        <img class="shot" src="shots/ufc-home.jpg" style="position:absolute; left:0; top:0; width:1060px; opacity:1;">
+        <img class="shot" src="shots/ufc-after-signin.jpg" style="position:absolute; left:0; top:0; width:1060px; opacity:0;">
+        <img class="shot" src="shots/ufc-booking.jpg" style="position:absolute; left:0; top:0; width:1060px; opacity:0;">
+        <img class="shot" src="shots/ufc-booked.jpg" style="position:absolute; left:0; top:0; width:1060px; opacity:0;">
       </div>
-      <div style="height:54px; border-radius:16px; background:#f2f2f2; color:#000; display:grid; place-items:center; font:600 21px Inter,sans-serif;">+ Add meal</div>
-      <div style="margin-top:18px; font:600 24px Inter,sans-serif; text-align:center;">EasyCal</div>
-    </div>
-    <div id="ghosts" style="position:absolute; left:1440px; top:150px; width:340px; display:flex; flex-direction:column; gap:22px;">
-      <div class="ghost" style="height:180px; border-radius:22px; border:2px dashed rgba(255,255,255,.18); display:grid; place-items:center; font:500 22px 'JetBrains Mono',monospace; color:#6e6e73; opacity:0;">untitled-01 ?</div>
-      <div class="ghost" style="height:180px; border-radius:22px; border:2px dashed rgba(255,255,255,.18); display:grid; place-items:center; font:500 22px 'JetBrains Mono',monospace; color:#6e6e73; opacity:0;">side-project ?</div>
-      <div class="ghost" style="height:180px; border-radius:22px; border:2px dashed rgba(255,255,255,.18); display:grid; place-items:center; font:500 22px 'JetBrains Mono',monospace; color:#6e6e73; opacity:0;">idea.v3 ?</div>
     </div>
   </div>
+  <div class="layer" id="s8e" style="left:0; top:0; width:1920px; height:1080px;">
+    <div style="position:absolute; left:150px; top:200px; width:600px;">
+      <div class="kicker">Android · C# · .NET MAUI</div>
+      <div class="big" style="margin-top:14px;">EasyCal</div>
+      <div class="sub" style="margin-top:14px;">A calorie-tracking app, built, debugged and tested end to end.</div>
+    </div>
+    <div class="win" id="ecal" style="left:1130px; top:110px; width:380px; height:780px; border-radius:52px; border:12px solid #1d1d1f; padding:64px 32px 0;">
+      <div style="font:600 30px Inter,sans-serif;">Today</div>
+      <div style="position:relative; width:270px; height:270px; margin:30px auto;">
+        <svg width="270" height="270" viewBox="0 0 120 120" style="transform:rotate(-90deg)"><circle cx="60" cy="60" r="50" fill="none" stroke="#1f1f21" stroke-width="10"/><circle id="calRing" cx="60" cy="60" r="50" fill="none" stroke="#ff6a2f" stroke-width="10" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/></svg>
+        <div style="position:absolute; inset:0; display:grid; place-content:center; text-align:center;"><div id="kcal" style="font:700 52px 'Space Grotesk',sans-serif;">0</div><div class="mono" style="font-size:17px; color:#8e8e93;">of 2,200 kcal</div></div>
+      </div>
+      <div style="height:62px; border-radius:18px; background:#f2f2f2; color:#000; display:grid; place-items:center; font:600 24px Inter,sans-serif;">+ Add meal</div>
+      <div id="meal" style="margin-top:22px; display:flex; justify-content:space-between; padding:18px 4px; border-bottom:1px solid rgba(255,255,255,.1); font-size:22px; opacity:0;">Grilled chicken<span class="mono" style="color:#ff6a2f;">+320</span></div>
+    </div>
+  </div>
+  <div class="layer" id="s8g" style="left:0; right:0; top:330px; text-align:center;">
+    <div style="display:flex; justify-content:center; gap:36px;">
+      <div class="ghost" style="width:360px; height:240px; border-radius:26px; border:2px dashed rgba(255,255,255,.2); display:grid; place-items:center; font:500 24px 'JetBrains Mono',monospace; color:#8e8e93;">untitled-01</div>
+      <div class="ghost" style="width:360px; height:240px; border-radius:26px; border:2px dashed rgba(255,255,255,.2); display:grid; place-items:center; font:500 24px 'JetBrains Mono',monospace; color:#8e8e93;">side-project</div>
+      <div class="ghost" style="width:360px; height:240px; border-radius:26px; border:2px dashed rgba(255,255,255,.2); display:grid; place-items:center; font:500 24px 'JetBrains Mono',monospace; color:#8e8e93;">idea.v3</div>
+    </div>
+    <div class="mono" style="margin-top:40px; font-size:22px; color:#6e6e73; letter-spacing:.1em;">NEVER SAW THE LIGHT OF DAY · YET</div>
+  </div>
+
+  <div id="labels" style="position:absolute; inset:0; pointer-events:none;"></div>
 
   <!-- 9 · End -->
   <div class="layer" id="s9a" style="left:0; right:0; top:420px; text-align:center;">
@@ -253,7 +274,7 @@ import * as THREE from './three.module.js';
 import { SIG } from './sig.js';
 
 /* ───────── Timeline (seconds) — retime to the voice-over here ───────── */
-const S = { space: 0, kajang: 7, uni: 13, sifr: 21, codai: 33, riyadh: 52, hcm: 60, built: 70, end: 77, total: 88 };
+const S = { space: 0, kajang: 7, uni: 13, sifr: 21, codai: 33, riyadh: 52, hcm: 60, built: 70, end: 82, total: 93 };
 const CAPTIONS = [
   [0.6, 6.6, 'Every system starts with a single line. Mine started here.'],
   [7.4, 12.6, 'Kajang, Malaysia, where I spent three years studying software engineering.'],
@@ -264,9 +285,11 @@ const CAPTIONS = [
   [38.6, 48.4, 'You describe a system in plain words. Codai analyses the requirements, draws the UML, designs the database, generates and reviews the code, then writes the test cases.'],
   [53.0, 59.6, 'Then I came back to where I grew up: Riyadh.'],
   [60.4, 69.6, 'At Macquires, I trained as an Oracle Fusion HCM consultant, configuring and testing core HR, absence plans and payroll, and the rules behind them.'],
-  [70.4, 76.6, 'Along the way, I built a ticketing platform, a mobile app, and a few things that never saw the light of day.'],
-  [77.6, 81.4, 'Thank you for watching.'],
-  [81.8, 87.6, 'My first line was written in Kajang. My next one is ready to be written with you.'],
+  [70.4, 75.4, 'Along the way, I built a ticketing platform,'],
+  [75.8, 79.2, 'a mobile app,'],
+  [79.4, 81.8, 'and a few things that never saw the light of day.'],
+  [82.6, 86.4, 'Thank you for watching.'],
+  [86.8, 92.6, 'My first line was written in Kajang. My next one is ready to be written with you.'],
 ];
 
 /* ───────── helpers ───────── */
@@ -335,11 +358,25 @@ const place = (m, c) => { const p = ll(c.lat, c.lon, 1.012); m.position.copy(p);
 const mK = marker(0xffffff), mR = marker(0xff6a2f); place(mK, KAJ); place(mR, RUH);
 // great-circle arc, lifted
 const arcPts = []; { const a = ll(KAJ.lat, KAJ.lon, 1).normalize(), b = ll(RUH.lat, RUH.lon, 1).normalize();
-  for (let i = 0; i <= 200; i++) { const u = i / 200; const v = new THREE.Vector3().copy(a).lerp(b, u).normalize(); arcPts.push(v.multiplyScalar(1.012 + .16 * Math.sin(Math.PI * u))); } }
-const arcGeo = new THREE.BufferGeometry().setFromPoints(arcPts);
-const arc = new THREE.Line(arcGeo, new THREE.LineBasicMaterial({ color: 0xff6a2f, transparent: true, depthTest: false }));
-arc.renderOrder = 9; scene.add(arc);
-const head = new THREE.Mesh(new THREE.SphereGeometry(.007, 16, 16), new THREE.MeshBasicMaterial({ color: 0xffb08a, depthTest: false }));
+  for (let i = 0; i <= 200; i++) { const u = i / 200; const v = new THREE.Vector3().copy(a).lerp(b, u).normalize(); arcPts.push(v.multiplyScalar(1.008 + .07 * Math.sin(Math.PI * u))); } }
+const arcCurve = new THREE.CatmullRomCurve3(arcPts);
+const TUBE_SEG = 400, TUBE_RAD = 12;
+let arcGeo = new THREE.TubeGeometry(arcCurve, TUBE_SEG, .0032, TUBE_RAD, false);
+let glowGeo = new THREE.TubeGeometry(arcCurve, TUBE_SEG, .010, TUBE_RAD, false);
+let tubeScale = 1;
+// keep the route a constant on-screen width: rebuild the tubes when the camera distance changes
+function sizeTubes(dist) {
+  const k = Math.round(Math.pow(dist / 4, 1.5) * 60) / 60; // quantised so it only rebuilds on real changes
+  if (k === tubeScale) return; tubeScale = k;
+  arcGeo.dispose(); glowGeo.dispose();
+  arcGeo = new THREE.TubeGeometry(arcCurve, TUBE_SEG, .0026 * k, TUBE_RAD, false);
+  glowGeo = new THREE.TubeGeometry(arcCurve, TUBE_SEG, .0075 * k, TUBE_RAD, false);
+  arc.geometry = arcGeo; arcGlow.geometry = glowGeo;
+}
+const arc = new THREE.Mesh(arcGeo, new THREE.MeshBasicMaterial({ color: 0xffb08a, transparent: true, depthTest: false }));
+const arcGlow = new THREE.Mesh(glowGeo, new THREE.MeshBasicMaterial({ color: 0xff6a2f, transparent: true, opacity: .3, depthTest: false, blending: THREE.AdditiveBlending, depthWrite: false }));
+arc.renderOrder = 9; arcGlow.renderOrder = 8; scene.add(arcGlow, arc);
+const head = new THREE.Mesh(new THREE.SphereGeometry(.0042, 20, 20), new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false }));
 head.renderOrder = 11; scene.add(head);
 
 function camAt(lat, lon, dist) {
@@ -349,8 +386,8 @@ function camAt(lat, lon, dist) {
 // camera path: keyframes [t, lat, lon, dist]
 const K = [
   [0, 14, 82, 4.6], [7, 10, 98, 4.0], [12.4, KAJ.lat, KAJ.lon, 1.42], [52, KAJ.lat + .6, KAJ.lon + 1.4, 1.5],
-  [54.6, 15, 76, 3.3], [57.6, RUH.lat, RUH.lon, 1.42], [77, RUH.lat + .6, RUH.lon + 1.2, 1.5],
-  [80, 14, 74, 3.6], [88, 15, 70, 4.2],
+  [54.6, 15, 76, 3.3], [57.6, RUH.lat, RUH.lon, 1.42], [82, RUH.lat + .6, RUH.lon + 1.2, 1.5],
+  [85, 14, 74, 3.6], [93, 15, 70, 4.2],
 ];
 function camPath(t) {
   let i = 0; while (i < K.length - 2 && t > K[i + 1][0]) i++;
@@ -359,13 +396,25 @@ function camPath(t) {
   return [lerp(a0, a1, k), lerp(o0, o1, k), Math.exp(lerp(Math.log(d0), Math.log(d1), k))];
 }
 
+/* ───────── city labels ───────── */
+const LABELS = [
+  ['Kajang', 2.99, 101.79, 1], ['Riyadh', 24.71, 46.68, 1],
+  ['Singapore', 1.35, 103.82], ['Jakarta', -6.2, 106.85], ['Bangkok', 13.75, 100.5],
+  ['Colombo', 6.93, 79.86], ['Mumbai', 19.08, 72.88], ['Muscat', 23.59, 58.41], ['Dubai', 25.2, 55.27],
+  ['Doha', 25.29, 51.53], ['Jeddah', 21.49, 39.19], ['Kuwait', 29.38, 47.99],
+].map(([name, lat, lon, main]) => {
+  const el = document.createElement('div');
+  el.style.cssText = `position:absolute; left:0; top:0; white-space:nowrap; opacity:0; font:${main ? '600 24px' : '500 18px'} Inter, sans-serif; color:${main ? '#fff' : 'rgba(255,255,255,.85)'}; text-shadow:0 1px 8px rgba(0,0,0,.95);`;
+  el.innerHTML = `<span style="position:absolute; left:-5px; top:-5px; width:10px; height:10px; border-radius:50%; background:${main ? '#ff6a2f' : '#fff'}; box-shadow:0 0 0 3px rgba(0,0,0,.35);"></span><span style="position:absolute; left:14px; top:-15px;">${name}</span>`;
+  document.querySelector('#labels').append(el);
+  return { name, lat, lon, main: !!main, el };
+});
+
 /* ───────── signature ───────── */
 const sig = $('#sig'); sig.setAttribute('viewBox', `0 0 ${SIG.w} ${SIG.h}`);
 sig.innerHTML = `<path id="sigInk" d="${SIG.d}" pathLength="1" fill="#f2f2f2" fill-opacity="0" stroke="#f2f2f2" stroke-width="1.1" stroke-dasharray="1 1" stroke-dashoffset="1"/>
   <path id="sigLine" d="M 40 160 C 180 170, 380 166, 560 150" pathLength="1" fill="none" stroke="#ff6a2f" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>`;
 
-/* seats */
-{ const g = $('#seats'), taken = new Set([2, 3, 7, 11, 14, 18, 22, 25, 26, 31, 33]); for (let i = 0; i < 36; i++) { const s = document.createElement('span'); s.className = 'seat' + (taken.has(i) ? ' t' : ''); if (i === 20) s.id = 'pick'; g.append(s); } }
 
 /* ───────── seek(t): draw one frame ───────── */
 const PROMPT = 'Library system: members borrow books';
@@ -375,21 +424,37 @@ function seek(t) {
   camAt(lat, lon, dist);
   earth.rotation.y = 0; clouds.rotation.y = t * .004;
   const pulse = (t * .8) % 1;
-  for (const [m, on] of [[mK, seg(t, 8.5, 9.5) * (1 - seg(t, 51, 52.5)) + seg(t, 81.6, 82.4)], [mR, seg(t, 57, 58)]]) {
+  for (const [m, on] of [[mK, seg(t, 8.5, 9.5) * (1 - seg(t, 51, 52.5)) + seg(t, 86.6, 87.4)], [mR, seg(t, 57, 58)]]) {
     m.visible = on > 0.01; m.scale.setScalar(dist * .7);
     m.children[0].material.opacity = on; m.children[0].material.transparent = true;
     m.userData.ring.scale.setScalar(1 + pulse * 2.4); m.userData.ring.material.opacity = on * (1 - pulse);
   }
   const arcK = ease(seg(t, 53.8, 57.4));
-  const glow = seg(t, 81.6, 83);
-  arcGeo.setDrawRange(0, Math.round(arcK * 200) + 1);
-  arc.visible = arcK > 0; arc.material.opacity = t > 60 && t < 77 ? .35 : .95;
-  arc.material.color.set(glow > 0 ? 0xffc29f : 0xff6a2f);
-  head.visible = arcK > 0 && arcK < 1; if (head.visible) head.position.copy(arcPts[Math.round(arcK * 200)]); head.scale.setScalar(dist * .7);
+  const glow = seg(t, 86.6, 88);
+  sizeTubes(dist);
+  const tri = Math.round(arcK * TUBE_SEG) * TUBE_RAD * 6;
+  arcGeo.setDrawRange(0, tri); glowGeo.setDrawRange(0, tri);
+  arc.visible = arcGlow.visible = arcK > 0;
+  const faint = t > 60 && t < 82;
+  arc.material.opacity = faint ? .3 : 1; arcGlow.material.opacity = (faint ? .1 : .3) + glow * .25;
+  head.visible = arcK > 0 && arcK < 1; if (head.visible) head.position.copy(arcPts[Math.round(arcK * 200)]); head.scale.setScalar(dist / 2.2);
   renderer.render(scene, cam);
+  // city labels
+  const labelK = Math.max(seg(t, 2, 4) * (1 - seg(t, 12.8, 13.6)), seg(t, 52.4, 53.4) * (1 - seg(t, 59.8, 60.6)), seg(t, 83.6, 84.6) * (1 - seg(t, 87.6, 88.4)));
+  cam.updateMatrixWorld();
+  for (const L of LABELS) {
+    const w = ll(L.lat, L.lon, 1.012);
+    const facing = w.clone().normalize().dot(cam.position.clone().normalize());
+    const v = w.project(cam);
+    const x = (v.x + 1) / 2 * 1920, y = (1 - v.y) / 2 * 1080;
+    const on = facing > .25 && x > 40 && x < 1880 && y > 40 && y < 1000;
+    const k = on ? labelK * Math.min(1, (facing - .25) * 4) : 0;
+    L.el.style.opacity = k.toFixed(3);
+    if (k > 0) L.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+  }
 
   // dimming behind the info cards
-  const dimK = Math.max(seg(t, 13, 14.2) * (1 - seg(t, 51.4, 52.6)), seg(t, 60, 61.2) * (1 - seg(t, 76.6, 77.8)), seg(t, 82.8, 84) * .85);
+  const dimK = Math.max(seg(t, 13, 14.2) * (1 - seg(t, 51.4, 52.6)), seg(t, 60, 61.2) * (1 - seg(t, 81.6, 82.8)), seg(t, 87.8, 89) * .85);
   $('#dim').style.opacity = (dimK * .9).toFixed(3);
 
   // 1
@@ -438,20 +503,27 @@ function seek(t) {
   $('#bal').textContent = (21 - 3 * out(seg(t, 63.6, 65))).toFixed(1);
   $$('#s7 .tag').forEach((e, i) => { const k = out(seg(t, 65 + i * .35, 65.5 + i * .35)); e.style.opacity = k; e.style.transform = `translateY(${((1 - k) * 14).toFixed(1)}px)`; });
   // 8 projects
-  show($('#s8'), t, 70.4, 77.2);
-  const u = out(seg(t, 70.4, 71.2)); $('#ufc').style.transform = `translateY(${((1 - u) * 40).toFixed(1)}px)`;
-  const pick = $('#pick'); const sel = t > 71.6; pick.style.background = sel ? '#ff6a2f' : 'transparent'; pick.style.borderColor = sel ? '#ff6a2f' : '#333';
-  const bk = t > 72.4; const B = $('#booked'); B.textContent = bk ? '✓ Booked' : 'Book'; B.style.background = bk ? '#3ddc97' : '#f2f2f2';
-  const e = out(seg(t, 71.6, 72.4)); $('#ecal').style.opacity = e; $('#ecal').style.transform = `translateY(${((1 - e) * 40).toFixed(1)}px)`;
-  const c = out(seg(t, 72.6, 74.4)); $('#calRing').style.strokeDashoffset = (100 - c * 74.5).toFixed(2); $('#kcal').textContent = Math.round(c * 1640).toLocaleString('en');
-  $$('#s8 .ghost').forEach((gh, i) => { const k = out(seg(t, 74.6 + i * .45, 75.2 + i * .45)); gh.style.opacity = (k * .9).toFixed(3); gh.style.filter = `blur(${((1 - k) * 8 + 1.2).toFixed(1)}px)`; });
+  show($('#s8u'), t, 70.4, 75.6);
+  const shots = $$('#ufcWin .shot'), sAt = [70.4, 71.8, 73.0, 74.2];
+  shots.forEach((im, i) => {
+    const k = i === 0 ? 1 : out(seg(t, sAt[i], sAt[i] + .45));
+    im.style.opacity = k;
+    const z = 1 + .05 * seg(t, sAt[i], sAt[i] + 1.6);
+    im.style.transform = `scale(${z.toFixed(4)})`; im.style.transformOrigin = '50% 30%';
+  });
+  $$('#ufcSteps div').forEach((d, i) => { const on = t >= sAt[i] && (i === 3 || t < sAt[i + 1]); d.style.color = on ? '#fff' : '#6e6e73'; d.style.transform = on ? 'translateX(10px)' : 'none'; });
+  show($('#s8e'), t, 75.8, 79.4);
+  const c = out(seg(t, 76.8, 78.6)); $('#calRing').style.strokeDashoffset = (100 - c * 74.5).toFixed(2); $('#kcal').textContent = Math.round(c * 1640).toLocaleString('en');
+  $('#meal').style.opacity = out(seg(t, 77.4, 78));
+  show($('#s8g'), t, 79.5, 82.2);
+  $$('#s8g .ghost').forEach((gh, i) => { const k = out(seg(t, 79.6 + i * .4, 80.3 + i * .4)); gh.style.opacity = (k * .85).toFixed(3); gh.style.filter = `blur(${((1 - k) * 8 + 1.5).toFixed(1)}px)`; });
   // 9 end
-  show($('#s9a'), t, 77.8, 81.6, 18);
-  const sk = show($('#s9b'), t, 83.4, 99, 18);
-  $('#sigInk').style.strokeDashoffset = 1 - ease(seg(t, 83.6, 86.2));
-  $('#sigInk').style.fillOpacity = seg(t, 85.4, 86.6);
-  $('#sigInk').style.strokeWidth = 1.1 * (1 - seg(t, 85.6, 86.6));
-  $('#sigLine').style.strokeDashoffset = 1 - ease(seg(t, 86.2, 87));
+  show($('#s9a'), t, 82.8, 86.6, 18);
+  const sk = show($('#s9b'), t, 88.4, 99, 18);
+  $('#sigInk').style.strokeDashoffset = 1 - ease(seg(t, 88.6, 91.2));
+  $('#sigInk').style.fillOpacity = seg(t, 90.4, 91.6);
+  $('#sigInk').style.strokeWidth = 1.1 * (1 - seg(t, 90.6, 91.6));
+  $('#sigLine').style.strokeDashoffset = 1 - ease(seg(t, 91.2, 92));
 
   // captions
   const cap = CAPTIONS.find(([a, b]) => t >= a && t < b);
