@@ -1,4 +1,5 @@
 import { voiceOut } from './speak.js';
+import { answer, SUGGEST } from './abchat.js';
 // AB — a small greeting assistant, and Video mode (the intro film, full screen).
 // The bubble appears once, a moment after the loader, types its message, and
 // offers three choices. Dismissing it is remembered. Video mode loads the film
@@ -16,14 +17,14 @@ const store = {
 const TXT = {
   en: {
     hi: "Hi, I'm AB, Ahmed Bawazir's assistant. Want to get to know Ahmed in 85 seconds?",
-    tap: '🔊 Tap anywhere to hear me', ask: '🎤 Ask me', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
+    tap: '🔊 Tap anywhere to hear me', ask: '💬 Ask me anything', ph: 'Ask about Ahmed…', send: 'Send', mic: 'Speak', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
     close: 'Close', name: 'AB · assistant',
     vtitle: 'From Kuala Lumpur to Riyadh', talk: "Let's talk ↗", replay: '↺ Replay',
     mute: 'Sound on', unmute: 'Sound off', cc: 'Captions',
   },
   ar: {
     hi: 'هلا، أنا AB، مساعد أحمد باوزير. تبي تتعرّف على أحمد في 85 ثانية؟',
-    tap: '🔊 المس الشاشة عشان تسمعني', ask: '🎤 اسألني', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
+    tap: '🔊 المس الشاشة عشان تسمعني', ask: '💬 اسألني أي شي', ph: 'اسأل عن أحمد…', send: 'إرسال', mic: 'تكلّم', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
     close: 'إغلاق', name: 'AB · المساعد',
     vtitle: 'من كوالالمبور إلى الرياض', talk: 'لنتحدث ↗', replay: '↺ إعادة',
     mute: 'تشغيل الصوت', unmute: 'كتم الصوت', cc: 'الترجمة',
@@ -138,7 +139,7 @@ function createVideoMode() {
 }
 
 /* ───────── AB bubble ───────── */
-export function initAssistant({ goProjects, ask }) {
+export function initAssistant({ goProjects, ask, act = {} }) {
   const video = createVideoMode();
   document.querySelectorAll('[data-action="intro"]').forEach(b => b.addEventListener('click', () => video.open()));
 
@@ -154,10 +155,18 @@ export function initAssistant({ goProjects, ask }) {
       <button type="button" class="btn btn-ghost btn-sm abot-proj"></button>
       <button type="button" class="btn btn-ghost btn-sm abot-ask"></button>
       <button type="button" class="abot-later"></button>
+    </div>
+    <div class="abot-chat" hidden>
+      <div class="abot-log" aria-live="polite"></div>
+      <div class="abot-sugg"></div>
+      <form class="abot-form"><input class="abot-in" type="text" autocomplete="off" enterkeyhint="send" maxlength="160">
+        <button type="button" class="abot-mic" aria-label="Speak">🎤</button><button type="submit" class="abot-send" aria-label="Send">↑</button></form>
     </div>`;
   document.body.append(bubble);
   const text = bubble.querySelector('.abot-text');
   const snd = bubble.querySelector('.abot-snd');
+  const chatEl = bubble.querySelector('.abot-chat'), log = bubble.querySelector('.abot-log'), sugg = bubble.querySelector('.abot-sugg');
+  const input = bubble.querySelector('.abot-in');
   if (!voiceOut.ok) snd.hidden = true;
   const tapHint = bubble.querySelector('.abot-tap');
   document.addEventListener('ab:needtap', () => { tapHint.textContent = L().tap; tapHint.hidden = false; });
@@ -169,6 +178,8 @@ export function initAssistant({ goProjects, ask }) {
     bubble.querySelector('.abot-proj').textContent = t.projects;
     bubble.querySelector('.abot-later').textContent = t.later;
     bubble.querySelector('.abot-ask').textContent = t.ask;
+    input.placeholder = t.ph; bubble.querySelector('.abot-send').setAttribute('aria-label', t.send); bubble.querySelector('.abot-mic').setAttribute('aria-label', t.mic);
+    sugg.innerHTML = ''; SUGGEST[root.lang === 'ar' ? 'ar' : 'en'].forEach(q => { const b = document.createElement('button'); b.type = 'button'; b.textContent = q; b.addEventListener('click', () => chat(q)); sugg.append(b); });
     snd.textContent = voiceOut.muted ? '🔇' : '🔊';
     bubble.querySelector('.abot-x').setAttribute('aria-label', t.close);
     if (bubble.classList.contains('typed')) text.textContent = t.hi;
@@ -185,7 +196,32 @@ export function initAssistant({ goProjects, ask }) {
   bubble.querySelector('.abot-watch').addEventListener('click', () => { voiceOut.stop(); collapse(); video.open(); });
   bubble.querySelector('.abot-proj').addEventListener('click', () => { collapse(); goProjects(); });
   bubble.querySelector('.abot-later').addEventListener('click', () => { voiceOut.stop(); collapse(); });
-  bubble.querySelector('.abot-ask').addEventListener('click', () => { voiceOut.stop(); ask && ask(); });
+  const openChat = () => {
+    if (chatEl.hidden) { chatEl.hidden = false; bubble.classList.add('chatting'); if (!log.children.length) add('ab', L().open); }
+    pill.classList.remove('on'); bubble.classList.add('on'); bubble.classList.add('typed');
+  };
+  bubble.querySelector('.abot-ask').addEventListener('click', () => { voiceOut.stop(); openChat(); setTimeout(() => input.focus({ preventScroll: true }), 50); });
+  bubble.querySelector('.abot-mic').addEventListener('click', () => { voiceOut.stop(); ask && ask(); });
+  bubble.querySelector('.abot-form').addEventListener('submit', e => { e.preventDefault(); const q = input.value.trim(); if (q) { input.value = ''; chat(q); } });
+  const add = (who, txt) => { const p = document.createElement('p'); p.className = 'abot-m ' + who; p.textContent = txt; log.append(p); log.scrollTop = log.scrollHeight; return p; };
+  let busy = Promise.resolve();
+  // One exchange: show the question, AB "thinks" briefly, then types and speaks the answer at a calm pace.
+  function chat(q) {
+    openChat(); voiceOut.stop();
+    add('me', q);
+    const a = answer(q, root.lang === 'ar' ? 'ar' : 'en');
+    busy = busy.then(() => new Promise(done => {
+      const p = add('ab', ''); p.classList.add('thinking'); p.dir = a.lang === 'ar' ? 'rtl' : 'ltr';
+      setTimeout(() => {
+        p.classList.remove('thinking');
+        voiceOut.speak(a.text);
+        let i = 0;
+        const step = () => { p.textContent = a.text.slice(0, ++i); log.scrollTop = log.scrollHeight; if (i < a.text.length) setTimeout(step, reduce ? 0 : 28); else { done(); if (a.act && act[a.act]) setTimeout(act[a.act], 900); } };
+        step();
+      }, reduce ? 0 : 650);
+    }));
+    return a;
+  }
   snd.addEventListener('click', () => { voiceOut.setMuted(!voiceOut.muted); label(); if (!voiceOut.muted) voiceOut.speak(L().hi); });
   bubble.querySelector('.abot-x').addEventListener('click', () => { voiceOut.stop(); collapse(); });
   document.addEventListener('langchange', () => { label(); pill.setAttribute('aria-label', L().name); });
@@ -203,5 +239,5 @@ export function initAssistant({ goProjects, ask }) {
   const start = () => setTimeout(() => (store.get(KEY) ? pill.classList.add('on') : expand()), 2200); // after the hero name has finished arriving
   if (root.classList.contains('is-loading')) document.addEventListener('loader:done', start, { once: true });
   else start();
-  return video;
+  return Object.assign(video, { chat });
 }

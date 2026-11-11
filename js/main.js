@@ -377,11 +377,13 @@ initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
 var chaos = initChaos(L, toast);
-var intro = initAssistant({ goProjects: () => go('projects')(), ask: () => voice ? voice.start() : toast(L().voiceNone) });
+var intro = initAssistant({ goProjects: () => go('projects')(), ask: () => voice ? voice.start() : toast(L().voiceNone),
+  act: { projects: () => go('projects')(), contact: () => go('contact')(), intro: () => intro.open(),
+    cv: () => { const a = document.createElement('a'); a.href = 'assets/Ahmed_Bawazir_CV.pdf'; a.download = ''; a.click(); } } });
 initTabTalk();
 var present = initPresent({ L, toast });
 var voice = initVoice({
-  button: $('.voice-btn'), L, toast,
+  button: $('.voice-btn'), L, toast, chat: q => intro.chat(q),
   run: id => {
     const sec = { projects: 'projects', experience: 'experience', skills: 'skills', terminal: 'terminal', contact: 'contact', top: 'hero' }[id];
     if (sec) return go(sec)();

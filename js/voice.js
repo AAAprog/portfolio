@@ -1,5 +1,6 @@
 // Voice commands (Web Speech API). A short, fixed list in English and Arabic.
 import { voiceOut } from './speak.js';
+import { knows } from './abchat.js';
 // AB answers out loud. Hidden where the browser has no speech recognition.
 
 const COMMANDS = [
@@ -31,7 +32,8 @@ function match(text) {
   return best;
 }
 
-export function initVoice({ button, L, run, toast }) {
+export function initVoice({ button, L, run, toast, chat }) {
+  const QUICK = ['dark', 'light', 'arabic', 'english', 'break', 'present'];
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR || !button) { if (button) button.hidden = true; return null; }
   const root = document.documentElement;
@@ -60,11 +62,19 @@ export function initVoice({ button, L, run, toast }) {
     let done = false, heard = false, failed = false, last = '';
     button.setAttribute('aria-pressed', 'true'); button.classList.add('on');
     say(L().voiceListening, true);
+    const command = id => { done = true; say('✓ ' + (L().voiceDone[id] || id)); voiceOut.speak((L().abOk || '') + ' ' + (L().voiceDone[id] || '')); run(id); try { rec.stop(); } catch {} return true; };
+    // Final words: a question for AB goes to the chat; otherwise a site command; otherwise AB still replies.
+    const settle = t => {
+      done = true; try { rec.stop(); } catch {}
+      if (chat && knows(t)) { pill.classList.remove('on'); chat(t); return true; }
+      const id = match(t);
+      if (id) return command(id);
+      if (chat) { pill.classList.remove('on'); chat(t); return true; }
+      say(L().voiceMiss, true); voiceOut.speak(L().voiceMiss); return true;
+    };
+    // Instant commands (theme, language…) act as soon as they are heard.
     const act = transcripts => {
-      for (const t of transcripts) {
-        const id = match(t);
-        if (id) { done = true; const ans = (L().abSay || {})[id]; if (ans) { say(ans); voiceOut.speak(ans); } else { say('✓ ' + (L().voiceDone[id] || id)); voiceOut.speak((L().abOk || '') + ' ' + (L().voiceDone[id] || '')); } run(id); try { rec.stop(); } catch {} return true; }
-      }
+      for (const t of transcripts) { const id = match(t); if (id && QUICK.includes(id) && !(chat && knows(t))) return command(id); }
       return false;
     };
     rec.onresult = e => {
@@ -74,8 +84,8 @@ export function initVoice({ button, L, run, toast }) {
       const alts = Array.from(res, a => a.transcript);
       last = alts[0];
       text.textContent = '“' + last + '”';
-      if (act(alts)) return;                 // act as soon as a command word is heard
-      if (res.isFinal) { done = true; say(L().voiceMiss, true); voiceOut.speak(L().voiceMiss); }
+      if (act(alts)) return;
+      if (res.isFinal) settle(last);
     };
     rec.onerror = e => {
       failed = true;
@@ -86,7 +96,7 @@ export function initVoice({ button, L, run, toast }) {
     };
     rec.onend = () => {
       listening = false; button.setAttribute('aria-pressed', 'false'); button.classList.remove('on');
-      if (!done && last && act([last])) return finish(900);     // Chrome sometimes ends without a final result
+      if (!done && last) { settle(last); return finish(900); }     // Chrome sometimes ends without a final result
       if (!heard && !failed && retry !== true) return start(true); // heard nothing: listen once more
       if (!done && !failed) say(heard ? L().voiceMiss : L().voiceErr['no-speech'], true);
       finish(done ? 900 : 5000);
