@@ -1,5 +1,6 @@
 import { ar, dyn } from './i18n.js';
 import { initHero } from './hero.js';
+import { initLiquidBg } from './liquidbg.js';
 import { initMotion } from './motion.js';
 import { initTerminal } from './terminal.js';
 import { roll } from './roll.js';
@@ -377,6 +378,7 @@ const mBtn = $('.sb-motion'); if (mBtn) mBtn.setAttribute('aria-pressed', String
 initClock();
 initStages();
 $$('.year').forEach(y => { y.textContent = new Date().getFullYear(); });
+initLiquidBg($('.hero-liquid'));
 const hero = initHero($('.hero-canvas'));
 modules = [];
 initTerminal($('.term'));
