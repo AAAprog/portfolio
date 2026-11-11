@@ -1,6 +1,6 @@
 // Offline + fast repeat visits.
 // Network-first for pages and assets (always fresh when online); cache = offline fallback.
-const VERSION = 'ab-v26';
+const VERSION = 'ab-v27';
 const CORE = ['./', 'index.html', 'css/style.css', 'js/main.js', 'js/i18n.js', 'js/hero.js',
   'js/motion.js', 'js/terminal.js', 'js/roll.js', 'js/stage.js', 'js/loader.js', 'js/form.js',
   'js/glass.js', 'js/signature.js', 'js/signmark.js', 'js/chaos.js', 'js/tabtalk.js', 'js/ambient.js', 'js/voice.js', 'js/present.js', 'js/assistant.js', 'js/speak.js',

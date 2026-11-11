@@ -18,34 +18,41 @@ export function svgFor(sig, label, cls) {
   svg.setAttribute("role", "img");
   svg.setAttribute("aria-label", label);
   const ink = document.createElementNS(NS, "path");
-  ink.setAttribute("d", sig.d); ink.setAttribute("pathLength", "1"); ink.setAttribute("class", "sig-ink");
+  ink.setAttribute("d", sig.d); ink.setAttribute("class", "sig-ink");
   svg.append(ink);
   let line = null;
   if (sig.flourish) {
     line = document.createElementNS(NS, "path");
-    line.setAttribute("d", sig.flourish); line.setAttribute("pathLength", "1"); line.setAttribute("class", "sig-line");
+    line.setAttribute("d", sig.flourish); line.setAttribute("class", "sig-line");
     svg.append(line);
   }
   return { svg, ink, line };
 }
 
+// Real path lengths (not pathLength="1"): Safari mis-scales dashes with pathLength.
+function len(path) {
+  if (!path._len) { try { path._len = path.getTotalLength() || 1; } catch { path._len = 1; } path.style.strokeDasharray = `${path._len} ${path._len}`; }
+  return path._len;
+}
 export function write(s, ms) {
   s.svg.style.visibility = "visible";
+  const L = len(s.ink);
   const a = s.ink.animate([
-    { strokeDashoffset: 1, fillOpacity: 0, strokeWidth: 1.2 },
-    { strokeDashoffset: 0, fillOpacity: 0, strokeWidth: 1.2, offset: .72 },
-    { strokeDashoffset: 0, fillOpacity: 1, strokeWidth: 0 },
+    { strokeDashoffset: L, fillOpacity: 0, strokeOpacity: 1 },
+    { strokeDashoffset: 0, fillOpacity: 0, strokeOpacity: 1, offset: .72 },
+    { strokeDashoffset: 0, fillOpacity: 1, strokeOpacity: 0 },
   ], { duration: ms, easing: EASE, fill: "forwards" });
-  if (s.line) s.line.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 700, delay: ms * .78, easing: EASE, fill: "forwards" });
+  if (s.line) { const l = len(s.line); s.line.animate([{ strokeDashoffset: l }, { strokeDashoffset: 0 }], { duration: 700, delay: ms * .78, easing: EASE, fill: "forwards" }); }
   return a.finished;
 }
 function erase(s) {
+  const L = len(s.ink);
   const a = s.ink.animate([
-    { strokeDashoffset: 0, fillOpacity: 1, strokeWidth: 0 },
-    { strokeDashoffset: 0, fillOpacity: 0, strokeWidth: 1.2, offset: .35 },
-    { strokeDashoffset: -1, fillOpacity: 0, strokeWidth: 1.2 },
+    { strokeDashoffset: 0, fillOpacity: 1, strokeOpacity: 0 },
+    { strokeDashoffset: 0, fillOpacity: 0, strokeOpacity: 1, offset: .35 },
+    { strokeDashoffset: -L, fillOpacity: 0, strokeOpacity: 1 },
   ], { duration: 1100, easing: EASE, fill: "forwards" });
-  if (s.line) s.line.animate([{ strokeDashoffset: 0 }, { strokeDashoffset: -1 }], { duration: 600, easing: EASE, fill: "forwards" });
+  if (s.line) { const l = len(s.line); s.line.animate([{ strokeDashoffset: 0 }, { strokeDashoffset: -l }], { duration: 600, easing: EASE, fill: "forwards" }); }
   return a.finished.then(() => { s.svg.style.visibility = "hidden"; });
 }
 
