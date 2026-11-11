@@ -1258,6 +1258,12 @@ body::after {
 .vm-track { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.2); cursor: pointer; overflow: hidden; }
 .vm-track i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
 .vm-time { font-size: 12.5px; color: #c7c7cc; min-width: 40px; }
+.vm-big { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 88px; height: 88px; border-radius: 50%; border: 0; background: var(--accent); color: #000; font-size: 28px; padding-left: 6px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .25s, scale .25s; box-shadow: 0 0 0 12px rgba(255,106,47,.18); }
+.vmode.paused .vm-big { opacity: 1; pointer-events: auto; }
+.vm-sound { width: 44px; padding: 0; font-size: 18px; }
+.vm-rotate { position: absolute; left: 0; right: 0; bottom: 96px; text-align: center; font-size: 13px; color: #8e8e93; display: none; }
+@media (orientation: portrait) and (pointer: coarse) { .vm-rotate { display: block; } .vm-top, .vm-bar { padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); } }
+@media (orientation: landscape) and (pointer: coarse) { .vm-top { padding-top: max(14px, env(safe-area-inset-top)); } }
 .vm-end { position: absolute; left: 50%; bottom: 110px; translate: -50% 0; display: flex; gap: 12px; }
 .vm-end[hidden] { display: none; }
 .vm-end .btn-ghost { color: #fff; border-color: rgba(255,255,255,.35); }
