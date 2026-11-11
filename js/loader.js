@@ -77,6 +77,12 @@ export function initLoader() {
       bar.style.transform = 'scaleX(1)';
       expandStart = performance.now();
       el.classList.add('expanding');
+      // The glass fades away and the signature writes itself on black, once.
+      const b = arBox(canvas.clientWidth, canvas.clientHeight);
+      Object.assign(sig.svg.style, { width: b.w + 'px', height: b.h + 'px' });
+      writing = true;
+      if (reduceM) setTimeout(finish, 400);
+      else setTimeout(() => write(sig, 1900).then(() => setTimeout(finish, 450)), 250);
     };
 
     const tick = now => {
@@ -92,14 +98,6 @@ export function initLoader() {
         const e = out3(Math.min(1, (now - expandStart) / 650));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
         r = R + (Math.hypot(w, h) - R) * e;
-        if (e >= 1 && !writing) {
-          writing = true;
-          const b = arBox(w, h);
-          Object.assign(sig.svg.style, { width: b.w + 'px', height: b.h + 'px' });
-          el.classList.add('writing');
-          if (reduceM) finish();
-          else write(sig, 1900).then(() => setTimeout(finish, 450));
-        }
       }
       glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
       glass.setLens(x, y, r);
