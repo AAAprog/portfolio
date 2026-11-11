@@ -5,7 +5,7 @@
 // Tracks real readiness (fonts + load), skippable, shown on every visit.
 import { roll } from './roll.js';
 import { createGlass, wordmark } from './glass.js';
-import { AR, svgFor, write } from './signmark.js';
+import { AR } from './signmark.js';
 
 const ease = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const out3 = t => 1 - Math.pow(1 - t, 3);
@@ -25,19 +25,13 @@ export function initLoader() {
 
   const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
   let fs = 100;
-  const arBox = (w, h) => { const bw = Math.min(w * 0.7, h * 0.36 * AR.w / AR.h, 640); return { w: bw, h: bw * AR.h / AR.w }; };
-  // Once the lens fills the screen, the signature writes itself in (stroke, then fill).
-  const sig = svgFor(AR, 'أحمد باوزير', 'sig-ar loader-sig');
-  sig.svg.style.visibility = 'hidden';
-  el.append(sig.svg);
-  const reduceM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const arBox = (w, h) => { const bw = Math.min(w * 0.6, h * 0.3 * AR.w / AR.h, 560); return { w: bw, h: bw * AR.h / AR.w }; };
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07,
     drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
     // Through the glass: the Ruqaa signature, the same outline the footer signature writes.
     drawReveal: (c, w, h) => {
       c.clearRect(0, 0, w, h);
-      if (emptyReveal) return; // while the bubble fills the screen, the glass is clear
       const k = arBox(w, h).w / AR.w;
       c.save(); c.translate((w - AR.w * k) / 2, (h - AR.h * k) / 2); c.scale(k, k);
       c.fillStyle = '#ffffff'; c.fill(new Path2D(AR.d)); c.restore();
@@ -45,7 +39,7 @@ export function initLoader() {
   });
 
   const MIN = 1700, MAX = 4000, t0 = performance.now();
-  let emptyReveal = false, target = 0.15, shown = 0, finished = false, raf, expandStart = 0, writing = false;
+  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0, writing = false;
   const fontsReady = (document.fonts ? Promise.all([
     document.fonts.load('600 80px "Space Grotesk"'),
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
@@ -78,13 +72,6 @@ export function initLoader() {
       bar.style.transform = 'scaleX(1)';
       expandStart = performance.now();
       el.classList.add('expanding');
-      // The glass fades away and the signature writes itself on black, once.
-      const b = arBox(canvas.clientWidth, canvas.clientHeight);
-      Object.assign(sig.svg.style, { width: b.w + 'px', height: b.h + 'px' });
-      writing = true;
-      emptyReveal = true; glass.layout();
-      if (reduceM) setTimeout(finish, 700);
-      else setTimeout(() => { el.classList.add('writing'); write(sig, 1900).then(() => setTimeout(finish, 450)); }, 1000);
     };
 
     const tick = now => {
@@ -99,11 +86,11 @@ export function initLoader() {
       if (expandStart) {
         const e = ease(Math.min(1, (now - expandStart) / 1000));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
-        // Grow into one big glass bubble that holds the whole signature, rim still on screen.
-        const big = Math.min(Math.hypot(w, h) / 2, Math.max(arBox(w, h).w * 0.64, Math.min(w, h) * 0.46));
-        r = R + (big - R) * e;
+        // The bubble grows until the Arabic name, fixed behind the English one, fills the screen.
+        r = R + (Math.hypot(w, h) - R) * e;
+        if (e >= 1 && !writing) { writing = true; setTimeout(finish, 650); }
       }
-      glass.setGlass(0.09); // the glass stays visible; the signature is written inside it
+      glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 900)) : 0.07);
       glass.setLens(x, y, r);
 
       if (!finished) {
