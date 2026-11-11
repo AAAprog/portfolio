@@ -161,15 +161,22 @@ const gitlog = $('.gitlog');
 const sections = $$('[data-section]');
 const navLinks = $$('.toplinks a');
 
+// Words light up one by one as the text scrolls through the screen (the About statement,
+// section intros and the contact line). The next word fades in partially, so it feels continuous.
 function updateStatement() {
-  const el = $('.statement-text');
-  if (!el) return;
-  const words = $$('.w', el);
-  if (reduce) { words.forEach(w => w.classList.add('on')); return; }
-  const r = el.getBoundingClientRect(), vh = innerHeight;
-  const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
-  const n = Math.round(p * words.length);
-  words.forEach((w, i) => w.classList.toggle('on', i < n));
+  $$('[data-split]').forEach(el => {
+    const words = $$('.w', el);
+    if (reduce) { words.forEach(w => { w.classList.add('on'); w.style.opacity = ''; }); return; }
+    const r = el.getBoundingClientRect(), vh = innerHeight;
+    const big = el.classList.contains('statement-text');
+    const p = Math.min(1, Math.max(0, (vh * (big ? 0.85 : 0.92) - r.top) / (r.height + vh * (big ? 0.35 : 0.25))));
+    const x = p * words.length;
+    words.forEach((w, i) => {
+      const k = Math.min(1, Math.max(0, x - i));
+      w.classList.toggle('on', k >= 1);
+      w.style.opacity = k >= 1 ? '' : (0.16 + 0.84 * k).toFixed(2);
+    });
+  });
 }
 
 let ticking = false;

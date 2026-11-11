@@ -239,8 +239,10 @@ p { margin: 0; }
   font: 600 clamp(28px, 4.6vw, 58px)/1.14 var(--font-display); letter-spacing: -.03em; max-width: 22ch;
 }
 :root[lang="ar"] .statement-text { letter-spacing: 0; line-height: 1.45; max-width: 26ch; }
-.statement-text .w { color: var(--ink); opacity: .16; transition: opacity .35s ease, color .35s ease; }
+.statement-text .w { color: var(--ink); opacity: .16; transition: opacity .2s ease, color .35s ease; }
 .statement-text .w.on { opacity: 1; }
+[data-split]:not(.statement-text) .w { opacity: .16; transition: opacity .25s ease; }
+[data-split]:not(.statement-text) .w.on { opacity: 1; }
 .statement-text .w.hl.on { color: var(--accent); }
 .stat { display: flex; flex-direction: column; gap: 6px; }
 .stat-value { font: 700 clamp(40px, 5vw, 64px)/1 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; font-family: "Space Grotesk", sans-serif; }
