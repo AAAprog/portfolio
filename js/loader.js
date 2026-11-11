@@ -25,21 +25,20 @@ export function initLoader() {
 
   const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
   let fs = 100;
-  const arBox = (w, h) => { const bw = Math.min(w * 0.6, h * 0.3 * AR.w / AR.h, 560); return { w: bw, h: bw * AR.h / AR.w }; };
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07,
     drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
-    // Through the glass: the Ruqaa signature, the same outline the footer signature writes.
+    // Same reveal as before, only the Arabic is now the Ruqaa signature outline (filled).
     drawReveal: (c, w, h) => {
       c.clearRect(0, 0, w, h);
-      const k = arBox(w, h).w / AR.w;
-      c.save(); c.translate((w - AR.w * k) / 2, (h - AR.h * k) / 2); c.scale(k, k);
+      const bw = Math.min(w * 0.58, fs * 5.6), k = bw / AR.w;
+      c.save(); c.translate((w - AR.w * k) / 2, h / 2 - AR.h * k * 0.52); c.scale(k, k);
       c.fillStyle = '#ffffff'; c.fill(new Path2D(AR.d)); c.restore();
     },
   });
 
   const MIN = 1700, MAX = 4000, t0 = performance.now();
-  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0, writing = false;
+  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
   const fontsReady = (document.fonts ? Promise.all([
     document.fonts.load('600 80px "Space Grotesk"'),
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
@@ -84,13 +83,12 @@ export function initLoader() {
       let y = h / 2 + Math.sin(t / 380) * fs * 0.05;
       let r = R;
       if (expandStart) {
-        const e = ease(Math.min(1, (now - expandStart) / 1000));
+        const e = out3(Math.min(1, (now - expandStart) / 650));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
-        // The bubble grows until the Arabic name, fixed behind the English one, fills the screen.
         r = R + (Math.hypot(w, h) - R) * e;
-        if (e >= 1 && !writing) { writing = true; setTimeout(finish, 650); }
+        if (e >= 1 && !el.classList.contains('out')) finish();
       }
-      glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 900)) : 0.07);
+      glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
       glass.setLens(x, y, r);
 
       if (!finished) {
