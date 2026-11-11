@@ -5,6 +5,7 @@
 // Tracks real readiness (fonts + load), skippable, shown on every visit.
 import { roll } from './roll.js';
 import { createGlass, wordmark } from './glass.js';
+import { AR, svgFor, write } from './signmark.js';
 
 const ease = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const out3 = t => 1 - Math.pow(1 - t, 3);
@@ -24,14 +25,26 @@ export function initLoader() {
 
   const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
   let fs = 100;
+  const arBox = (w, h) => { const bw = Math.min(w * 0.82, h * 0.42 * AR.w / AR.h, 760); return { w: bw, h: bw * AR.h / AR.w }; };
+  // Once the lens fills the screen, the signature writes itself in (stroke, then fill).
+  const sig = svgFor(AR, 'أحمد باوزير', 'sig-ar loader-sig');
+  sig.svg.style.visibility = 'hidden';
+  el.append(sig.svg);
+  const reduceM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07,
     drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
-    drawReveal: (c, w, h) => wordmark(c, w, h, { text: 'أحمد باوزير', size: fs * 1.02, weight: 700, family: '"IBM Plex Sans Arabic"', color: '#ffffff' }),
+    // Through the glass: the Ruqaa signature, the same outline the footer signature writes.
+    drawReveal: (c, w, h) => {
+      c.clearRect(0, 0, w, h);
+      const k = arBox(w, h).w / AR.w;
+      c.save(); c.translate((w - AR.w * k) / 2, (h - AR.h * k) / 2); c.scale(k, k);
+      c.fillStyle = '#ffffff'; c.fill(new Path2D(AR.d)); c.restore();
+    },
   });
 
   const MIN = 1700, MAX = 4000, t0 = performance.now();
-  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
+  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0, writing = false;
   const fontsReady = (document.fonts ? Promise.all([
     document.fonts.load('600 80px "Space Grotesk"'),
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
@@ -79,7 +92,14 @@ export function initLoader() {
         const e = out3(Math.min(1, (now - expandStart) / 650));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
         r = R + (Math.hypot(w, h) - R) * e;
-        if (e >= 1 && !el.classList.contains('out')) finish();
+        if (e >= 1 && !writing) {
+          writing = true;
+          const b = arBox(w, h);
+          Object.assign(sig.svg.style, { width: b.w + 'px', height: b.h + 'px' });
+          el.classList.add('writing');
+          if (reduceM) finish();
+          else write(sig, 1900).then(() => setTimeout(finish, 450));
+        }
       }
       glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
       glass.setLens(x, y, r);
