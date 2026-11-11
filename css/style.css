@@ -23,16 +23,17 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 12px 32px -12px rgba(0, 0, 0, .18);
   --grid: rgba(0, 0, 0, .06);
 
-  --font-display: "Space Grotesk", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --font-sans: "Inter", "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-mono: var(--font-sans);
+  --font-code: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --radius: 18px;
   --radius-sm: 10px;
   --gutter: clamp(16px, 4vw, 40px);
   --max: 1200px;
   --ease: cubic-bezier(.2, .8, .2, 1);
-  --bar-h: 34px;
+  --bar-h: 0px; /* the bottom status bar is hidden */
   color-scheme: light;
 }
 
@@ -60,7 +61,7 @@
 }
 
 :root[lang="ar"] {
-  --font-display: "IBM Plex Sans Arabic", "Space Grotesk", system-ui, sans-serif;
+  --font-display: "IBM Plex Sans Arabic", "Plus Jakarta Sans", system-ui, sans-serif;
   --font-sans: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
 }
 
@@ -85,7 +86,7 @@ p, li { text-wrap: pretty; }
 :root[lang="ar"] h1, :root[lang="ar"] h2, :root[lang="ar"] h3 { letter-spacing: 0; line-height: 1.25; }
 p { margin: 0; }
 .mono { font-family: var(--font-mono); letter-spacing: 0; }
-:root[lang="ar"] .mono { font-family: "JetBrains Mono", "IBM Plex Sans Arabic", ui-monospace, sans-serif; }
+:root[lang="ar"] .mono { font-family: var(--font-sans); }
 ::selection { background: var(--accent); color: var(--on-accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
@@ -132,7 +133,7 @@ p { margin: 0; }
 .icon-btn:hover { border-color: var(--ink); }
 .icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
 .lang-label { font-family: "IBM Plex Sans Arabic", var(--font-sans); font-weight: 700; font-size: 15px; line-height: 1; }
-:root[lang="ar"] .lang-label { font-family: var(--font-mono); font-size: 12px; }
+:root[lang="ar"] .lang-label { font-family: var(--font-sans); }
 .i-moon { display: none; }
 :root[data-theme="dark"] .i-sun { display: none; }
 :root[data-theme="dark"] .i-moon { display: block; }
@@ -155,7 +156,7 @@ p { margin: 0; }
   border-bottom-color: var(--line);
 }
 .logo { display: inline-flex; align-items: flex-end; gap: 3px; text-decoration: none; transform: translate(var(--mx, 0px), var(--my, 0px)); transition: transform .35s var(--ease); }
-.logo-mark { font: 700 24px/1 var(--font-display); letter-spacing: -.02em; font-family: "Space Grotesk", sans-serif; }
+.logo-mark { font: 700 24px/1 var(--font-display); letter-spacing: -.02em; font-family: "Plus Jakarta Sans", sans-serif; }
 .logo-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--accent); margin-bottom: 4px; transition: transform .4s var(--ease); }
 .logo:hover .logo-dot { transform: rotate(45deg) scale(1.2); }
 .toplinks { display: flex; gap: 4px; margin-inline: auto; }
@@ -173,13 +174,8 @@ p { margin: 0; }
   display: flex; align-items: center;
   padding-block: 110px 80px; overflow: hidden; isolation: isolate;
 }
-.hero-grid {
-  position: absolute; inset: 0; z-index: -2;
-  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 45%, #000 30%, transparent 75%);
-}
+.hero-liquid { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; display: block; }
+.hero-liquid.no-gl { background: radial-gradient(60% 70% at 75% 45%, color-mix(in srgb, var(--ink) 14%, transparent), transparent 70%); }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
 .hero-inner { position: relative; pointer-events: none; }
 .hero-inner a, .hero-inner button { pointer-events: auto; }
@@ -239,11 +235,13 @@ p { margin: 0; }
   font: 600 clamp(28px, 4.6vw, 58px)/1.14 var(--font-display); letter-spacing: -.03em; max-width: 22ch;
 }
 :root[lang="ar"] .statement-text { letter-spacing: 0; line-height: 1.45; max-width: 26ch; }
-.statement-text .w { color: var(--ink); opacity: .16; transition: opacity .35s ease, color .35s ease; }
+.statement-text .w { color: var(--ink); opacity: .16; transition: opacity .2s ease, color .35s ease; }
 .statement-text .w.on { opacity: 1; }
+[data-split]:not(.statement-text) .w { opacity: .16; transition: opacity .25s ease; }
+[data-split]:not(.statement-text) .w.on { opacity: 1; }
 .statement-text .w.hl.on { color: var(--accent); }
 .stat { display: flex; flex-direction: column; gap: 6px; }
-.stat-value { font: 700 clamp(40px, 5vw, 64px)/1 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; font-family: "Space Grotesk", sans-serif; }
+.stat-value { font: 700 clamp(40px, 5vw, 64px)/1 var(--font-display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; font-family: "Plus Jakarta Sans", sans-serif; }
 .stat-label { font-size: 14px; color: var(--muted); }
 
 /* ---------- Git log ---------- */
@@ -714,7 +712,7 @@ kbd { font: inherit; font-size: 11px; padding: 1px 6px; border-radius: 4px; bord
 :root[lang="ar"] .b-avail h3 { letter-spacing: 0; }
 .b-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
 .b-clock { grid-area: clock; }
-.b-time { font: 600 clamp(44px, 5vw, 64px)/1 "Space Grotesk", sans-serif; letter-spacing: -.04em; font-variant-numeric: tabular-nums; direction: ltr; text-align: start; }
+.b-time { font: 600 clamp(44px, 5vw, 64px)/1 "Plus Jakarta Sans", sans-serif; letter-spacing: -.04em; font-variant-numeric: tabular-nums; direction: ltr; text-align: start; }
 .b-time .colon { animation: blink 2s steps(1) infinite; color: var(--accent); margin-inline: .04em; }
 .b-hours { margin-top: auto; font-size: 12px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; }
 .b-hours .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); margin-top: 5px; flex: none; }
@@ -726,7 +724,7 @@ kbd { font: inherit; font-size: 11px; padding: 1px 6px; border-radius: 4px; bord
 .g-bg { stroke: var(--surface-2); }
 .g-fg { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.6s var(--ease) .2s; }
 .b-gpa.in .g-fg { stroke-dashoffset: 9.25; } /* 3.63 / 4.00 = 90.75% */
-.g-val { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font: 700 30px/1 "Space Grotesk", sans-serif; letter-spacing: -.03em; }
+.g-val { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font: 700 30px/1 "Plus Jakarta Sans", sans-serif; letter-spacing: -.03em; }
 .g-val small { display: block; margin-top: 4px; font: 500 11px var(--font-mono); color: var(--muted); letter-spacing: 0; }
 .b-focus { grid-area: focus; }
 .b-chips { list-style: none; margin: auto 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; }
@@ -895,7 +893,7 @@ body::after {
 .ec-ring .bg { stroke: var(--surface-2); }
 .ec-ring .fg { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 40; transition: stroke-dashoffset .9s var(--ease); }
 [data-added="1"] .ec-ring .fg { stroke-dashoffset: 25.5; }
-.ec-ring p { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font: 700 19px/1 "Space Grotesk", sans-serif; }
+.ec-ring p { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; font: 700 19px/1 "Plus Jakarta Sans", sans-serif; }
 .ec-ring small { display: block; margin-top: 4px; font: 500 8.5px var(--font-mono); color: var(--muted); }
 .ec-add { display: flex; width: 100%; }
 .ec-list { list-style: none; margin: 10px 0 0; padding: 0; }
@@ -931,7 +929,7 @@ body::after {
 [data-ok="1"] .hc-pill .p-wait { display: none; }
 [data-ok="1"] .hc-pill .p-ok { display: inline; }
 .hc-balance { margin-top: 18px; font-size: 11.5px; color: var(--muted); display: flex; align-items: baseline; gap: 5px; }
-.hc-bal { color: var(--ink); font: 600 17px "Space Grotesk", sans-serif; }
+.hc-bal { color: var(--ink); font: 600 17px "Plus Jakarta Sans", sans-serif; }
 .hc-actions { display: flex; gap: 8px; margin-top: 12px; }
 .hc-undo { display: none; }
 .hc-more { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); display: grid; gap: 8px; }
@@ -1253,11 +1251,37 @@ body::after {
   display: grid; place-items: center; opacity: 0; scale: .6; pointer-events: none; transition: opacity .3s, scale .4s var(--ease); }
 .abot-pill.on { opacity: 1; scale: 1; pointer-events: auto; }
 .abot-pill:hover { scale: 1.06; }
-.abot-pill .abot-av { width: 42px; height: 42px; }
+.abot-pill { border: 0; background: none; box-shadow: none; backdrop-filter: none; overflow: visible; }
+.abot-pill.moving .abot-face { animation: abwalk .5s ease-in-out infinite; }
+@keyframes abwalk { 50% { translate: 0 -4px; rotate: -4deg; } }
+.abot-pill:not(.moving) .abot-face { animation: abfloat 3.6s ease-in-out infinite; }
+@keyframes abfloat { 50% { translate: 0 -3px; } }
+/* the glass face: same family as the loader lens — a silver orb with a bright rim */
+.abot-face { --lx: 0; --ly: 0; position: relative; display: block; width: 100%; height: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, #fff 0 8%, transparent 22%),
+    radial-gradient(circle at 70% 82%, rgba(255,255,255,.55), transparent 38%),
+    radial-gradient(circle at 50% 55%, #d9dade 0%, #a9abb2 55%, #5d6068 100%);
+  box-shadow: inset 0 -6px 12px rgba(0,0,0,.28), inset 0 3px 6px rgba(255,255,255,.8), 0 0 0 1px rgba(255,255,255,.45), 0 12px 26px -10px rgba(0,0,0,.55); }
+.abot-face::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 200deg, transparent, rgba(255,106,47,.18), transparent 30%, rgba(80,140,255,.16), transparent 60%); mix-blend-mode: overlay; }
+.ab-eye { position: absolute; top: 34%; width: 15%; height: 24%; border-radius: 50%; background: #121214;
+  translate: calc(var(--lx) * 18%) calc(var(--ly) * 14%); transition: translate .18s ease-out, scale .08s; }
+.ab-eye:nth-child(1) { left: 30%; } .ab-eye:nth-child(2) { right: 30%; }
+.ab-eye::after { content: ""; position: absolute; left: 22%; top: 16%; width: 38%; height: 30%; border-radius: 50%; background: #fff; }
+.abot-face.blink .ab-eye { scale: 1 .12; }
+.ab-mouth { position: absolute; left: 50%; top: 64%; width: 16%; height: 8%; translate: calc(-50% + var(--lx) * 10%) 0; border-radius: 0 0 50% 50% / 0 0 100% 100%; background: #121214; transition: height .15s; }
+.abot-pill.talking .ab-mouth { animation: abtalk .28s ease-in-out 6 alternate; }
+@keyframes abtalk { to { height: 13%; } }
+.abot-av .abot-face { width: 100%; height: 100%; }
+.abot-av:has(.abot-face) { background: none; }
+.abot-tip { position: absolute; bottom: calc(100% + 10px); right: 0; width: max-content; max-width: min(240px, 70vw); padding: 9px 12px; border-radius: 14px 14px 4px 14px;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); box-shadow: 0 14px 30px -14px rgba(0,0,0,.5); font-size: 13.5px; line-height: 1.45; text-align: start;
+  opacity: 0; translate: 0 6px; pointer-events: none; transition: opacity .3s, translate .3s var(--ease); }
+[dir="rtl"] .abot-tip { right: auto; left: 0; border-radius: 14px 14px 14px 4px; }
+.abot-pill.talking .abot-tip { opacity: 1; translate: none; }
 [dir="rtl"] .abot-pill { right: auto; left: 22px; }
 .vmode-on .abot-pill, .presenting .abot-pill, .chaos .abot-pill { display: none; }
 .abot-head { display: flex; align-items: center; gap: 10px; }
-.abot-av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 700 13px "Space Grotesk", sans-serif; position: relative; }
+.abot-av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 700 13px "Plus Jakarta Sans", sans-serif; position: relative; }
 .abot-av::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: var(--ok); border: 2px solid var(--surface); }
 .abot-name { font-size: 12px; color: var(--muted); }
 :root[lang="ar"] .abot-name { font-family: var(--font-sans); }
@@ -1342,3 +1366,33 @@ body::after {
   .wr > span { transform: none !important; }
   .statement-text .w { opacity: 1; }
 }
+
+/* Bottom status bar removed from view (kept in the DOM for the scripts that read it). */
+.statusbar { display: none !important; }
+
+/* ───────── No "tech" fonts: labels use the normal sans; only the terminal and code keep a code font ───────── */
+.term, .term *, code, kbd, .term-out { font-family: var(--font-code) !important; }
+.mono { letter-spacing: .005em; }
+.kicker, .eyebrow { text-transform: none; letter-spacing: .01em; font-weight: 500; }
+
+/* ───────── Header: one calm glass bar, grouped controls ───────── */
+.topbar { height: 72px; }
+.topbar .logo-mark { font: 800 22px/1 "Plus Jakarta Sans", var(--font-sans); letter-spacing: -.03em; }
+.toplinks a { font: 500 14.5px/1 var(--font-sans); letter-spacing: 0; padding: 9px 14px; border-radius: 999px; color: var(--muted); transition: color .2s, background-color .2s; }
+.toplinks a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.toplinks a.is-active { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.top-actions { display: flex; align-items: center; gap: 8px; }
+/* the three small controls sit together in one soft pill */
+.top-tools { display: flex; align-items: center; padding: 3px; gap: 2px; border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 5%, transparent); border: 1px solid var(--line); }
+.top-tools .icon-btn { width: 34px; height: 34px; border: 0; background: transparent; color: var(--muted); }
+.top-tools .icon-btn:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 8%, transparent); }
+.top-tools .icon-btn svg { width: 17px; height: 17px; stroke-width: 1.7; }
+.top-tools .icon-btn[aria-pressed="true"] { color: var(--accent); }
+.top-tools .lang-btn { width: auto; padding-inline: 11px; }
+.lang-label { font: 600 13.5px/1 var(--font-sans) !important; letter-spacing: 0; }
+.top-actions .btn-cv { --h: 40px; padding-inline: 18px; font: 600 14px/1 var(--font-sans); gap: 8px; }
+.top-actions .btn-cv svg { width: 16px; height: 16px; }
+@media (max-width: 560px) { .top-actions .btn-cv span { display: none; } .top-actions .btn-cv { padding-inline: 12px; } }
+/* the new font sits lower: give revealed words room so descenders are not clipped */
+:root:not([lang="ar"]) .wr { padding-bottom: .14em; margin-bottom: -.14em; }

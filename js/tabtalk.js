@@ -13,7 +13,7 @@ function badgeIcon(withBadge) {
   c.width = c.height = 64;
   const x = c.getContext('2d');
   x.fillStyle = '#000'; x.beginPath(); x.roundRect ? x.roundRect(0, 0, 64, 64, 14) : x.rect(0, 0, 64, 64); x.fill();
-  x.fillStyle = '#f3f1ec'; x.font = '700 28px "Space Grotesk", Arial, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
+  x.fillStyle = '#f3f1ec'; x.font = '700 28px "Plus Jakarta Sans", Arial, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
   x.fillText('AB', 29, 35);
   if (withBadge) {
     x.fillStyle = '#ff5a1f'; x.beginPath(); x.arc(50, 14, 13, 0, Math.PI * 2); x.fill();

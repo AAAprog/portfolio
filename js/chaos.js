@@ -169,7 +169,7 @@ export function initChaos(L, toast) {
 
   // A note for the curious who open DevTools.
   try {
-    console.log('%cAB.', 'font: 700 64px "Space Grotesk", sans-serif; color: #ff6a2f;');
+    console.log('%cAB.', 'font: 700 64px "Plus Jakarta Sans", sans-serif; color: #ff6a2f;');
     console.log('%cYou opened the console. That is exactly what I would do.\nHiring? aaa.bawazir0@gmail.com  ·  try typing  hire  on the page, or press B.', 'font: 13px/1.6 "JetBrains Mono", monospace; color: #8e8e93;');
   } catch {}
 

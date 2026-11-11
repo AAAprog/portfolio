@@ -19,7 +19,7 @@ export function initSignature(wrap) {
     const bg = m.slice(0, 3).map(v => +v / 255);
     glass = createGlass(canvas, {
       tint: [1, 1, 1], glass: 0.06, bg,
-      drawBase: (c, w, h) => { fs = Math.min(w * 0.135, h * 0.78); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: fg, alpha: 0.16, accent, dot: true, y: 0.42 }); },
+      drawBase: (c, w, h) => { fs = Math.min(w * 0.135, h * 0.78); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Plus Jakarta Sans"', color: fg, alpha: 0.16, accent, dot: true, y: 0.42 }); },
       drawReveal: (c, w, h) => wordmark(c, w, h, { text: 'أحمد باوزير', size: fs * 1.02, weight: 700, family: '"IBM Plex Sans Arabic"', color: fg, y: 0.42 }),
     });
     glass.layout();
@@ -56,6 +56,6 @@ export function initSignature(wrap) {
     let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { glass.layout(); }, 150); });
     new MutationObserver(() => build()).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
   };
-  (document.fonts ? Promise.all([document.fonts.load('600 80px "Space Grotesk"'), document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد')]) : Promise.resolve())
+  (document.fonts ? Promise.all([document.fonts.load('600 80px "Plus Jakarta Sans"'), document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد')]) : Promise.resolve())
     .then(boot, boot);
 }

@@ -35,7 +35,7 @@ export function initHero(canvas) {
     const o = off.getContext('2d');
     o.fillStyle = '#000';
     o.textAlign = 'center'; o.textBaseline = 'middle';
-    o.font = `700 ${size * 0.92}px "Space Grotesk", system-ui, sans-serif`;
+    o.font = `700 ${size * 0.92}px "Plus Jakarta Sans", system-ui, sans-serif`;
     o.fillText('AB', ow / 2, oh * 0.5);
     const data = o.getImageData(0, 0, ow, oh).data;
 
@@ -117,7 +117,7 @@ export function initHero(canvas) {
   }).observe(hero);
 
   const start = () => { sample(); reduce ? draw() : (raf = requestAnimationFrame(step)); };
-  const boot = () => (document.fonts && document.fonts.load) ? document.fonts.load('700 100px "Space Grotesk"').then(start, start) : start();
+  const boot = () => (document.fonts && document.fonts.load) ? document.fonts.load('700 100px "Plus Jakarta Sans"').then(start, start) : start();
   // Wait for the loader curtain so the particles assemble in view.
   if (document.documentElement.classList.contains('is-loading')) document.addEventListener('loader:done', boot, { once: true });
   else boot();
