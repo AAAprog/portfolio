@@ -17,6 +17,15 @@ const store = {
 const TXT = {
   en: {
     hi: "Hi, I'm AB, Ahmed Bawazir's assistant. Want to get to know Ahmed in 85 seconds?",
+    say: {
+      about: "That's Ahmed in one line: code and configuration.",
+      experience: 'His career, written like git commits. Very him.',
+      projects: "This first one is Codai, Ahmed's graduation project.",
+      skills: 'His whole toolbox. Try the filters.',
+      credentials: 'Certified, and fluent in two languages. Like me.',
+      terminal: 'Type help here. Or try: sudo hire ahmed 😉',
+      contact: 'This is the part where you say hi.',
+    },
     tap: '🔊 Tap anywhere to hear me', ask: '💬 Ask me anything', ph: 'Ask about Ahmed…', send: 'Send', mic: 'Speak', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
     close: 'Close', name: 'AB · assistant',
     vtitle: 'From Kuala Lumpur to Riyadh', talk: "Let's talk ↗", replay: '↺ Replay',
@@ -24,6 +33,15 @@ const TXT = {
   },
   ar: {
     hi: 'هلا، أنا AB، مساعد أحمد باوزير. تبي تتعرّف على أحمد في 85 ثانية؟',
+    say: {
+      about: 'هذا أحمد بسطر واحد: برمجة وتهيئة أنظمة.',
+      experience: 'خبراته مكتوبة كأنها commits. هذا أسلوبه.',
+      projects: 'أول واحد Codai، مشروع تخرّج أحمد.',
+      skills: 'كل أدواته هنا. جرّب الفلاتر.',
+      credentials: 'شهادات، ولغتين بطلاقة. مثلي.',
+      terminal: 'اكتب help هنا. أو جرّب: sudo hire ahmed 😉',
+      contact: 'هنا تقول له هلا.',
+    },
     tap: '🔊 المس الشاشة عشان تسمعني', ask: '💬 اسألني أي شي', ph: 'اسأل عن أحمد…', send: 'إرسال', mic: 'تكلّم', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
     close: 'إغلاق', name: 'AB · المساعد',
     vtitle: 'من كوالالمبور إلى الرياض', talk: 'لنتحدث ↗', replay: '↺ إعادة',
@@ -147,7 +165,7 @@ export function initAssistant({ goProjects, ask, act = {} }) {
   bubble.className = 'abot';
   bubble.setAttribute('aria-live', 'polite');
   bubble.innerHTML = `
-    <div class="abot-head"><span class="abot-av">AB</span><span class="abot-name mono"></span>
+    <div class="abot-head"><span class="abot-av"><span class="abot-face" aria-hidden="true"><i class="ab-eye"></i><i class="ab-eye"></i><i class="ab-mouth"></i></span></span><span class="abot-name mono"></span>
       <button type="button" class="abot-snd" aria-label="Voice">🔊</button><button type="button" class="abot-x" aria-label="Close">✕</button></div>
     <p class="abot-tap mono" hidden></p><p class="abot-msg"><span class="abot-text"></span><span class="abot-caret"></span></p>
     <div class="abot-actions">
@@ -187,7 +205,7 @@ export function initAssistant({ goProjects, ask, act = {} }) {
   // Closing collapses AB to a small avatar in the corner; tapping it opens the message again.
   const pill = document.createElement('button');
   pill.type = 'button'; pill.className = 'abot-pill';
-  pill.innerHTML = '<span class="abot-av">AB</span>';
+  pill.innerHTML = '<span class="abot-face" aria-hidden="true"><i class="ab-eye"></i><i class="ab-eye"></i><i class="ab-mouth"></i></span><span class="abot-tip" role="status"></span>';
   document.body.append(pill);
   let typedOnce = false;
   const collapse = () => { store.set(KEY, '1'); bubble.classList.remove('on'); setTimeout(() => pill.classList.add('on'), 250); };
@@ -235,6 +253,32 @@ export function initAssistant({ goProjects, ask, act = {} }) {
     const tick = () => { text.textContent = msg.slice(0, ++i); if (i < msg.length) setTimeout(tick, 48); else bubble.classList.add('typed'); };
     setTimeout(tick, 250);
   }
+  /* ── AB as a character: eyes follow the pointer and the scroll, it blinks, and it
+     comments once on each section while the visitor scrolls down with it. ── */
+  const tip = pill.querySelector('.abot-tip');
+  const eyesOf = () => document.querySelectorAll('.abot-face');
+  let lookX = 0, lookY = 0;
+  const look = (x, y) => { lookX = Math.max(-1, Math.min(1, x)); lookY = Math.max(-1, Math.min(1, y)); eyesOf().forEach(f => { f.style.setProperty('--lx', lookX.toFixed(2)); f.style.setProperty('--ly', lookY.toFixed(2)); }); };
+  addEventListener('pointermove', e => { const r = pill.getBoundingClientRect(); const cx = r.left + r.width / 2 || innerWidth - 50, cy = r.top + r.height / 2 || innerHeight - 80; look((e.clientX - cx) / (innerWidth / 2), (e.clientY - cy) / (innerHeight / 2)); }, { passive: true });
+  let lastY = scrollY, scrollT;
+  addEventListener('scroll', () => {
+    const dy = scrollY - lastY; lastY = scrollY;
+    if (Math.abs(dy) > 2) { look(lookX * 0.3, dy > 0 ? 0.9 : -0.9); pill.classList.add('moving'); clearTimeout(scrollT); scrollT = setTimeout(() => { pill.classList.remove('moving'); look(0, 0); }, 500); }
+  }, { passive: true });
+  if (!reduce) (function blink() { setTimeout(() => { eyesOf().forEach(f => f.classList.add('blink')); setTimeout(() => eyesOf().forEach(f => f.classList.remove('blink')), 140); blink(); }, 2600 + Math.random() * 3200); })();
+  const seen = new Set(); let tipT;
+  const comment = id => {
+    const msg = (L().say || {})[id];
+    if (!msg || seen.has(id) || !pill.classList.contains('on') || bubble.classList.contains('on')) return;
+    seen.add(id);
+    tip.textContent = msg; tip.dir = 'auto'; pill.classList.add('talking');
+    clearTimeout(tipT); tipT = setTimeout(() => pill.classList.remove('talking'), 4200);
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) comment(e.target.id); }), { threshold: 0.35 });
+  Object.keys(TXT.en.say).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+  // While the visitor scrolls past the hero with the greeting still open, AB shrinks into the character and comes along.
+  addEventListener('scroll', () => { if (scrollY > innerHeight * 0.6 && bubble.classList.contains('on') && !bubble.classList.contains('chatting')) collapse(); }, { passive: true });
+
   // First visit: open the full greeting. Returning visitor who closed it: just the avatar.
   const start = () => setTimeout(() => (store.get(KEY) ? pill.classList.add('on') : expand()), 2200); // after the hero name has finished arriving
   if (root.classList.contains('is-loading')) document.addEventListener('loader:done', start, { once: true });
