@@ -24,7 +24,7 @@ export function initLoader() {
   roll(pct, '000', true);
 
   const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
-  let fs = 100, fillLevel = 0, drawnLevel = 0;
+  let fs = 100, fillLevel = 0, drawnLevel = 0, fillStart = 0, holding = false;
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07,
     drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
@@ -97,11 +97,16 @@ export function initLoader() {
         const e = out3(Math.min(1, (now - expandStart) / 650));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
         r = R + (Math.hypot(w, h) - R) * e;
-        if (e >= 1 && !el.classList.contains('out')) finish();
+        // Once the bubble fills the screen, the outlined name fills with white from the bottom up.
+        if (e >= 1) {
+          if (!fillStart) fillStart = now;
+          const f = Math.min(1, (now - fillStart) / 1300);
+          fillLevel = 0.12 + 0.88 * (f < .5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2);
+          if (f >= 1 && !el.classList.contains('out') && !holding) { holding = true; setTimeout(finish, 350); }
+        }
       }
       glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
-      if (expandStart) fillLevel = Math.min(1, fillLevel + 0.06);
-      if (Math.abs(fillLevel - drawnLevel) >= 0.035 || (fillLevel === 1 && drawnLevel < 1)) { drawnLevel = fillLevel; glass.redrawReveal(); }
+      if (Math.abs(fillLevel - drawnLevel) >= 0.025 || (fillLevel === 1 && drawnLevel < 1)) { drawnLevel = fillLevel; glass.redrawReveal(); }
       glass.setLens(x, y, r);
 
       if (!finished) {
@@ -109,7 +114,7 @@ export function initLoader() {
         shown += (Math.max(target, floor) - shown) * 0.08;
         roll(pct, String(Math.min(99, Math.round(shown * 100))).padStart(3, '0'));
         bar.style.transform = `scaleX(${shown.toFixed(3)})`;
-        fillLevel = shown;
+        fillLevel = Math.min(0.12, shown * 0.12); // just a hint of ink while loading
         if (t > MAX) done();
       }
       raf = requestAnimationFrame(tick);
