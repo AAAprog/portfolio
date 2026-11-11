@@ -24,7 +24,8 @@ export const voiceOut = {
     // Try straight away (some browsers allow it); if blocked, say it on the first tap.
     if (!unlocked && navigator.userActivation && !navigator.userActivation.hasBeenActive) { pending = { text, onend }; tryNow(text, onend); return; }
     synth.cancel();
-    const lang = root.lang === 'ar' ? 'ar' : 'en';
+    // the voice follows the text's own language, not just the page's
+    const lang = /[\u0600-\u06FF]/.test(text) ? 'ar' : /[a-z]/i.test(text) ? 'en' : (root.lang === 'ar' ? 'ar' : 'en');
     const u = new SpeechSynthesisUtterance(text.replace(/[▶↗↺✓]/g, ''));
     u.lang = lang === 'ar' ? 'ar-SA' : 'en-US';
     const v = pick(lang); if (v) u.voice = v;

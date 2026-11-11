@@ -191,7 +191,7 @@ export function initAssistant({ goProjects, ask, act = {} }) {
   document.body.append(pill);
   let typedOnce = false;
   const collapse = () => { store.set(KEY, '1'); bubble.classList.remove('on'); setTimeout(() => pill.classList.add('on'), 250); };
-  const expand = () => { pill.classList.remove('on'); bubble.classList.add('on'); voiceOut.speak(L().hi); if (!typedOnce) type(); };
+  const expand = () => { pill.classList.remove('on'); bubble.classList.add('on'); if (!bubble.classList.contains('chatting')) voiceOut.speak(L().hi); if (!typedOnce) type(); };
   pill.addEventListener('click', expand);
   bubble.querySelector('.abot-watch').addEventListener('click', () => { voiceOut.stop(); collapse(); video.open(); });
   bubble.querySelector('.abot-proj').addEventListener('click', () => { collapse(); goProjects(); });
@@ -203,7 +203,7 @@ export function initAssistant({ goProjects, ask, act = {} }) {
   bubble.querySelector('.abot-ask').addEventListener('click', () => { voiceOut.stop(); openChat(); setTimeout(() => input.focus({ preventScroll: true }), 50); });
   bubble.querySelector('.abot-mic').addEventListener('click', () => { voiceOut.stop(); ask && ask(); });
   bubble.querySelector('.abot-form').addEventListener('submit', e => { e.preventDefault(); const q = input.value.trim(); if (q) { input.value = ''; chat(q); } });
-  const add = (who, txt) => { const p = document.createElement('p'); p.className = 'abot-m ' + who; p.textContent = txt; log.append(p); log.scrollTop = log.scrollHeight; return p; };
+  const add = (who, txt) => { const p = document.createElement('p'); p.className = 'abot-m ' + who; p.dir = 'auto'; p.textContent = txt; log.append(p); log.scrollTop = log.scrollHeight; return p; };
   let busy = Promise.resolve();
   // One exchange: show the question, AB "thinks" briefly, then types and speaks the answer at a calm pace.
   function chat(q) {

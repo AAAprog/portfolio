@@ -377,14 +377,7 @@ initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
 var chaos = initChaos(L, toast);
-var intro = initAssistant({ goProjects: () => go('projects')(), ask: () => voice ? voice.start() : toast(L().voiceNone),
-  act: { projects: () => go('projects')(), contact: () => go('contact')(), intro: () => intro.open(),
-    cv: () => { const a = document.createElement('a'); a.href = 'assets/Ahmed_Bawazir_CV.pdf'; a.download = ''; a.click(); } } });
-initTabTalk();
-var present = initPresent({ L, toast });
-var voice = initVoice({
-  button: $('.voice-btn'), L, toast, chat: q => intro.chat(q),
-  run: id => {
+function runCmd(id) {
     const sec = { projects: 'projects', experience: 'experience', skills: 'skills', terminal: 'terminal', contact: 'contact', top: 'hero' }[id];
     if (sec) return go(sec)();
     if (id === 'dark' || id === 'light') { ambient.stop(); delete root.dataset.themeMode; store.set('ab-theme-mode', ''); return applyTheme(id); }
@@ -394,7 +387,16 @@ var voice = initVoice({
     if (id === 'break') return chaos && chaos.break();
     if (id === 'present') return present.toggle();
     if (id === 'intro') return intro.open();
-  },
+}
+var intro = initAssistant({ goProjects: () => go('projects')(), ask: () => voice ? voice.start() : toast(L().voiceNone),
+  act: { projects: () => go('projects')(), contact: () => go('contact')(), intro: () => intro.open(),
+    cv: () => runCmd('cv'), dark: () => runCmd('dark'), light: () => runCmd('light'), break: () => runCmd('break') } });
+initTabTalk();
+var present = initPresent({ L, toast });
+var voice = initVoice({
+  button: $('.voice-btn'), L, toast, chat: q => intro.chat(q),
+  run: id => runCmd(id),
+
 });
 if (store.get('ab-theme-mode') === 'auto') { root.dataset.themeMode = 'auto'; ambient.start(); }
 if (root.lang === 'ar') applyLang('ar'); else { splitStatement(); typer.start(); }
