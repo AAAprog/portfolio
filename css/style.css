@@ -1071,7 +1071,6 @@ body::after {
 /* ==========================================================================
    Liquid glass: loader lens, footer signature, glass shine, floating nav
    ========================================================================== */
-.loader-sig { position: absolute; left: 50%; top: 50%; translate: -50% -50%; color: #fff; z-index: 2; }
 .loader-glass { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .loader-ui { position: absolute; inset: 0; padding: 28px var(--gutter) calc(28px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; justify-content: space-between; pointer-events: none; transition: opacity .4s ease; }
 .loader.expanding .loader-ui, .loader.out .loader-ui { opacity: 0; }
