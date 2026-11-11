@@ -25,7 +25,7 @@ export function initLoader() {
 
   const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
   let fs = 100;
-  const arBox = (w, h) => { const bw = Math.min(w * 0.82, h * 0.42 * AR.w / AR.h, 760); return { w: bw, h: bw * AR.h / AR.w }; };
+  const arBox = (w, h) => { const bw = Math.min(w * 0.7, h * 0.36 * AR.w / AR.h, 640); return { w: bw, h: bw * AR.h / AR.w }; };
   // Once the lens fills the screen, the signature writes itself in (stroke, then fill).
   const sig = svgFor(AR, 'أحمد باوزير', 'sig-ar loader-sig');
   sig.svg.style.visibility = 'hidden';
@@ -99,9 +99,11 @@ export function initLoader() {
       if (expandStart) {
         const e = ease(Math.min(1, (now - expandStart) / 1000));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
-        r = R + (Math.hypot(w, h) - R) * e;
+        // Grow into one big glass bubble that holds the whole signature, rim still on screen.
+        const big = Math.min(Math.hypot(w, h) / 2, Math.max(arBox(w, h).w * 0.64, Math.min(w, h) * 0.46));
+        r = R + (big - R) * e;
       }
-      glass.setGlass(0.08); // the glass stays visible while the bubble grows to fill the screen
+      glass.setGlass(0.09); // the glass stays visible; the signature is written inside it
       glass.setLens(x, y, r);
 
       if (!finished) {
