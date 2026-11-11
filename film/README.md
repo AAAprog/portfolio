@@ -1,4 +1,4 @@
-# Intro film — «From Kajang to Riyadh»
+# Intro film — «From Kuala Lumpur to Riyadh»
 
 `index.html` draws every frame as a pure function of time (`seek(t)`), so the film can be
 previewed live in a browser or rendered frame by frame into `assets/intro.mp4`.

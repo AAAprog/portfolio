@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>From Kajang to Riyadh — Ahmed Bawazir</title>
+<title>From Kuala Lumpur to Riyadh — Ahmed Bawazir</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -56,10 +56,10 @@
     <div class="mono" style="font-size:22px; letter-spacing:.4em; color:#9a9aa0;">AHMED BAWAZIR</div>
   </div>
 
-  <!-- 2 · Kajang -->
+  <!-- 2 · Kuala Lumpur -->
   <div class="layer" id="s2" style="left:140px; top:640px;">
-    <div class="mono" style="font-size:22px; color:var(--accent); letter-spacing:.1em;">2.99° N · 101.79° E</div>
-    <div class="big" style="margin-top:14px;">Kajang, Malaysia</div>
+    <div class="mono" style="font-size:22px; color:var(--accent); letter-spacing:.1em;">3.14° N · 101.69° E</div>
+    <div class="big" style="margin-top:14px;">Kuala Lumpur, Malaysia</div>
   </div>
 
   <!-- 3 · University -->
@@ -90,7 +90,7 @@
         <div class="mid" style="font-size:56px; margin-top:18px;">Software Engineer <span style="color:#8e8e93;">@ Sifr IDE</span></div>
         <div class="sub" style="margin-top:12px;">Part-time · Feb – May 2026 · while finishing my degree</div>
       </div>
-      <div class="pill" style="margin-top:6px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--ok);display:block;"></span>Kajang ⇄ Doha</div>
+      <div class="pill" style="margin-top:6px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--ok);display:block;"></span>Kuala Lumpur ⇄ Doha</div>
     </div>
     <div style="margin-top:44px; display:flex; flex-direction:column; gap:16px;" class="mono">
       <div class="bug" style="display:flex; align-items:center; gap:18px; padding:18px 24px; border-radius:16px; background:#0e0e10; border:1px solid rgba(255,255,255,.08); font-size:22px; opacity:0;"><span style="color:#ff6b6b;">BUG-142</span><span style="flex:1;color:#d0d0d4;">Workflow skips a validation step</span><span class="st" style="color:#8e8e93;">reproduced</span></div>
@@ -187,7 +187,7 @@
 
   <!-- 6 · Riyadh -->
   <div class="layer" id="s6km" style="right:150px; top:150px; text-align:right;">
-    <div class="mono" style="font-size:20px; color:#8e8e93; letter-spacing:.12em;">KAJANG → RIYADH</div>
+    <div class="mono" style="font-size:20px; color:#8e8e93; letter-spacing:.12em;">KUALA LUMPUR → RIYADH</div>
     <div style="font:700 72px 'Space Grotesk',sans-serif; margin-top:8px;"><span id="km">0</span> <span style="font-size:36px; color:#8e8e93;">km</span></div>
   </div>
   <div class="layer" id="s6" style="left:140px; top:640px;">
@@ -295,7 +295,7 @@ import { SIG } from './sig.js';
 const S = { space: 0, kajang: 7, uni: 13, sifr: 21, codai: 33, riyadh: 52, hcm: 60, built: 70, end: 82, total: 93 };
 const CAPTIONS = [
   [0.6, 6.6, 'Every system starts with a single line. Mine started here.'],
-  [7.4, 12.6, 'Kajang, Malaysia, where I spent three years studying software engineering.'],
+  [7.4, 12.6, 'Kuala Lumpur, Malaysia, where I spent three years studying software engineering.'],
   [13.4, 20.6, 'At Universiti Tenaga Nasional, I graduated with First Class Honours in Software Engineering.'],
   [21.4, 27.0, 'In my final year, I joined Sifr IDE remotely as a part-time software engineer:'],
   [27.0, 32.6, 'testing workflows, reproducing bugs, and tracking them to their root cause, while finishing my degree.'],
@@ -307,7 +307,7 @@ const CAPTIONS = [
   [75.8, 79.2, 'a mobile app,'],
   [79.4, 81.8, 'and a few things that never saw the light of day.'],
   [82.6, 86.4, 'Thank you for watching.'],
-  [86.8, 92.6, 'My first line was written in Kajang. My next one is ready to be written with you.'],
+  [86.8, 92.6, 'My first line was written in Kuala Lumpur. My next one is ready to be written with you.'],
 ];
 
 /* ───────── helpers ───────── */
@@ -365,7 +365,7 @@ scene.add(atmo);
 scene.add(new THREE.AmbientLight(0xffffff, .38));
 const sun = new THREE.DirectionalLight(0xffffff, 2.3); scene.add(sun);
 
-const KAJ = { lat: 2.99, lon: 101.79 }, RUH = { lat: 24.71, lon: 46.68 };
+const KAJ = { lat: 3.14, lon: 101.69 }, RUH = { lat: 24.71, lon: 46.68 };
 const marker = color => {
   const g = new THREE.Group();
   g.add(new THREE.Mesh(new THREE.CircleGeometry(.006, 32), new THREE.MeshBasicMaterial({ color, depthTest: false })));
@@ -416,7 +416,7 @@ function camPath(t) {
 
 /* ───────── city labels ───────── */
 const LABELS = [
-  ['Kajang', 2.99, 101.79, 1], ['Riyadh', 24.71, 46.68, 1],
+  ['Kuala Lumpur', 3.14, 101.69, 1], ['Riyadh', 24.71, 46.68, 1],
   ['Singapore', 1.35, 103.82], ['Jakarta', -6.2, 106.85], ['Bangkok', 13.75, 100.5],
   ['Colombo', 6.93, 79.86], ['Mumbai', 19.08, 72.88], ['Muscat', 23.59, 58.41], ['Dubai', 25.2, 55.27],
   ['Doha', 25.29, 51.53], ['Jeddah', 21.49, 39.19], ['Kuwait', 29.38, 47.99],
