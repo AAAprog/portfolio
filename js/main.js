@@ -383,7 +383,7 @@ initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
 var chaos = initChaos(L, toast);
-var intro = initAssistant({ goProjects: () => go('projects')() });
+var intro = initAssistant({ goProjects: () => go('projects')(), ask: () => voice ? voice.start() : toast(L().voiceNone) });
 initTabTalk();
 var present = initPresent({ L, toast });
 var voice = initVoice({
@@ -397,6 +397,7 @@ var voice = initVoice({
     if (id === 'cv') { const a = document.createElement('a'); a.href = 'assets/Ahmed_Bawazir_CV.pdf'; a.download = ''; a.click(); return; }
     if (id === 'break') return chaos && chaos.break();
     if (id === 'present') return present.toggle();
+    if (id === 'intro') return intro.open();
   },
 });
 if (store.get('ab-theme-mode') === 'auto') { root.dataset.themeMode = 'auto'; ambient.start(); }
