@@ -10,6 +10,7 @@ import { initForm } from './form.js';
 import { initSignature } from './signature.js';
 import { initSignmarks } from './signmark.js';
 import { initChaos } from './chaos.js';
+import { initAssistant } from './assistant.js';
 import { initTabTalk } from './tabtalk.js';
 import { createAmbient } from './ambient.js';
 import { initVoice } from './voice.js';
@@ -234,7 +235,6 @@ const commands = () => {
     ['projects', c.projects, '§', go('projects')],
     ['playground', c.playground, '§', go('playground')],
     ['skills', c.skills, '§', go('skills')],
-    ['journey', c.journey, '§', go('journey')],
     ['credentials', c.credentials, '§', go('credentials')],
     ['terminal', c.terminal, '>_', go('terminal')],
     ['contact', c.contact, '§', go('contact')],
@@ -248,6 +248,7 @@ const commands = () => {
     ['motion', c.motion, '◎', toggleMotion],
     ['keys', c.keys, '?', openKeys],
     ['break', c.break, 'B', () => chaos && chaos.break()],
+    ['intro', c.intro, '▶', () => intro.open()],
     ['present', c.present, 'P', () => present.toggle()],
     ['voice', c.voice, 'V', () => voice ? voice.start() : toast(L().voiceNone)],
     ['top', c.top, '↑', go('hero')],
@@ -382,6 +383,7 @@ initForm($('.cform'), toast, L);
 initSignature($('.signature'));
 initSignmarks();
 var chaos = initChaos(L, toast);
+var intro = initAssistant({ goProjects: () => go('projects')() });
 initTabTalk();
 var present = initPresent({ L, toast });
 var voice = initVoice({

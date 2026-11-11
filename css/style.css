@@ -1136,7 +1136,11 @@ body::after {
   background: rgba(10,10,10,.92); color: #f2f2f2; border: 1px solid rgba(255,255,255,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 20px 50px -14px rgba(0,0,0,.8);
   backdrop-filter: blur(14px); font-size: 14px; transition: translate .4s var(--ease), opacity .3s; }
 .voice-pill.on { translate: -50% 0; opacity: 1; }
+.voice-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .voice-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.voice-hints { font-size: 11.5px; color: #8e8e93; white-space: normal; }
+.voice-hints:empty { display: none; }
+.voice-pill { border-radius: 20px; }
 .voice-wave { display: flex; align-items: center; gap: 3px; height: 18px; }
 .voice-wave i { width: 3px; height: 100%; border-radius: 2px; background: var(--accent); animation: vw .9s ease-in-out infinite; }
 .voice-wave i:nth-child(2) { animation-delay: .15s; } .voice-wave i:nth-child(3) { animation-delay: .3s; } .voice-wave i:nth-child(4) { animation-delay: .45s; }
@@ -1207,6 +1211,57 @@ body::after {
 }
 .topbar.is-scrolled .logo { padding-inline-start: 10px; }
 @media (max-width: 680px) { .topbar.is-scrolled { height: 52px; width: calc(100% - 16px); top: 8px; } }
+
+
+/* ==========================================================================
+   AB assistant + Video mode
+   ========================================================================== */
+.btn-intro .intro-dot { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: inline-grid; place-items: center; font-size: 9px; padding-left: 2px; box-sizing: border-box; }
+.sb-intro span:first-child { color: var(--accent); }
+
+.abot { position: fixed; z-index: 140; right: 22px; bottom: calc(var(--bar-h) + 22px); width: min(360px, calc(100vw - 32px));
+  padding: 16px 16px 14px; border-radius: 22px; background: color-mix(in srgb, var(--surface) 86%, transparent);
+  border: 1px solid var(--line-strong); box-shadow: var(--glass-shine), 0 30px 70px -24px rgba(0,0,0,.6);
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  opacity: 0; translate: 0 18px; scale: .97; pointer-events: none; transition: opacity .4s var(--ease), translate .5s var(--ease), scale .5s var(--ease); }
+[dir="rtl"] .abot { right: auto; left: 22px; }
+.abot.on { opacity: 1; translate: none; scale: 1; pointer-events: auto; }
+.abot-head { display: flex; align-items: center; gap: 10px; }
+.abot-av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 700 13px "Space Grotesk", sans-serif; position: relative; }
+.abot-av::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: var(--ok); border: 2px solid var(--surface); }
+.abot-name { font-size: 12px; color: var(--muted); }
+:root[lang="ar"] .abot-name { font-family: var(--font-sans); }
+.abot-x { margin-inline-start: auto; width: 30px; height: 30px; border-radius: 50%; border: 0; background: transparent; color: var(--muted); font-size: 14px; cursor: pointer; }
+.abot-x:hover { background: var(--surface-2); color: var(--ink); }
+.abot-msg { margin: 12px 2px 14px; font-size: 15.5px; line-height: 1.5; min-height: 3em; }
+.abot-caret { display: inline-block; width: 2px; height: 1em; margin-inline-start: 2px; vertical-align: -2px; background: var(--accent); animation: blink 1s steps(1) infinite; }
+.abot.typed .abot-caret { display: none; }
+.abot-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; opacity: 0; transition: opacity .4s; }
+.abot.typed .abot-actions { opacity: 1; }
+.abot-later { border: 0; background: none; color: var(--muted); font-size: 13px; cursor: pointer; padding: 6px 4px; }
+.abot-later:hover { color: var(--ink); }
+
+.vmode { position: fixed; inset: 0; z-index: 220; background: #000; opacity: 0; transition: opacity .3s ease; display: grid; place-items: center; }
+.vmode[hidden] { display: none; }
+.vmode.on { opacity: 1; }
+.vmode-on, .vmode-on body { overflow: hidden; }
+.vm-video { width: 100%; height: 100%; object-fit: contain; background: #000; }
+.vm-top, .vm-bar { position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 14px; padding: 18px 22px; color: #f2f2f2;
+  transition: opacity .35s ease; opacity: 0; pointer-events: none; }
+.vmode.ui .vm-top, .vmode.ui .vm-bar { opacity: 1; pointer-events: auto; }
+.vm-top { top: 0; background: linear-gradient(rgba(0,0,0,.7), transparent); }
+.vm-bar { bottom: 0; background: linear-gradient(transparent, rgba(0,0,0,.75)); }
+.vm-title { font: 600 15px var(--font-display); }
+.vm-btn { min-width: 40px; height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #fff; font: 500 13px var(--font-sans); cursor: pointer; }
+.vm-btn:hover { background: rgba(255,255,255,.18); }
+.vm-close { margin-inline-start: auto; }
+.vm-track { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.2); cursor: pointer; overflow: hidden; }
+.vm-track i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); }
+.vm-time { font-size: 12.5px; color: #c7c7cc; min-width: 40px; }
+.vm-end { position: absolute; left: 50%; bottom: 110px; translate: -50% 0; display: flex; gap: 12px; }
+.vm-end[hidden] { display: none; }
+.vm-end .btn-ghost { color: #fff; border-color: rgba(255,255,255,.35); }
+@media (max-width: 680px) { .sb-intro span:last-child { display: none; } .abot { right: 12px; left: 12px; width: auto; } }
 
 @media (max-width: 1020px) {
   .toplinks { display: none; }
