@@ -200,7 +200,7 @@ export function initAssistant({ goProjects, ask }) {
     setTimeout(tick, 250);
   }
   // First visit: open the full greeting. Returning visitor who closed it: just the avatar.
-  const start = () => setTimeout(() => (store.get(KEY) ? pill.classList.add('on') : expand()), 700);
+  const start = () => setTimeout(() => (store.get(KEY) ? pill.classList.add('on') : expand()), 2200); // after the hero name has finished arriving
   if (root.classList.contains('is-loading')) document.addEventListener('loader:done', start, { once: true });
   else start();
   return video;

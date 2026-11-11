@@ -1251,8 +1251,9 @@ body::after {
 .abot-msg { margin: 12px 2px 14px; font-size: 15.5px; line-height: 1.5; min-height: 3em; }
 .abot-caret { display: inline-block; width: 2px; height: 1em; margin-inline-start: 2px; vertical-align: -2px; background: var(--accent); animation: blink 1s steps(1) infinite; }
 .abot.typed .abot-caret { display: none; }
-.abot-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; opacity: 0; transition: opacity .4s; }
-.abot.typed .abot-actions { opacity: 1; }
+.abot-actions { display: none; flex-wrap: wrap; gap: 8px; align-items: center; }
+.abot.typed .abot-actions { display: flex; animation: abin .4s ease both; }
+@keyframes abin { from { opacity: 0; translate: 0 6px; } }
 .abot-later { border: 0; background: none; color: var(--muted); font-size: 13px; cursor: pointer; padding: 6px 4px; }
 .abot-later:hover { color: var(--ink); }
 
