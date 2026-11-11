@@ -21,17 +21,28 @@ export const voiceOut = {
   stop() { if (synth) synth.cancel(); },
   speak(text, { onend } = {}) {
     if (!synth || muted) { onend && onend(); return; }
-    if (!unlocked) { pending = { text, onend }; return; }
+    // Try straight away (some browsers allow it); if blocked, say it on the first tap.
+    if (!unlocked && navigator.userActivation && !navigator.userActivation.hasBeenActive) { pending = { text, onend }; tryNow(text, onend); return; }
     synth.cancel();
     const lang = root.lang === 'ar' ? 'ar' : 'en';
     const u = new SpeechSynthesisUtterance(text.replace(/[▶↗↺✓]/g, ''));
     u.lang = lang === 'ar' ? 'ar-SA' : 'en-US';
     const v = pick(lang); if (v) u.voice = v;
-    u.rate = 1.02; u.pitch = 1;
-    u.onend = u.onerror = () => onend && onend();
+    u.rate = 0.88; u.pitch = 1;
+    u.onstart = () => { unlocked = true; pending = null; document.dispatchEvent(new Event('ab:speaking')); };
+    u.onend = () => onend && onend();
+    u.onerror = e => { if (e.error === 'not-allowed') { pending = { text, onend }; document.dispatchEvent(new Event('ab:needtap')); } else onend && onend(); };
     synth.speak(u);
   },
 };
+
+function tryNow(text, onend) {
+  const was = unlocked; unlocked = true;
+  voiceOut.speak(text, { onend });
+  unlocked = was;
+  // No start within a moment means the browser is holding it back.
+  setTimeout(() => { if (!unlocked && pending) { synth.cancel(); document.dispatchEvent(new Event('ab:needtap')); } }, 900);
+}
 
 if (synth) {
   synth.getVoices(); synth.addEventListener && synth.addEventListener('voiceschanged', () => synth.getVoices());

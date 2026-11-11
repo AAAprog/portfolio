@@ -16,14 +16,14 @@ const store = {
 const TXT = {
   en: {
     hi: "Hi, I'm AB, Ahmed Bawazir's assistant. Want to get to know Ahmed in 85 seconds?",
-    ask: '🎤 Ask me', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
+    tap: '🔊 Tap anywhere to hear me', ask: '🎤 Ask me', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
     close: 'Close', name: 'AB · assistant',
     vtitle: 'From Kuala Lumpur to Riyadh', talk: "Let's talk ↗", replay: '↺ Replay',
     mute: 'Sound on', unmute: 'Sound off', cc: 'Captions',
   },
   ar: {
     hi: 'هلا، أنا AB، مساعد أحمد باوزير. تبي تتعرّف على أحمد في 85 ثانية؟',
-    ask: '🎤 اسألني', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
+    tap: '🔊 المس الشاشة عشان تسمعني', ask: '🎤 اسألني', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
     close: 'إغلاق', name: 'AB · المساعد',
     vtitle: 'من كوالالمبور إلى الرياض', talk: 'لنتحدث ↗', replay: '↺ إعادة',
     mute: 'تشغيل الصوت', unmute: 'كتم الصوت', cc: 'الترجمة',
@@ -148,7 +148,7 @@ export function initAssistant({ goProjects, ask }) {
   bubble.innerHTML = `
     <div class="abot-head"><span class="abot-av">AB</span><span class="abot-name mono"></span>
       <button type="button" class="abot-snd" aria-label="Voice">🔊</button><button type="button" class="abot-x" aria-label="Close">✕</button></div>
-    <p class="abot-msg"><span class="abot-text"></span><span class="abot-caret"></span></p>
+    <p class="abot-tap mono" hidden></p><p class="abot-msg"><span class="abot-text"></span><span class="abot-caret"></span></p>
     <div class="abot-actions">
       <button type="button" class="btn btn-solid btn-sm abot-watch"></button>
       <button type="button" class="btn btn-ghost btn-sm abot-proj"></button>
@@ -159,6 +159,9 @@ export function initAssistant({ goProjects, ask }) {
   const text = bubble.querySelector('.abot-text');
   const snd = bubble.querySelector('.abot-snd');
   if (!voiceOut.ok) snd.hidden = true;
+  const tapHint = bubble.querySelector('.abot-tap');
+  document.addEventListener('ab:needtap', () => { tapHint.textContent = L().tap; tapHint.hidden = false; });
+  document.addEventListener('ab:speaking', () => { tapHint.hidden = true; });
   const label = () => {
     const t = L();
     bubble.querySelector('.abot-name').textContent = t.name;
@@ -193,7 +196,7 @@ export function initAssistant({ goProjects, ask }) {
     const msg = L().hi;
     if (reduce) { text.textContent = msg; bubble.classList.add('typed'); return; }
     let i = 0;
-    const tick = () => { text.textContent = msg.slice(0, ++i); if (i < msg.length) setTimeout(tick, 22); else bubble.classList.add('typed'); };
+    const tick = () => { text.textContent = msg.slice(0, ++i); if (i < msg.length) setTimeout(tick, 48); else bubble.classList.add('typed'); };
     setTimeout(tick, 250);
   }
   // First visit: open the full greeting. Returning visitor who closed it: just the avatar.
