@@ -66,7 +66,7 @@ function makeLayer(w, h) {
 export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], glass = 0.08, bg = [0, 0, 0] }) {
   const dprMax = 3;
   const SS = 2; // text layers are drawn at 2× so the magnified glass stays sharp
-  let W = 0, H = 0, dpr = 1, base, reveal;
+  let W = 0, H = 0, dpr = 1, base, reveal, cssW = 0, cssH = 0, rs = 1;
   let lens = { x: -9999, y: -9999, r: 80 };
   let gl = null, prog, uni = {}, tBase, tReveal, ctx2d = null;
 
@@ -108,7 +108,8 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     const TS = Math.min(SS, 8192 / Math.max(W, H));
     base = makeLayer(Math.round(W * TS), Math.round(H * TS)); reveal = makeLayer(Math.round(W * TS), Math.round(H * TS));
     const b = base.getContext('2d'), v = reveal.getContext('2d');
-    b.scale(dpr * TS, dpr * TS); v.scale(dpr * TS, dpr * TS);
+    rs = dpr * TS; cssW = r.width; cssH = r.height;
+    b.scale(rs, rs); v.scale(rs, rs);
     drawBase(b, r.width, r.height); drawReveal(v, r.width, r.height);
     if (gl) {
       gl.viewport(0, 0, W, H);
@@ -153,9 +154,20 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     c.restore();
   }
 
+  // Redraw only the layer seen through the glass (e.g. an animated fill), keeping the size.
+  function redrawReveal() {
+    if (!reveal) return;
+    const v = reveal.getContext('2d');
+    v.setTransform(rs, 0, 0, rs, 0, 0);
+    drawReveal(v, cssW, cssH);
+    if (gl) { gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tReveal); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, reveal); }
+    render();
+  }
+
   return {
     webgl: !!gl,
     layout,
+    redrawReveal,
     setLens(x, y, r) { lens = { x, y, r }; render(); },
     setGlass(g) { glass = g; },
     get lens() { return lens; },
