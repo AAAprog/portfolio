@@ -62,7 +62,8 @@ function makeLayer(w, h) {
 }
 
 export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], glass = 0.08 }) {
-  const dprMax = 2;
+  const dprMax = 3;
+  const SS = 2; // text layers are drawn at 2× so the magnified glass stays sharp
   let W = 0, H = 0, dpr = 1, base, reveal;
   let lens = { x: -9999, y: -9999, r: 80 };
   let gl = null, prog, uni = {}, tBase, tReveal, ctx2d = null;
@@ -102,9 +103,10 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     dpr = Math.min(devicePixelRatio || 1, dprMax);
     W = Math.max(1, Math.round(r.width * dpr)); H = Math.max(1, Math.round(r.height * dpr));
     canvas.width = W; canvas.height = H;
-    base = makeLayer(W, H); reveal = makeLayer(W, H);
+    const TS = Math.min(SS, 8192 / Math.max(W, H));
+    base = makeLayer(Math.round(W * TS), Math.round(H * TS)); reveal = makeLayer(Math.round(W * TS), Math.round(H * TS));
     const b = base.getContext('2d'), v = reveal.getContext('2d');
-    b.scale(dpr, dpr); v.scale(dpr, dpr);
+    b.scale(dpr * TS, dpr * TS); v.scale(dpr * TS, dpr * TS);
     drawBase(b, r.width, r.height); drawReveal(v, r.width, r.height);
     if (gl) {
       gl.viewport(0, 0, W, H);
@@ -132,7 +134,7 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     const c = ctx2d;
     c.setTransform(1, 0, 0, 1, 0, 0);
     c.clearRect(0, 0, W, H);
-    c.drawImage(base, 0, 0);
+    c.drawImage(base, 0, 0, W, H);
     c.save();
     c.beginPath(); c.arc(x, y, rr, 0, Math.PI * 2);
     c.shadowColor = 'rgba(0,0,0,.18)'; c.shadowBlur = rr * .25; c.shadowOffsetY = rr * .08;
@@ -152,6 +154,7 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     webgl: !!gl,
     layout,
     setLens(x, y, r) { lens = { x, y, r }; render(); },
+    setGlass(g) { glass = g; },
     get lens() { return lens; },
   };
 }

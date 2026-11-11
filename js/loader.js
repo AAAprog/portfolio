@@ -81,6 +81,7 @@ export function initLoader() {
         r = R + (Math.hypot(w, h) - R) * e;
         if (e >= 1 && !el.classList.contains('out')) finish();
       }
+      glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
       glass.setLens(x, y, r);
 
       if (!finished) {
