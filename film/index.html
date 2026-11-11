@@ -104,23 +104,33 @@
     <div style="position:absolute; left:150px; top:120px;">
       <div class="kicker">Final-year project</div>
       <div class="big" style="margin-top:14px;">Codai</div>
-      <div class="sub" style="margin-top:10px; max-width:420px;">An AI assistant for the whole software lifecycle.</div>
-      <div style="margin-top:56px; display:flex; flex-direction:column; gap:22px;">
-        <div class="step"><span class="n">1</span>Requirements</div>
-        <div class="step"><span class="n">2</span>UML diagrams</div>
-        <div class="step"><span class="n">3</span>Database design</div>
-        <div class="step"><span class="n">4</span>Code &amp; review</div>
-        <div class="step"><span class="n">5</span>Test cases</div>
+      <div class="sub" style="margin-top:10px; max-width:420px;">An AI assistant for the whole software lifecycle, starting from the idea itself.</div>
+      <div style="margin-top:44px; display:flex; flex-direction:column; gap:18px;">
+        <div class="step"><span class="n">1</span>Project idea</div>
+        <div class="step"><span class="n">2</span>Requirements</div>
+        <div class="step"><span class="n">3</span>UML diagrams</div>
+        <div class="step"><span class="n">4</span>Database design</div>
+        <div class="step"><span class="n">5</span>Code &amp; review</div>
+        <div class="step"><span class="n">6</span>Test cases</div>
       </div>
     </div>
     <div class="win" style="left:700px; top:150px; width:1080px; height:700px;">
-      <div class="bar"><i></i><i></i><i></i><b>codai.app/new</b></div>
+      <div class="bar"><i></i><i></i><i></i><b id="codaiUrl">codai-murex.vercel.app</b></div>
+      <img id="codaiLanding" src="shots/codai-home.jpg" style="position:absolute; left:0; top:46px; width:1080px; z-index:2;">
       <div style="padding:30px 36px;">
         <div style="display:flex; gap:14px;">
           <div style="flex:1; height:62px; border-radius:14px; border:1px solid rgba(255,255,255,.18); display:flex; align-items:center; padding:0 20px; font-size:24px;"><span id="prompt"></span><span id="caret" style="display:inline-block;width:3px;height:30px;background:var(--accent);margin-left:2px;"></span></div>
           <div id="gen" style="height:62px; padding:0 30px; border-radius:14px; background:#f2f2f2; color:#000; display:flex; align-items:center; font:600 22px Inter,sans-serif;">Generate</div>
         </div>
         <div style="position:relative; height:520px; margin-top:30px;">
+          <div class="panel" id="p0">
+            <div class="mono" style="font-size:18px; color:#8e8e93; letter-spacing:.12em;">GENERATED PROJECT IDEAS</div>
+            <div style="margin-top:22px; display:flex; flex-direction:column; gap:16px;">
+              <div class="idea" style="display:flex; align-items:center; gap:18px; padding:20px 24px; border-radius:16px; border:1px solid rgba(255,255,255,.12); font-size:24px;"><span class="mono" style="color:#8e8e93;">01</span>Library management system<span class="mono pick" style="margin-left:auto; font-size:18px; color:var(--accent);"></span></div>
+              <div class="idea" style="display:flex; align-items:center; gap:18px; padding:20px 24px; border-radius:16px; border:1px solid rgba(255,255,255,.12); font-size:24px;"><span class="mono" style="color:#8e8e93;">02</span>Clinic appointment booking<span class="mono pick" style="margin-left:auto; font-size:18px; color:var(--accent);"></span></div>
+              <div class="idea" style="display:flex; align-items:center; gap:18px; padding:20px 24px; border-radius:16px; border:1px solid rgba(255,255,255,.12); font-size:24px;"><span class="mono" style="color:#8e8e93;">03</span>Campus event planner<span class="mono pick" style="margin-left:auto; font-size:18px; color:var(--accent);"></span></div>
+            </div>
+          </div>
           <div class="panel" id="p1">
             <div class="mono" style="font-size:18px; color:#8e8e93; letter-spacing:.12em;">REQUIREMENTS</div>
             <div style="margin-top:22px; display:flex; flex-direction:column; gap:18px; font-size:24px;">
@@ -281,7 +291,7 @@ const CAPTIONS = [
   [13.4, 20.6, 'At Universiti Tenaga Nasional, I graduated with First Class Honours in Software Engineering.'],
   [21.4, 27.0, 'In my final year, I joined Sifr IDE remotely as a part-time software engineer:'],
   [27.0, 32.6, 'testing workflows, reproducing bugs, and tracking them to their root cause, while finishing my degree.'],
-  [33.4, 38.4, 'My final-year project, Codai, is an AI assistant that walks an idea through the whole software lifecycle.'],
+  [33.4, 38.4, 'My final-year project, Codai, is an AI assistant that walks an idea through the whole software lifecycle, and can even generate the idea for you.'],
   [38.6, 48.4, 'You describe a system in plain words. Codai analyses the requirements, draws the UML, designs the database, generates and reviews the code, then writes the test cases.'],
   [53.0, 59.6, 'Then I came back to where I grew up: Riyadh.'],
   [60.4, 69.6, 'At Macquires, I trained as an Oracle Fusion HCM consultant, configuring and testing core HR, absence plans and payroll, and the rules behind them.'],
@@ -480,11 +490,21 @@ function seek(t) {
   });
   // 5 codai
   show($('#s5'), t, 33.4, 52.2);
-  const typed = Math.round(PROMPT.length * seg(t, 36, 38.6));
+  const typed = Math.round(PROMPT.length * seg(t, 38.0, 39.0));
   $('#prompt').textContent = PROMPT.slice(0, typed);
   $('#caret').style.opacity = (Math.floor(t * 2.2) % 2 || typed < PROMPT.length) ? 1 : 0;
-  $('#gen').style.background = t > 38.7 && t < 39.1 ? '#ff6a2f' : '#f2f2f2';
-  const stepAt = [39.2, 41.0, 42.8, 44.6, 46.6];
+  $('#gen').style.background = (t > 36.5 && t < 36.9) || (t > 39.0 && t < 39.3) ? '#ff6a2f' : '#f2f2f2';
+  const land = 1 - seg(t, 35.8, 36.4);
+  $('#codaiLanding').style.opacity = land;
+  $('#codaiUrl').textContent = land > .5 ? 'codai-murex.vercel.app' : 'codai-murex.vercel.app/new';
+  $$('#p0 .idea').forEach((d, i) => {
+    const k = out(seg(t, 36.9 + i * .25, 37.4 + i * .25)); d.style.opacity = k;
+    const on = i === 0 && t > 37.7;
+    d.style.borderColor = on ? '#ff6a2f' : 'rgba(255,255,255,.12)';
+    d.style.background = on ? 'rgba(255,106,47,.1)' : 'transparent';
+    d.querySelector('.pick').textContent = on ? 'selected ✓' : '';
+  });
+  const stepAt = [36.6, 39.4, 41.2, 43.0, 44.8, 46.6];
   $$('#s5 .step').forEach((s, i) => s.classList.toggle('on', t >= stepAt[i]));
   let cur = -1; stepAt.forEach((a, i) => { if (t >= a) cur = i; });
   $$('#s5 .panel').forEach((p, i) => { const a = stepAt[i], b = stepAt[i + 1] ?? 52.2; const k = i === cur ? Math.min(out(seg(t, a, a + .45)), 1 - seg(t, b - .2, b)) : 0; p.style.opacity = k; p.style.transform = `translateY(${((1 - k) * 18).toFixed(1)}px)`; });
