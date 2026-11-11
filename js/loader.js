@@ -97,7 +97,7 @@ export function initLoader() {
       if (expandStart) {
         const e = out3(Math.min(1, (now - expandStart) / 650));
         x += (w / 2 - x) * e; y += (h / 2 - y) * e;
-        r = R + (Math.hypot(w, h) - R) * e;
+        // the lens stays its size and fades with the glass (no giant magnified name)
       }
       glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
       glass.setLens(x, y, r);
