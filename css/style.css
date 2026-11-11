@@ -32,7 +32,7 @@
   --gutter: clamp(16px, 4vw, 40px);
   --max: 1200px;
   --ease: cubic-bezier(.2, .8, .2, 1);
-  --bar-h: 34px;
+  --bar-h: 0px; /* the bottom status bar is hidden */
   color-scheme: light;
 }
 
@@ -1365,3 +1365,6 @@ body::after {
   .wr > span { transform: none !important; }
   .statement-text .w { opacity: 1; }
 }
+
+/* Bottom status bar removed from view (kept in the DOM for the scripts that read it). */
+.statusbar { display: none !important; }
