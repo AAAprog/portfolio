@@ -116,7 +116,15 @@
     </div>
     <div class="win" style="left:700px; top:150px; width:1080px; height:700px;">
       <div class="bar"><i></i><i></i><i></i><b id="codaiUrl">codai-murex.vercel.app</b></div>
-      <img id="codaiLanding" src="shots/codai-home.jpg" style="position:absolute; left:0; top:46px; width:1080px; z-index:2;">
+      <img id="codaiLanding" src="shots/codai-home.jpg" style="position:absolute; left:0; top:46px; width:1080px; z-index:3;">
+      <div id="codaiReal" style="position:absolute; left:0; top:46px; width:1080px; height:654px; overflow:hidden; background:#f7f8fb; z-index:2;">
+        <img class="cshot" src="shots/codai-1-ideas.jpg" style="position:absolute; left:-218px; top:0; width:1340px; opacity:0; will-change:transform,opacity;">
+        <img class="cshot" src="shots/codai-2-req.jpg" style="position:absolute; left:-218px; top:0; width:1340px; opacity:0; will-change:transform,opacity;">
+        <img class="cshot" src="shots/codai-3-uml.jpg" style="position:absolute; left:-218px; top:0; width:1340px; opacity:0; will-change:transform,opacity;">
+        <img class="cshot" src="shots/codai-4-db.jpg" style="position:absolute; left:-218px; top:0; width:1340px; opacity:0; will-change:transform,opacity;">
+        <img class="cshot" src="shots/codai-5-code.jpg" style="position:absolute; left:-218px; top:0; width:1340px; opacity:0; will-change:transform,opacity;">
+        <img class="cshot" src="shots/codai-6-tests.jpg" style="position:absolute; left:-218px; top:0; width:1340px; opacity:0; will-change:transform,opacity;">
+      </div>
       <div style="padding:30px 36px;">
         <div style="display:flex; gap:14px;">
           <div style="flex:1; height:62px; border-radius:14px; border:1px solid rgba(255,255,255,.18); display:flex; align-items:center; padding:0 20px; font-size:24px;"><span id="prompt"></span><span id="caret" style="display:inline-block;width:3px;height:30px;background:var(--accent);margin-left:2px;"></span></div>
@@ -505,6 +513,16 @@ function seek(t) {
     d.querySelector('.pick').textContent = on ? 'selected ✓' : '';
   });
   const stepAt = [36.6, 39.4, 41.2, 43.0, 44.8, 46.6];
+  // real Codai screens: one per step, scrolling down the page like a user reading the result
+  const ends = [39.4, 41.2, 43.0, 44.8, 46.6, 52.2];
+  $$('#codaiReal .cshot').forEach((im, i) => {
+    const a = stepAt[i], b = ends[i];
+    im.style.opacity = i === 0 ? (t >= a - .2 ? 1 : 0) : out(seg(t, a, a + .4));
+    const h = im.naturalHeight ? im.naturalHeight * 1340 / im.naturalWidth : 1400;
+    const range = Math.max(0, h - 654);
+    const y = range * ease(seg(t, a + .3, b - .1)) * .92;
+    im.style.transform = `translateY(${(-y).toFixed(1)}px)`;
+  });
   $$('#s5 .step').forEach((s, i) => s.classList.toggle('on', t >= stepAt[i]));
   let cur = -1; stepAt.forEach((a, i) => { if (t >= a) cur = i; });
   $$('#s5 .panel').forEach((p, i) => { const a = stepAt[i], b = stepAt[i + 1] ?? 52.2; const k = i === cur ? Math.min(out(seg(t, a, a + .45)), 1 - seg(t, b - .2, b)) : 0; p.style.opacity = k; p.style.transform = `translateY(${((1 - k) * 18).toFixed(1)}px)`; });
