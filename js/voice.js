@@ -5,7 +5,6 @@ import { voiceOut } from './speak.js';
 const COMMANDS = [
   { id: 'projects', words: ['project', 'work', 'مشاريع', 'المشاريع', 'أعمال', 'اعمال'] },
   { id: 'experience', words: ['experience', 'career', 'خبرات', 'الخبرات', 'خبرة'] },
-  { id: 'playground', words: ['playground', 'play', 'demo', 'جرب', 'العروض'] },
   { id: 'skills', words: ['skill', 'stack', 'مهارات', 'المهارات'] },
   { id: 'terminal', words: ['terminal', 'console', 'الطرفية', 'طرفية'] },
   { id: 'contact', words: ['contact', 'email', 'hire', 'تواصل', 'اتصال', 'ايميل', 'بريد', 'وظف'] },

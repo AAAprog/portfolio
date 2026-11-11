@@ -1,6 +1,5 @@
 import { ar, dyn } from './i18n.js';
 import { initHero } from './hero.js';
-import { initBugHunt, initAccrual, initRules } from './play.js';
 import { initMotion } from './motion.js';
 import { initTerminal } from './terminal.js';
 import { roll } from './roll.js';
@@ -233,7 +232,6 @@ const commands = () => {
   return [
     ['experience', c.experience, '§', go('experience')],
     ['projects', c.projects, '§', go('projects')],
-    ['playground', c.playground, '§', go('playground')],
     ['skills', c.skills, '§', go('skills')],
     ['credentials', c.credentials, '§', go('credentials')],
     ['terminal', c.terminal, '>_', go('terminal')],
@@ -373,11 +371,7 @@ initClock();
 initStages();
 $$('.year').forEach(y => { y.textContent = new Date().getFullYear(); });
 const hero = initHero($('.hero-canvas'));
-modules = [
-  initBugHunt($('#bughunt'), toast),
-  initAccrual($('#accrual')),
-  initRules($('#rules')),
-];
+modules = [];
 initTerminal($('.term'));
 initForm($('.cform'), toast, L);
 initSignature($('.signature'));
@@ -389,7 +383,7 @@ var present = initPresent({ L, toast });
 var voice = initVoice({
   button: $('.voice-btn'), L, toast,
   run: id => {
-    const sec = { projects: 'projects', experience: 'experience', playground: 'playground', skills: 'skills', terminal: 'terminal', contact: 'contact', top: 'hero' }[id];
+    const sec = { projects: 'projects', experience: 'experience', skills: 'skills', terminal: 'terminal', contact: 'contact', top: 'hero' }[id];
     if (sec) return go(sec)();
     if (id === 'dark' || id === 'light') { ambient.stop(); delete root.dataset.themeMode; store.set('ab-theme-mode', ''); return applyTheme(id); }
     if (id === 'arabic' && root.lang !== 'ar') return switchLang();
