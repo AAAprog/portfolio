@@ -1234,7 +1234,7 @@ body::after {
 .abot-tap { margin: 0 0 6px; font-size: 11.5px; color: var(--accent); animation: abtap 1.6s ease-in-out infinite; }
 @keyframes abtap { 50% { opacity: .45; } }
 .abot-chat { margin-top: 10px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; }
-.abot-log { max-height: min(36vh, 300px); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; overscroll-behavior: contain; }
+.abot-log { max-height: min(36vh, 300px); -webkit-mask-image: linear-gradient(transparent, #000 18px); mask-image: linear-gradient(transparent, #000 18px); padding-top: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; overscroll-behavior: contain; }
 .abot-log:empty { display: none; }
 .abot-m { margin: 0 4px; padding: 8px 12px; border-radius: 14px; font-size: 14px; line-height: 1.5; max-width: 88%; }
 .abot-m.me { align-self: flex-end; background: var(--ink); color: var(--bg); border-bottom-right-radius: 4px; }
