@@ -1233,6 +1233,23 @@ body::after {
 .abot-snd + .abot-x { margin-inline-start: 0; }
 .abot-tap { margin: 0 0 6px; font-size: 11.5px; color: var(--accent); animation: abtap 1.6s ease-in-out infinite; }
 @keyframes abtap { 50% { opacity: .45; } }
+.abot-chat { margin-top: 10px; display: grid; gap: 8px; }
+.abot-log { max-height: min(36vh, 300px); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 2px; overscroll-behavior: contain; }
+.abot-log:empty { display: none; }
+.abot-m { margin: 0 4px; padding: 8px 12px; border-radius: 14px; font-size: 14px; line-height: 1.5; max-width: 88%; }
+.abot-m.me { align-self: flex-end; background: var(--ink); color: var(--bg); border-bottom-right-radius: 4px; }
+.abot-m.ab { align-self: flex-start; background: color-mix(in srgb, var(--ink) 8%, transparent); border-bottom-left-radius: 4px; }
+.abot-m.thinking::after { content: '•••'; letter-spacing: 3px; animation: abtap 1s ease-in-out infinite; }
+.abot-sugg { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.abot-sugg button { flex: none; font: inherit; font-size: 12.5px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; color: inherit; cursor: pointer; }
+.abot-sugg button:hover { border-color: var(--accent); }
+.abot-form { display: flex; gap: 6px; padding-inline-end: 2px; }
+.abot-form .abot-in { margin: 0; }
+.abot-in { flex: 1; min-width: 0; font: inherit; font-size: 16px; padding: 9px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; color: inherit; }
+.abot-in:focus { outline: none; border-color: var(--accent); }
+.abot-mic, .abot-send { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line-strong); background: transparent; color: inherit; cursor: pointer; font-size: 15px; }
+.abot-send { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+.abot.chatting.typed .abot-actions, .abot.chatting .abot-msg { display: none; }
 .abot-pill { position: fixed; z-index: 140; right: 22px; bottom: calc(var(--bar-h) + 22px); width: 56px; height: 56px; padding: 0; border-radius: 50%; border: 1px solid var(--line-strong);
   background: color-mix(in srgb, var(--surface) 86%, transparent); box-shadow: var(--glass-shine), 0 18px 40px -14px rgba(0,0,0,.6); backdrop-filter: blur(14px); cursor: pointer;
   display: grid; place-items: center; opacity: 0; scale: .6; pointer-events: none; transition: opacity .3s, scale .4s var(--ease); }
