@@ -27,7 +27,7 @@ export function initLoader() {
   let fs = 100, fillLevel = 0, drawnLevel = 0, fillStart = 0, holding = false;
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07,
-    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Space Grotesk"', color: '#f1efe9', accent, dot: true }); },
+    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Plus Jakarta Sans"', color: '#f1efe9', accent, dot: true }); },
     // Through the glass: the Ruqaa name as a white frame that fills up from the bottom
     // as the page loads, with the orange dot like the English name.
     drawReveal: (c, w, h) => {
@@ -51,7 +51,7 @@ export function initLoader() {
   const MIN = 1700, MAX = 4000, t0 = performance.now();
   let target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
   const fontsReady = (document.fonts ? Promise.all([
-    document.fonts.load('600 80px "Space Grotesk"'),
+    document.fonts.load('600 80px "Plus Jakarta Sans"'),
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
   ]) : Promise.resolve()).catch(() => {});
   const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise(r => addEventListener('load', r, { once: true }));

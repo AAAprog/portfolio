@@ -252,7 +252,7 @@ function initMarquee() {
 
 /* ───────────── Kinetic variable-weight type (hero) ───────────── */
 // Letters near the pointer ease from bold (700) to light (320) using the
-// variable 'wght' axis of Space Grotesk, a calm, typographic interaction.
+// variable 'wght' axis of Plus Jakarta Sans, a calm, typographic interaction.
 function initKinetic() {
   if (!fine || reduce) return () => {};
   const hero = $('.hero');

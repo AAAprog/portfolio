@@ -59,7 +59,7 @@ function applyLang(lang) {
     const key = n.dataset.i18n;
     n.innerHTML = lang === 'ar' && ar[key] ? ar[key] : n.dataset.en;
   });
-  $('.lang-label').textContent = lang === 'ar' ? 'EN' : 'ع';
+  $('.lang-label').textContent = lang === 'ar' ? 'English' : 'عربي';
   $('.palette-input').placeholder = L().palettePh;
   document.title = lang === 'ar'
     ? 'أحمد باوزير — مهندس برمجيات واستشاري Oracle Fusion HCM'
