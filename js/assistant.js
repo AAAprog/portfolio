@@ -39,6 +39,8 @@ function createVideoMode() {
   el.hidden = true;
   el.innerHTML = `
     <video class="vm-video" playsinline preload="none" poster="assets/intro-poster.jpg"></video>
+    <button type="button" class="vm-big" aria-label="Play">▶</button>
+    <p class="vm-rotate mono" aria-hidden="true">↻ Rotate your phone for full screen</p>
     <div class="vm-top">
       <span class="vm-title"></span>
       <button type="button" class="vm-btn vm-close" aria-label="Close">✕</button>
@@ -66,7 +68,8 @@ function createVideoMode() {
     el.querySelector('.vm-title').textContent = t.vtitle;
     el.querySelector('.vm-talk').textContent = t.talk;
     el.querySelector('.vm-replay').textContent = t.replay;
-    sound.textContent = v.muted ? '🔇 ' + t.mute : '🔊 ' + t.unmute;
+    sound.textContent = v.muted ? '🔇' : '🔊';
+    sound.setAttribute('aria-label', v.muted ? t.mute : t.unmute); sound.title = v.muted ? t.mute : t.unmute;
   };
   const wake = () => { el.classList.add('ui'); clearTimeout(idle); idle = setTimeout(() => { if (!v.paused) el.classList.remove('ui'); }, 2600); };
 
@@ -74,8 +77,9 @@ function createVideoMode() {
     const k = v.duration ? v.currentTime / v.duration : 0;
     fill.style.transform = `scaleX(${k})`; time.textContent = fmt(v.currentTime);
   });
-  v.addEventListener('play', () => { play.textContent = '❚❚'; end.hidden = true; wake(); });
-  v.addEventListener('pause', () => { play.textContent = '▶'; el.classList.add('ui'); });
+  v.addEventListener('play', () => { play.textContent = '❚❚'; end.hidden = true; el.classList.remove('paused'); wake(); });
+  v.addEventListener('pause', () => { play.textContent = '▶'; el.classList.add('ui', 'paused'); });
+  el.querySelector('.vm-big').addEventListener('click', () => v.play());
   v.addEventListener('ended', () => { end.hidden = false; el.classList.add('ui'); });
   play.addEventListener('click', () => (v.paused ? v.play() : v.pause()));
   v.addEventListener('click', () => (v.paused ? v.play() : v.pause()));
@@ -92,20 +96,37 @@ function createVideoMode() {
     else if (e.key === 'm') { v.muted = !v.muted; label(); }
   }, true);
 
+  const touch = matchMedia('(pointer: coarse)').matches;
+  const iosNative = touch && typeof v.webkitEnterFullscreen === 'function' && !el.requestFullscreen;
+  // Make sure the browser knows the video's size before a phone asks for native full screen.
+  const prime = () => { if (!v.src) { v.preload = 'metadata'; v.src = 'assets/intro.mp4'; } };
+  if (touch) prime();
   function open() {
     lastFocus = document.activeElement;
-    if (!v.src) { v.src = 'assets/intro.mp4'; v.load(); }
+    prime();
     v.muted = false; // opened by a click, so sound is allowed
     label();
     el.hidden = false; root.classList.add('vmode-on');
     requestAnimationFrame(() => el.classList.add('on'));
-    try { el.requestFullscreen && el.requestFullscreen().catch(() => {}); } catch {}
     v.currentTime = 0;
-    v.play().catch(() => { v.muted = true; label(); v.play().catch(() => {}); });
+    const p = v.play();
+    if (iosNative) {
+      // iPhone: the native player rotates and fills the screen like any video
+      v.controls = true;
+      try { v.webkitEnterFullscreen(); } catch {}
+    } else {
+      try {
+        const fs = el.requestFullscreen ? el.requestFullscreen() : Promise.reject();
+        fs.then(() => { if (touch && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); }).catch(() => {});
+      } catch {}
+    }
+    p && p.catch && p.catch(() => { v.muted = true; label(); v.play().catch(() => {}); });
     el.querySelector('.vm-close').focus({ preventScroll: true });
   }
+  v.addEventListener('webkitendfullscreen', () => { v.controls = false; close(); });
   function close() {
     v.pause(); el.classList.remove('on'); root.classList.remove('vmode-on');
+    try { screen.orientation && screen.orientation.unlock && screen.orientation.unlock(); } catch {}
     if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     setTimeout(() => { el.hidden = true; }, 300);
     lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
@@ -143,32 +164,32 @@ export function initAssistant({ goProjects }) {
     bubble.querySelector('.abot-x').setAttribute('aria-label', t.close);
     if (bubble.classList.contains('typed')) text.textContent = t.hi;
   };
-  const dismiss = () => { store.set(KEY, '1'); bubble.classList.remove('on'); setTimeout(() => bubble.remove(), 400); };
-  bubble.querySelector('.abot-watch').addEventListener('click', () => { dismiss(); video.open(); });
-  bubble.querySelector('.abot-proj').addEventListener('click', () => { dismiss(); goProjects(); });
-  bubble.querySelector('.abot-later').addEventListener('click', dismiss);
-  bubble.querySelector('.abot-x').addEventListener('click', dismiss);
-  document.addEventListener('langchange', label);
-  label();
+  // Closing collapses AB to a small avatar in the corner; tapping it opens the message again.
+  const pill = document.createElement('button');
+  pill.type = 'button'; pill.className = 'abot-pill';
+  pill.innerHTML = '<span class="abot-av">AB</span>';
+  document.body.append(pill);
+  let typedOnce = false;
+  const collapse = () => { store.set(KEY, '1'); bubble.classList.remove('on'); setTimeout(() => pill.classList.add('on'), 250); };
+  const expand = () => { pill.classList.remove('on'); bubble.classList.add('on'); if (!typedOnce) type(); };
+  pill.addEventListener('click', expand);
+  bubble.querySelector('.abot-watch').addEventListener('click', () => { collapse(); video.open(); });
+  bubble.querySelector('.abot-proj').addEventListener('click', () => { collapse(); goProjects(); });
+  bubble.querySelector('.abot-later').addEventListener('click', collapse);
+  bubble.querySelector('.abot-x').addEventListener('click', collapse);
+  document.addEventListener('langchange', () => { label(); pill.setAttribute('aria-label', L().name); });
+  label(); pill.setAttribute('aria-label', L().name);
 
-  if (store.get(KEY)) { bubble.remove(); return video; }
-
-  const show = () => {
-    // on small phones, wait until the visitor has scrolled a little
-    const ready = () => {
-      bubble.classList.add('on');
-      const msg = L().hi;
-      if (reduce) { text.textContent = msg; bubble.classList.add('typed'); return; }
-      let i = 0;
-      const tick = () => { text.textContent = msg.slice(0, ++i); if (i < msg.length) setTimeout(tick, 26); else bubble.classList.add('typed'); };
-      setTimeout(tick, 350);
-    };
-    if (innerWidth < 560) {
-      const onScroll = () => { if (scrollY > 200) { removeEventListener('scroll', onScroll); ready(); } };
-      addEventListener('scroll', onScroll, { passive: true });
-    } else ready();
-  };
-  const start = () => setTimeout(show, 2600);
+  function type() {
+    typedOnce = true;
+    const msg = L().hi;
+    if (reduce) { text.textContent = msg; bubble.classList.add('typed'); return; }
+    let i = 0;
+    const tick = () => { text.textContent = msg.slice(0, ++i); if (i < msg.length) setTimeout(tick, 22); else bubble.classList.add('typed'); };
+    setTimeout(tick, 250);
+  }
+  // First visit: open the full greeting. Returning visitor who closed it: just the avatar.
+  const start = () => setTimeout(() => (store.get(KEY) ? pill.classList.add('on') : expand()), 700);
   if (root.classList.contains('is-loading')) document.addEventListener('loader:done', start, { once: true });
   else start();
   return video;
