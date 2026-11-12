@@ -1,5 +1,6 @@
 import { voiceOut } from './speak.js';
 import { answer, SUGGEST } from './abchat.js';
+import { initBlob, mood } from './blob.js';
 // AB — a small greeting assistant, and Video mode (the intro film, full screen).
 // The bubble appears once, a moment after the loader, types its message, and
 // offers three choices. Dismissing it is remembered. Video mode loads the film
@@ -26,6 +27,7 @@ const TXT = {
       terminal: 'Type help here. Or try: sudo hire ahmed 😉',
       contact: 'This is the part where you say hi.',
     },
+    open: 'Ask me anything about Ahmed: where he studied, his experience, his projects…',
     tap: '🔊 Tap anywhere to hear me', ask: '💬 Ask me anything', ph: 'Ask about Ahmed…', send: 'Send', mic: 'Speak', watch: '▶ Watch the intro', projects: 'Show me the projects', later: "I'll browse",
     close: 'Close', name: 'AB · assistant',
     vtitle: 'From Kuala Lumpur to Riyadh', talk: "Let's talk ↗", replay: '↺ Replay',
@@ -42,6 +44,7 @@ const TXT = {
       terminal: 'اكتب help هنا. أو جرّب: sudo hire ahmed 😉',
       contact: 'هنا تقول له هلا.',
     },
+    open: 'اسألني أي شي عن أحمد: وين درس، خبراته، مشاريعه…',
     tap: '🔊 المس الشاشة عشان تسمعني', ask: '💬 اسألني أي شي', ph: 'اسأل عن أحمد…', send: 'إرسال', mic: 'تكلّم', watch: '▶ شاهد التعريف', projects: 'وريني المشاريع', later: 'بتصفّح بنفسي',
     close: 'إغلاق', name: 'AB · المساعد',
     vtitle: 'من كوالالمبور إلى الرياض', talk: 'لنتحدث ↗', replay: '↺ إعادة',
@@ -230,13 +233,14 @@ export function initAssistant({ goProjects, ask, act = {} }) {
     const a = answer(q, root.lang === 'ar' ? 'ar' : 'en');
     busy = busy.then(() => new Promise(done => {
       const p = add('ab', ''); p.classList.add('thinking'); p.dir = a.lang === 'ar' ? 'rtl' : 'ltr';
+      mood.think = 1; feel('think');
       setTimeout(() => {
-        p.classList.remove('thinking');
+        p.classList.remove('thinking'); mood.think = 0; mood.talk = 1; feel(a.mood);
         voiceOut.speak(a.text);
         let i = 0;
-        const step = () => { p.textContent = a.text.slice(0, ++i); log.scrollTop = log.scrollHeight; if (i < a.text.length) setTimeout(step, reduce ? 0 : 28); else { done(); if (a.act && act[a.act]) setTimeout(act[a.act], 900); } };
+        const step = () => { p.textContent = a.text.slice(0, ++i); log.scrollTop = log.scrollHeight; if (i < a.text.length) setTimeout(step, reduce ? 0 : 28); else { mood.talk = 0; done(); if (a.act && act[a.act]) setTimeout(act[a.act], 900); } };
         step();
-      }, reduce ? 0 : 650);
+      }, reduce ? 0 : 750);
     }));
     return a;
   }
@@ -257,12 +261,24 @@ export function initAssistant({ goProjects, ask, act = {} }) {
      comments once on each section while the visitor scrolls down with it. ── */
   const tip = pill.querySelector('.abot-tip');
   const eyesOf = () => document.querySelectorAll('.abot-face');
+  initBlob(eyesOf);
+  // act out a feeling on the face for a moment: happy (smiling eyes), sorry (worried), think (looks up)
+  let feelT;
+  function feel(name) {
+    clearTimeout(feelT);
+    eyesOf().forEach(f => { f.classList.remove('feel-happy', 'feel-sorry', 'feel-think'); if (name && name !== 'talk') f.classList.add('feel-' + name); });
+    if (name === 'think') look(0.25, -0.9);
+    else feelT = setTimeout(() => eyesOf().forEach(f => f.classList.remove('feel-happy', 'feel-sorry', 'feel-think')), 2600);
+  }
+  pill.addEventListener('pointerdown', () => { mood.poke = 1; feel('happy'); });
+  bubble.querySelector('.abot-av').addEventListener('pointerdown', () => { mood.poke = 1; feel('happy'); });
   let lookX = 0, lookY = 0;
-  const look = (x, y) => { lookX = Math.max(-1, Math.min(1, x)); lookY = Math.max(-1, Math.min(1, y)); eyesOf().forEach(f => { f.style.setProperty('--lx', lookX.toFixed(2)); f.style.setProperty('--ly', lookY.toFixed(2)); }); };
-  addEventListener('pointermove', e => { const r = pill.getBoundingClientRect(); const cx = r.left + r.width / 2 || innerWidth - 50, cy = r.top + r.height / 2 || innerHeight - 80; look((e.clientX - cx) / (innerWidth / 2), (e.clientY - cy) / (innerHeight / 2)); }, { passive: true });
+  const look = (x, y) => { lookX = Math.max(-1, Math.min(1, x)); lookY = Math.max(-1, Math.min(1, y)); mood.lx = lookX; mood.ly = lookY; eyesOf().forEach(f => { f.style.setProperty('--lx', lookX.toFixed(2)); f.style.setProperty('--ly', lookY.toFixed(2)); }); };
+  addEventListener('pointermove', e => { const r = pill.getBoundingClientRect(); const cx = r.left + r.width / 2 || innerWidth - 50, cy = r.top + r.height / 2 || innerHeight - 80; const dx = e.clientX - cx, dy = e.clientY - cy, d = Math.hypot(dx, dy) || 1; const k = Math.min(1, d / 220); look(dx / d * k, dy / d * k); }, { passive: true });
   let lastY = scrollY, scrollT;
   addEventListener('scroll', () => {
     const dy = scrollY - lastY; lastY = scrollY;
+    mood.vel = Math.max(-1, Math.min(1, dy / 45));
     if (Math.abs(dy) > 2) { look(lookX * 0.3, dy > 0 ? 0.9 : -0.9); pill.classList.add('moving'); clearTimeout(scrollT); scrollT = setTimeout(() => { pill.classList.remove('moving'); look(0, 0); }, 500); }
   }, { passive: true });
   if (!reduce) (function blink() { setTimeout(() => { eyesOf().forEach(f => f.classList.add('blink')); setTimeout(() => eyesOf().forEach(f => f.classList.remove('blink')), 140); blink(); }, 2600 + Math.random() * 3200); })();
@@ -271,8 +287,8 @@ export function initAssistant({ goProjects, ask, act = {} }) {
     const msg = (L().say || {})[id];
     if (!msg || seen.has(id) || !pill.classList.contains('on') || bubble.classList.contains('on')) return;
     seen.add(id);
-    tip.textContent = msg; tip.dir = 'auto'; pill.classList.add('talking');
-    clearTimeout(tipT); tipT = setTimeout(() => pill.classList.remove('talking'), 4200);
+    tip.textContent = msg; tip.dir = 'auto'; pill.classList.add('talking'); mood.talk = 1;
+    clearTimeout(tipT); tipT = setTimeout(() => { pill.classList.remove('talking'); mood.talk = 0; }, 4200);
   };
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) comment(e.target.id); }), { threshold: 0.35 });
   Object.keys(TXT.en.say).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });

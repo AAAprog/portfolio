@@ -1415,3 +1415,23 @@ body::after {
   background: color-mix(in srgb, var(--surface) 72%, transparent); color: var(--ink); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .field input, .field textarea { color: var(--ink); }
 .topic span:hover { border-color: color-mix(in srgb, var(--ink) 45%, transparent); }
+
+/* ───────── AB as a liquid drop ───────── */
+.abot-pill { width: 68px; height: 68px; }
+.abot-face.liquid, .abot-face.liquid-flat { background: none; box-shadow: none; filter: drop-shadow(0 10px 14px rgba(0,0,0,.35)); }
+.abot-face.liquid::after, .abot-face.liquid-flat::after { display: none; }
+.abot-face.liquid-flat { border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%; background: radial-gradient(circle at 30% 26%, #6a6b72, #0c0c10 60%); }
+.ab-blob { position: absolute; inset: -14%; width: 128%; height: 128%; display: block; pointer-events: none; }
+.abot-face.liquid .ab-blob { display: block; } .abot-face.liquid-flat .ab-blob { display: none; }
+.abot-face.liquid .ab-eye, .abot-face.liquid-flat .ab-eye { background: #fff; top: 37%; width: 11.5%; height: 25%; border-radius: 99px; box-shadow: 0 0 6px rgba(255,255,255,.35);
+  translate: calc(var(--lx) * 34%) calc(var(--ly) * 22%); transition: translate .16s ease-out, scale .08s, height .2s var(--ease), border-radius .2s, rotate .2s; }
+.abot-face.liquid .ab-eye:nth-of-type(1), .abot-face.liquid-flat .ab-eye:nth-of-type(1) { left: 32.5%; }
+.abot-face.liquid .ab-eye:nth-of-type(2), .abot-face.liquid-flat .ab-eye:nth-of-type(2) { right: 32.5%; }
+.abot-face.liquid .ab-eye::after, .abot-face.liquid-flat .ab-eye::after, .abot-face.liquid .ab-mouth, .abot-face.liquid-flat .ab-mouth { display: none; }
+/* feelings */
+.abot-face.feel-happy .ab-eye { height: 13%; top: 42%; border-radius: 99px 99px 3px 3px; }
+.abot-face.feel-sorry .ab-eye:nth-of-type(1) { rotate: 16deg; height: 20%; } .abot-face.feel-sorry .ab-eye:nth-of-type(2) { rotate: -16deg; height: 20%; }
+.abot-face.feel-think .ab-eye { height: 18%; }
+.abot-pill:hover .abot-face { scale: 1.06; transition: scale .25s var(--ease); }
+.abot-av:has(.liquid), .abot-av:has(.liquid-flat) { width: 40px; height: 40px; cursor: pointer; }
+.abot-av::after { display: none; }
