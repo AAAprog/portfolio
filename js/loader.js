@@ -24,10 +24,13 @@ export function initLoader() {
   roll(pct, '000', true);
 
   const accent = getComputedStyle(root).getPropertyValue('--accent').trim() || '#ff6a2f';
+  // match the site: same light/dark colours, same font as the hero name
+  const isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const INK = isDark ? '#f1efe9' : '#111111', BG = isDark ? [0, 0, 0] : [242 / 255, 241 / 255, 238 / 255];
   let fs = 100, fillLevel = 0, drawnLevel = 0, fillStart = 0, holding = false;
   const glass = createGlass(canvas, {
-    tint: [1, 1, 1], glass: 0.07,
-    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Plus Jakarta Sans"', color: '#f1efe9', accent, dot: true }); },
+    tint: [1, 1, 1], glass: 0.07, bg: BG,
+    drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 700, family: '"Plus Jakarta Sans"', color: INK, accent, dot: true }); },
     // Through the glass: the Ruqaa name as a white frame that fills up from the bottom
     // as the page loads, with the orange dot like the English name.
     drawReveal: (c, w, h) => {
@@ -39,8 +42,8 @@ export function initLoader() {
       // the ink sits roughly between y 8 and 175 of the outline's box
       const top = 6, bot = 176, lvl = top + (bot - top) * (1 - fillLevel);
       c.save(); c.beginPath(); c.rect(-10, lvl, AR.w + 20, AR.h); c.clip();
-      c.fillStyle = '#ffffff'; c.fill(path); c.restore();
-      c.lineWidth = 1.6 / k * Math.max(1, fs / 60); c.lineJoin = 'round'; c.strokeStyle = '#ffffff'; c.stroke(path);
+      c.fillStyle = INK; c.fill(path); c.restore();
+      c.lineWidth = 1.6 / k * Math.max(1, fs / 60); c.lineJoin = 'round'; c.strokeStyle = INK; c.stroke(path);
       c.restore();
       // orange dot after the name (on its left, as Arabic reads right to left)
       const d = fs * 0.17;
@@ -51,7 +54,7 @@ export function initLoader() {
   const MIN = 1700, MAX = 4000, t0 = performance.now();
   let target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
   const fontsReady = (document.fonts ? Promise.all([
-    document.fonts.load('600 80px "Plus Jakarta Sans"'),
+    document.fonts.load('700 80px "Plus Jakarta Sans"'),
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
   ]) : Promise.resolve()).catch(() => {});
   const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise(r => addEventListener('load', r, { once: true }));

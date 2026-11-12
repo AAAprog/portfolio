@@ -14,7 +14,8 @@ uniform vec2 uRes;      // device px
 uniform vec3 uLens;     // centre x, y (device px, top-left origin), radius
 uniform float uGlass;   // glass fill strength (0..1)
 uniform vec3 uTint;     // glass tint (rgb)
-uniform vec3 uBg;       // page colour behind the canvas: output is opaque (Safari mis-blends straight alpha)
+uniform vec3 uBg;       // page colour behind the canvas (opaque mode)
+uniform float uClear;   // 1 = transparent output, premultiplied (lets the page background show through)
 out vec4 o;
 
 vec4 tex(sampler2D t, vec2 p){ return texture(t, p / uRes); }
@@ -31,7 +32,7 @@ void main(){
     float sd = length(p - (c + vec2(0., r * .1))) / r;
     float sh = smoothstep(1.32, .98, sd) * .16;
     vec4 c0 = over(col, vec4(0., 0., 0., sh));
-    o = vec4(mix(uBg, c0.rgb, c0.a), 1.);
+    o = uClear > .5 ? vec4(c0.rgb * c0.a, c0.a) : vec4(mix(uBg, c0.rgb, c0.a), 1.);
     return;
   }
 
@@ -54,7 +55,7 @@ void main(){
   col = over(vec4(1., 1., 1., low * .25), col);
   // anti-aliased edge
   col.a *= smoothstep(1., .985, d);
-  o = vec4(mix(uBg, col.rgb, col.a), 1.);
+  o = uClear > .5 ? vec4(col.rgb * col.a, col.a) : vec4(mix(uBg, col.rgb, col.a), 1.);
 }`;
 
 function makeLayer(w, h) {
@@ -63,7 +64,7 @@ function makeLayer(w, h) {
   return c;
 }
 
-export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], glass = 0.08, bg = [0, 0, 0] }) {
+export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], glass = 0.08, bg = [0, 0, 0], clear = false }) {
   const dprMax = 3;
   const SS = 2; // text layers are drawn at 2× so the magnified glass stays sharp
   let W = 0, H = 0, dpr = 1, base, reveal, cssW = 0, cssH = 0, rs = 1;
@@ -71,7 +72,7 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
   let gl = null, prog, uni = {}, tBase, tReveal, ctx2d = null;
 
   try {
-    gl = canvas.getContext('webgl2', { premultipliedAlpha: false, antialias: false, alpha: false });
+    gl = canvas.getContext('webgl2', clear ? { premultipliedAlpha: true, antialias: false, alpha: true } : { premultipliedAlpha: false, antialias: false, alpha: false });
   } catch { gl = null; }
 
   if (gl) {
@@ -89,7 +90,7 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     const loc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    ['uBase', 'uReveal', 'uRes', 'uLens', 'uGlass', 'uTint', 'uBg'].forEach(n => { uni[n] = gl.getUniformLocation(prog, n); });
+    ['uBase', 'uReveal', 'uRes', 'uLens', 'uGlass', 'uTint', 'uBg', 'uClear'].forEach(n => { uni[n] = gl.getUniformLocation(prog, n); });
     const mk = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
@@ -125,7 +126,8 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     if (!W) return;
     const x = lens.x * dpr, y = lens.y * dpr, rr = lens.r * dpr;
     if (gl) {
-      gl.clearColor(bg[0], bg[1], bg[2], 1); gl.clear(gl.COLOR_BUFFER_BIT);
+      if (clear) gl.clearColor(0, 0, 0, 0); else gl.clearColor(bg[0], bg[1], bg[2], 1); gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.uniform1f(uni.uClear, clear ? 1 : 0);
       gl.uniform2f(uni.uRes, W, H);
       gl.uniform3f(uni.uLens, x, y, rr);
       gl.uniform1f(uni.uGlass, glass);

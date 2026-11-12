@@ -68,9 +68,10 @@
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { background: var(--bg); }
 body {
   margin: 0;
-  background: var(--bg);
+  background: transparent;
   color: var(--ink);
   font: 400 16px/1.6 var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -1396,3 +1397,21 @@ body::after {
 @media (max-width: 560px) { .top-actions .btn-cv span { display: none; } .top-actions .btn-cv { padding-inline: 12px; } }
 /* the new font sits lower: give revealed words room so descenders are not clipped */
 :root:not([lang="ar"]) .wr { padding-bottom: .14em; margin-bottom: -.14em; }
+
+/* ───────── One liquid background behind the whole site; every section follows light/dark ───────── */
+.page-liquid { position: fixed; inset: 0; width: 100vw; height: 100lvh; z-index: -1; display: block; pointer-events: none; }
+.page-liquid.no-gl { background: radial-gradient(60% 70% at 75% 35%, color-mix(in srgb, var(--ink) 10%, transparent), transparent 70%); }
+.section-alt { background: transparent; }
+.contact { background: transparent; color: var(--ink); }
+.contact .btn-solid:hover { background: var(--ink); color: var(--bg); }
+.contact .btn-ghost { border-color: var(--line-strong); color: var(--ink); }
+.contact .btn-ghost:hover { border-color: var(--ink); }
+.footer { border-top-color: var(--line); }
+.hero-title, .hero-title * { color: var(--ink); }
+.hero-spot { display: none; }
+
+/* contact form follows the theme too */
+.cform { --f-bg: color-mix(in srgb, var(--ink) 4%, transparent); --f-line: color-mix(in srgb, var(--ink) 16%, transparent);
+  background: color-mix(in srgb, var(--surface) 72%, transparent); color: var(--ink); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.field input, .field textarea { color: var(--ink); }
+.topic span:hover { border-color: color-mix(in srgb, var(--ink) 45%, transparent); }

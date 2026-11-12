@@ -5,7 +5,7 @@
 
 const FS = `precision highp float;
 uniform vec2 R; uniform float T; uniform vec2 M;
-uniform vec3 cA, cB, cC, cBg; uniform float rtl, veil;
+uniform vec3 cA, cB, cC, cBg; uniform float rtl, veil, heroK;
 #define N 7
 vec3 spec(float t){ return clamp(vec3(1.5-abs(4.*t-3.4), 1.5-abs(4.*t-2.), 1.5-abs(4.*t-.6)), 0., 1.); }
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
@@ -24,14 +24,16 @@ void main(){
   col/=ws; col+=pow(clamp(.5+liquid(p)*.22,0.,1.),14.)*.25;
   // calm the side where the text sits (left, or right in Arabic)
   float side=rtl>.5 ? 1.-uv.x : uv.x;
-  col=mix(col, cBg, veil*smoothstep(.78,.18,side));
+  // everywhere: calm enough to read; in the hero, the side away from the text shows more liquid
+  float v=mix(veil, .3, heroK*smoothstep(.42,.95,side));
+  col=mix(col, cBg, v);
   col+=(hash(gl_FragCoord.xy+fract(T*7.))-.5)/255.*2.;
   gl_FragColor=vec4(col,1.);
 }`;
 
 const PAL = {
-  dark: { a: [.9, .9, .94], b: [.32, .33, .38], c: [.02, .02, .03], veil: .72 },
-  light: { a: [1, 1, 1], b: [.8, .81, .85], c: [.38, .39, .45], veil: .8 },
+  dark: { a: [.92, .92, .96], b: [.32, .33, .38], c: [.02, .02, .03], veil: .74 },
+  light: { a: [1, 1, 1], b: [.78, .79, .84], c: [.36, .37, .43], veil: .74 },
 };
 
 export function initLiquidBg(canvas) {
@@ -49,7 +51,7 @@ export function initLiquidBg(canvas) {
   gl.useProgram(pr);
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
   const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  const U = {}; ['R', 'T', 'M', 'cA', 'cB', 'cC', 'cBg', 'rtl', 'veil'].forEach(k => { U[k] = gl.getUniformLocation(pr, k); });
+  const U = {}; ['R', 'T', 'M', 'cA', 'cB', 'cC', 'cBg', 'rtl', 'veil', 'heroK'].forEach(k => { U[k] = gl.getUniformLocation(pr, k); });
 
   const colours = () => {
     const t = root.dataset.theme; const dark = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
@@ -62,16 +64,17 @@ export function initLiquidBg(canvas) {
   };
   let W = 0, H = 0;
   const size = () => {
-    const d = Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1.25 : 1.5);
+    const d = Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1 : 1.25);
     W = Math.max(1, canvas.clientWidth * d | 0); H = Math.max(1, canvas.clientHeight * d | 0);
     if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H); }
   };
   let target = null, mouse = null, user = false, raf = 0, visible = true, t0 = performance.now() - 20000;
-  addEventListener('pointermove', e => { const r = canvas.getBoundingClientRect(); if (e.clientY > r.bottom) return; const d = W / r.width; target = [(e.clientX - r.left) * d, (r.bottom - e.clientY) * d]; user = true; }, { passive: true });
+  addEventListener('pointermove', e => { const d = W / innerWidth; target = [e.clientX * d, (innerHeight - e.clientY) * d]; user = true; }, { passive: true });
   const draw = now => {
     const t = (now - t0) / 1000, a = t * .3;
     const auto = [W * (.62 + .22 * Math.cos(a)), H * (.5 + .25 * Math.sin(a * 1.3))];
     const tg = user && target ? target : auto; mouse = mouse ? [mouse[0] + (tg[0] - mouse[0]) * .05, mouse[1] + (tg[1] - mouse[1]) * .05] : tg;
+    const hk = Math.max(0, 1 - scrollY / (innerHeight * .8)); gl.uniform1f(U.heroK, hk);
     gl.uniform2f(U.R, W, H); gl.uniform1f(U.T, t); gl.uniform2f(U.M, mouse[0], mouse[1]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };

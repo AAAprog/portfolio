@@ -12,13 +12,13 @@ export function initSignature(wrap) {
 
   const build = () => {
     const cs = getComputedStyle(wrap);
-    const fg = getComputedStyle(root).getPropertyValue('--bg').trim(), accent = getComputedStyle(root).getPropertyValue('--accent').trim();
+    const fg = getComputedStyle(root).getPropertyValue('--ink').trim(), accent = getComputedStyle(root).getPropertyValue('--accent').trim();
     // the canvas is drawn opaque, so it needs the colour of the section behind it
-    const host = wrap.closest('.contact') || document.body;
-    const m = getComputedStyle(host).backgroundColor.match(/[\d.]+/g) || [0, 0, 0];
+    const css = getComputedStyle(root).getPropertyValue('--bg').trim();
+    const m = /^#[0-9a-f]{6}$/i.test(css) ? [1, 3, 5].map(i => parseInt(css.substr(i, 2), 16)) : (css.match(/[\d.]+/g) || [0, 0, 0]);
     const bg = m.slice(0, 3).map(v => +v / 255);
     glass = createGlass(canvas, {
-      tint: [1, 1, 1], glass: 0.06, bg,
+      tint: [1, 1, 1], glass: 0.06, bg, clear: true,
       drawBase: (c, w, h) => { fs = Math.min(w * 0.135, h * 0.78); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 600, family: '"Plus Jakarta Sans"', color: fg, alpha: 0.16, accent, dot: true, y: 0.42 }); },
       drawReveal: (c, w, h) => wordmark(c, w, h, { text: 'أحمد باوزير', size: fs * 1.02, weight: 700, family: '"IBM Plex Sans Arabic"', color: fg, y: 0.42 }),
     });
