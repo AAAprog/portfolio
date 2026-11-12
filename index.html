@@ -58,12 +58,15 @@
     })();
   </script>
   <style>
-    /* Critical: the loader is black from the very first frame, before any stylesheet arrives */
-    html.is-loading, html.is-loading body { background: #000; color: #f2f2f2; }
-    html.is-loading .loader { position: fixed; inset: 0; z-index: 200; background: #000; }
+    /* Critical: the loader takes the site's own colours (light or dark) from the very first frame */
+    html.is-loading, html.is-loading body, html.is-loading .loader { background: #f2f1ee; color: #111; }
+    @media (prefers-color-scheme: dark) { html.is-loading:not([data-theme="light"]), html.is-loading:not([data-theme="light"]) body, html.is-loading:not([data-theme="light"]) .loader { background: #000; color: #f2f2f2; } }
+    html.is-loading[data-theme="dark"], html.is-loading[data-theme="dark"] body, html.is-loading[data-theme="dark"] .loader { background: #000; color: #f2f2f2; }
+    html.is-loading .loader { position: fixed; inset: 0; z-index: 200; }
   </style>
 </head>
 <body>
+  <canvas class="page-liquid" aria-hidden="true"></canvas>
   <!-- ───────── Loader ───────── -->
   <div class="loader" role="status" aria-label="Loading">
     <canvas class="loader-glass" aria-hidden="true"></canvas>
@@ -109,9 +112,7 @@
   <main id="main">
     <!-- ───────── Hero ───────── -->
     <section class="hero" id="hero" data-section="hero">
-      <canvas class="hero-liquid" aria-hidden="true"></canvas>
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
-      <div class="hero-spot" aria-hidden="true"></div>
       <div class="container hero-inner">
         <p class="eyebrow mono"><span class="pulse"></span><span data-i18n="hero.status">Available for opportunities · Riyadh, KSA</span></p>
         <h1 class="hero-title">

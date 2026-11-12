@@ -378,7 +378,7 @@ const mBtn = $('.sb-motion'); if (mBtn) mBtn.setAttribute('aria-pressed', String
 initClock();
 initStages();
 $$('.year').forEach(y => { y.textContent = new Date().getFullYear(); });
-initLiquidBg($('.hero-liquid'));
+initLiquidBg($('.page-liquid'));
 const hero = initHero($('.hero-canvas'));
 modules = [];
 initTerminal($('.term'));
