@@ -49,15 +49,18 @@ const T = [
     en: () => 'Ahmed grew up in Riyadh, Saudi Arabia, and he’s based there now.',
     ar: () => 'أحمد تربّى في الرياض، وهو مقيم فيها الحين.' },
   { id: 'journey', g: 'story', w: ['story', 'journey', 'background', 'path', 'قصته', 'قصه', 'رحلته', 'مسيرته', 'خلفيته'],
-    en: () => 'Short version: Ahmed grew up in Riyadh, went to Malaysia for his Software Engineering degree, worked remotely for a company in Doha during his final year, built Codai as his graduation project, then came back to Riyadh for Oracle Fusion HCM. The 85-second intro tells it better.',
-    ar: () => 'باختصار: أحمد تربّى في الرياض، وراح ماليزيا يدرس هندسة البرمجيات، واشتغل عن بُعد لشركة في الدوحة في سنته الأخيرة، وبنى Codai كمشروع تخرّج، وبعدها رجع الرياض واشتغل على Oracle Fusion HCM. وفيلم التعريف (85 ثانية) يحكيها أحسن.' },
+    en: () => 'Short version: Ahmed grew up in Riyadh, went to Malaysia for his Software Engineering degree, worked remotely from Malaysia for a Doha-based company during his final year (he never moved to Qatar), built Codai as his graduation project, then came back to Riyadh for Oracle Fusion HCM. The 85-second intro tells it better.',
+    ar: () => 'باختصار: أحمد تربّى في الرياض، وراح ماليزيا يدرس هندسة البرمجيات، واشتغل من ماليزيا عن بُعد لشركة مقرها الدوحة في سنته الأخيرة (وما سافر لقطر)، وبنى Codai كمشروع تخرّج، وبعدها رجع الرياض واشتغل على Oracle Fusion HCM. وفيلم التعريف (85 ثانية) يحكيها أحسن.' },
   { id: 'job', g: 'work', w: ['job', 'work', 'experience', 'career', 'company', 'intern', 'internship', 'macquires', 'employer', 'doing now', 'current role', 'خبره', 'خبرات', 'خبرته', 'خبراته', 'وظيفته', 'يشتغل', 'اشتغل', 'شغله الحالي', 'تدريب', 'شركه', 'وين يشتغل', 'عمله'],
-    en: () => 'Most recently, Ahmed was an Oracle Fusion HCM Consultant Intern at Macquires in Riyadh (June to August 2026). Before that, he worked part-time as a Software Engineer at Sifr IDE in Doha, remotely (February to May 2026).',
-    ar: () => 'آخر خبرة لأحمد كانت متدرّب مستشار Oracle Fusion HCM في شركة Macquires بالرياض (من يونيو إلى أغسطس 2026). وقبلها اشتغل مهندس برمجيات بدوام جزئي عن بُعد في Sifr IDE بالدوحة (من فبراير إلى مايو 2026).',
+    en: () => 'Most recently, Ahmed was an Oracle Fusion HCM Consultant Intern at Macquires in Riyadh (June to August 2026). Before that, he worked part-time as a Software Engineer for Sifr IDE, a Doha-based company, fully remotely from Malaysia (February to May 2026).',
+    ar: () => 'آخر خبرة لأحمد كانت متدرّب مستشار Oracle Fusion HCM في شركة Macquires بالرياض (من يونيو إلى أغسطس 2026). وقبلها اشتغل مهندس برمجيات بدوام جزئي مع Sifr IDE، شركة مقرها الدوحة، عن بُعد بالكامل من ماليزيا (من فبراير إلى مايو 2026).',
     more: { en: () => 'At Macquires he configured Core HR, absence management, payroll links, DFFs, value sets and Groovy triggers, and ran end-to-end testing.', ar: () => 'في Macquires هيّأ Core HR وإدارة الإجازات وربطها بالرواتب، وبنى DFFs وValue Sets وGroovy triggers، وسوّى اختبارات كاملة.' } },
   { id: 'sifr', g: 'work', w: ['sifr', 'doha', 'qatar', 'part time', 'part-time', 'صفر', 'الدوحه', 'قطر', 'دوام جزئي'],
-    en: () => 'At Sifr IDE (Doha, remote, February to May 2026) Ahmed tested interfaces, workflows and business logic, reproduced defects, helped find their root causes, and proposed practical fixes.',
-    ar: () => 'في Sifr IDE (الدوحة، عن بُعد، من فبراير إلى مايو 2026) اختبر أحمد الواجهات وسير العمل ومنطق النظام، وأعاد إنتاج الأخطاء، وساعد في إيجاد أسبابها، واقترح حلول عملية.' },
+    en: () => 'Sifr IDE is a Doha-based company. Ahmed worked for it fully remotely from Malaysia (February to May 2026), without travelling to Qatar. He tested interfaces, workflows and business logic, reproduced defects, helped find their root causes, and proposed practical fixes.',
+    ar: () => 'Sifr IDE شركة مقرها الدوحة. اشتغل معها أحمد عن بُعد بالكامل من ماليزيا (من فبراير إلى مايو 2026)، بدون ما يسافر لقطر. اختبر الواجهات وسير العمل ومنطق النظام، وأعاد إنتاج الأخطاء، وساعد في إيجاد أسبابها، واقترح حلول عملية.' },
+  { id: 'qatar', g: 'work', w: ['been to qatar', 'go to qatar', 'went to qatar', 'live in qatar', 'lived in qatar', 'move to qatar', 'in qatar', 'in doha', 'راح قطر', 'سافر قطر', 'سكن في قطر', 'عاش في قطر', 'في قطر', 'في الدوحه', 'زار قطر'],
+    en: () => 'No, Ahmed has never been to Qatar. He worked for Sifr IDE, a company based in Doha, fully remotely while he was studying in Malaysia.',
+    ar: () => 'لا، أحمد ما راح قطر أبداً. اشتغل مع Sifr IDE، شركة مقرها الدوحة، عن بُعد بالكامل وهو يدرس في ماليزيا.' },
   { id: 'years', g: 'work', w: ['years of experience', 'how many years', 'how long has he', 'senior', 'junior', 'fresh', 'كم سنه خبره', 'سنوات الخبره', 'سنين خبره', 'حديث تخرج', 'خريج جديد'],
     en: () => 'Ahmed is a recent graduate (2026). He has a three-month Oracle Fusion HCM internship at Macquires, four months of part-time software engineering at Sifr IDE, and three projects he built end to end.',
     ar: () => 'أحمد حديث تخرّج (2026). عنده تدريب ثلاثة أشهر على Oracle Fusion HCM في Macquires، وأربعة أشهر مهندس برمجيات بدوام جزئي في Sifr IDE، وثلاثة مشاريع بناها من البداية للنهاية.' },
@@ -95,8 +98,8 @@ const T = [
     en: () => 'Yes! Ahmed is open to full-time roles and freelance projects, in software engineering, Oracle Fusion HCM or QA.',
     ar: () => 'إيه! أحمد متاح لوظائف بدوام كامل ومشاريع عمل حر، في هندسة البرمجيات أو Oracle Fusion HCM أو اختبار الجودة.' },
   { id: 'remote', g: 'avail', w: ['remote', 'on site', 'on-site', 'onsite', 'hybrid', 'relocate', 'عن بعد', 'حضوري', 'هجين', 'ينتقل'],
-    en: () => 'He works on-site in Riyadh, hybrid, or remote. He has already worked remotely for a company in Doha.',
-    ar: () => 'يشتغل حضوري في الرياض، أو هجين، أو عن بُعد. وسبق اشتغل عن بُعد لشركة في الدوحة.' },
+    en: () => 'He works on-site in Riyadh, hybrid, or remote. He has already worked fully remotely, from Malaysia, for a company based in Doha.',
+    ar: () => 'يشتغل حضوري في الرياض، أو هجين، أو عن بُعد. وسبق اشتغل عن بُعد بالكامل من ماليزيا لشركة مقرها الدوحة.' },
   { id: 'reply', g: 'contact', w: ['reply', 'respond', 'response time', 'how fast', 'يرد', 'متى يرد', 'سرعه الرد'],
     en: () => 'Email is the fastest way to reach him. Outside working hours, he replies the next working day.',
     ar: () => 'الإيميل أسرع طريقة توصله. وخارج وقت الدوام، يرد في يوم العمل اللي بعده.' },
@@ -104,8 +107,8 @@ const T = [
     en: () => 'He sits between code and configuration: he can build a full product and also set up an enterprise HR system. And he likes hunting the edge case nobody thought of before users find it.',
     ar: () => 'يجمع بين البرمجة وتهيئة الأنظمة: يقدر يبني منتج كامل، ويهيّئ نظام موارد بشرية لشركة. ويحب يصيد الحالات الغريبة اللي محد انتبه لها قبل ما يواجهها المستخدم.' },
   { id: 'stats', g: 'stats', w: ['numbers', 'stats', 'how many projects', 'how many certificates', 'how many countries', 'ارقام', 'كم مشروع', 'كم شهاده', 'كم دوله'],
-    en: () => 'In numbers: 3 shipped projects, 5 certifications, 6 Oracle HCM modules configured, and 3 countries he has studied or worked with: Saudi Arabia, Malaysia and Qatar.',
-    ar: () => 'بالأرقام: 3 مشاريع منجزة، 5 شهادات، 6 وحدات Oracle HCM هيّأها، و3 دول درس أو اشتغل معها: السعودية وماليزيا وقطر.' },
+    en: () => 'In numbers: 3 shipped projects, 5 certifications, 6 Oracle HCM modules configured, and 3 countries in his path: Saudi Arabia where he lives, Malaysia where he studied, and Qatar, where a company he worked for remotely is based.',
+    ar: () => 'بالأرقام: 3 مشاريع منجزة، 5 شهادات، 6 وحدات Oracle HCM هيّأها، و3 دول في مسيرته: السعودية وين يعيش، وماليزيا وين درس، وقطر وين مقر شركة اشتغل معها عن بُعد.' },
   { id: 'private', g: 'private', mood: 'sorry', w: ['married', 'wife', 'girlfriend', 'single', 'family', 'father', 'mother', 'brother', 'sister', 'salary', 'religion', 'phone number', 'whatsapp', 'address', 'home', 'متزوج', 'زوجته', 'اعزب', 'اهله', 'عائلته', 'ابوه', 'امه', 'اخوه', 'اخته', 'راتبه', 'راتب', 'ديانته', 'رقمه', 'رقم جواله', 'واتساب', 'عنوانه', 'بيته'],
     en: () => 'That’s personal, so I don’t share it. I stick to Ahmed’s professional side. For anything else, the best way is to email him at aaa.bawazir0@gmail.com.',
     ar: () => 'هذا شي شخصي، فما أشاركه. أنا أتكلم عن الجانب المهني لأحمد بس. ولأي شي ثاني، أفضل طريقة تراسله على aaa.bawazir0@gmail.com.' },
@@ -193,7 +196,9 @@ export function answer(input, pageLang) {
   const best = ranked[0].tp; last = best;
   let text = best[lang](), act = best.act;
   // a second, different question in the same message
-  const second = ranked.find(x => x.tp.g !== best.g && x.s >= 4 && !['chat', 'cmd', 'who'].includes(x.tp.g) && !['chat', 'cmd'].includes(best.g));
+  // only when the visitor really asked two things ("… and …" / «… و…»)
+  const two = / (and|also|plus) /.test(t) || /\S (?!وين |وش |وشو )و\S/.test(t);
+  const second = two && ranked.find(x => x.tp.g !== best.g && x.s >= 4 && !['chat', 'cmd', 'who'].includes(x.tp.g) && !['chat', 'cmd'].includes(best.g));
   if (second) { text += ' ' + second.tp[lang](); act = act || second.tp.act; }
   return { text, lang, act, mood: best.mood || 'talk' };
 }
