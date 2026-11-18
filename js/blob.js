@@ -81,7 +81,7 @@ export function initBlob(getFaces) {
     mood.poke *= .9; mood.vel *= .86;
     for (const { c, x } of faces) {
       const w = c.clientWidth; if (!w) continue;
-      if (c.checkVisibility && !c.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue; // hidden: skip
+      if (!c.offsetParent && getComputedStyle(c).position !== 'fixed') continue; // not rendered (display: none): skip
       const px = Math.round(w * Math.min(devicePixelRatio || 1, 2));
       if (c.width !== px) { c.width = c.height = px; }
       if (glc.width !== px) { glc.width = glc.height = px; }
