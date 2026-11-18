@@ -1,8 +1,7 @@
-// Contact form: validates, then sends the message to Ahmed's inbox through FormSubmit
-// (a free form-to-email relay; no account, no database). If the relay can't be reached,
-// it falls back to a pre-filled email in the visitor's own mail app.
+// Contact form: validates, then sends the message to Ahmed's inbox through Formspree.
+// If Formspree can't be reached, it falls back to a pre-filled email in the visitor's mail app.
 const EMAIL = 'aaa.bawazir0@gmail.com';
-const ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL;
+const ENDPOINT = 'https://formspree.io/f/xaeojawn';
 const okEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 
 export function initForm(form, toast, L) {
@@ -37,7 +36,7 @@ export function initForm(form, toast, L) {
       form.querySelector('.invalid input, .invalid textarea')?.focus();
       return;
     }
-    if (f._honey.value) return; // a bot filled the hidden field
+    if (f._gotcha.value) return; // a bot filled the hidden field
     const topic = f.topic.value;
     const name = f.name.value.trim(), email = f.email.value.trim(), company = f.company.value.trim();
     const subject = `${topic} — ${name}${company ? ' (' + company + ')' : ''}`;
@@ -53,11 +52,11 @@ export function initForm(form, toast, L) {
     fetch(ENDPOINT, {
       method: 'POST', signal: ctrl.signal,
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ _subject: 'Portfolio: ' + subject, _template: 'table', _captcha: 'false', _replyto: email, name, email, company, topic, message }),
+      body: JSON.stringify({ _subject: 'Portfolio: ' + subject, email, name, company, topic, message }),
     }).then(r => r.json()).then(d => {
       clearTimeout(timer);
-      if (d && (d.success === true || d.success === 'true')) return finish(true);
-      throw new Error(d && d.message || 'failed');
+      if (d && d.ok) return finish(true);
+      throw new Error(d && d.errors && d.errors[0] && d.errors[0].message || 'failed');
     }).catch(() => {
       clearTimeout(timer);
       // fall back: open the visitor's mail app with everything filled in
