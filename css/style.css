@@ -1468,3 +1468,8 @@ body::after {
   input:not([type=range]):not([type=checkbox]):not([type=radio]), textarea, [contenteditable="true"], .term { cursor: var(--cur-text); }
 }
 .cursor { display: none !important; }
+
+/* bigger AB logo in the header */
+.topbar .logo-mark { font-size: 30px; }
+.topbar .logo-dot { width: 10px; height: 10px; margin-bottom: 5px; }
+@media (max-width: 560px) { .topbar .logo-mark { font-size: 27px; } }
