@@ -50,7 +50,7 @@ export function initBlob(getFaces) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
   const glc = document.createElement('canvas');
   let gl = null;
-  try { gl = glc.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, preserveDrawingBuffer: true }); } catch {}
+  try { gl = glc.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, preserveDrawingBuffer: false }); } catch {}
   const sh = (t, s) => { const x = gl.createShader(t); gl.shaderSource(x, s); gl.compileShader(x); return gl.getShaderParameter(x, gl.COMPILE_STATUS) ? x : null; };
   let U = null;
   if (gl) {
@@ -81,7 +81,8 @@ export function initBlob(getFaces) {
     mood.poke *= .9; mood.vel *= .86;
     for (const { c, x } of faces) {
       const w = c.clientWidth; if (!w) continue;
-      const px = Math.round(w * Math.min(devicePixelRatio || 1, 3));
+      if (c.checkVisibility && !c.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue; // hidden: skip
+      const px = Math.round(w * Math.min(devicePixelRatio || 1, 2));
       if (c.width !== px) { c.width = c.height = px; }
       if (glc.width !== px) { glc.width = glc.height = px; }
       gl.viewport(0, 0, px, px); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
@@ -92,7 +93,8 @@ export function initBlob(getFaces) {
     }
   };
   if (reduce) { draw(4000); return { adopt }; }
-  const loop = now => { if (!document.hidden) draw(now); requestAnimationFrame(loop); };
+  let lastDraw = 0;
+  const loop = now => { if (!document.hidden && now - lastDraw >= 32) { lastDraw = now; draw(now); } requestAnimationFrame(loop); };
   requestAnimationFrame(loop);
   return { adopt };
 }

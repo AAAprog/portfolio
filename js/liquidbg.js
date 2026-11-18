@@ -6,7 +6,6 @@
 const FS = `precision highp float;
 uniform vec2 R; uniform float T; uniform vec2 M;
 uniform vec3 cA, cB, cC, cBg; uniform float rtl, veil, heroK;
-#define N 7
 vec3 spec(float t){ return clamp(vec3(1.5-abs(4.*t-3.4), 1.5-abs(4.*t-2.), 1.5-abs(4.*t-.6)), 0., 1.); }
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
 float liquid(vec2 p){
@@ -18,10 +17,12 @@ float liquid(vec2 p){
 vec3 tone(float v){ float a=clamp(.5+v*.22,0.,1.); vec3 c=mix(cC,cB,smoothstep(.1,.47,a)); return mix(c,cA,smoothstep(.5,.6,a)); }
 void main(){
   vec2 uv=gl_FragCoord.xy/R; vec2 p=(uv-.5)*vec2(R.x/R.y,1.);
-  float e=.01; vec2 g=vec2(liquid(p+vec2(e,0.))-liquid(p-vec2(e,0.)), liquid(p+vec2(0.,e))-liquid(p-vec2(0.,e)));
-  vec2 dir=normalize(g+1e-5); vec3 col=vec3(0.), ws=vec3(0.);
-  for(int i=0;i<N;i++){ float t=float(i)/float(N-1); vec3 w=spec(t); col+=w*tone(liquid(p+dir*.03*(t-.5))); ws+=w; }
-  col/=ws; col+=pow(clamp(.5+liquid(p)*.22,0.,1.),14.)*.25;
+  // 5 evaluations per pixel (was 11): one sample per colour channel for the dispersion,
+  // and a forward difference for the flow direction
+  float e=.012, v0=liquid(p);
+  vec2 dir=normalize(vec2(liquid(p+vec2(e,0.))-v0, liquid(p+vec2(0.,e))-v0)+1e-5);
+  vec3 col=vec3(tone(liquid(p-dir*.015)).r, tone(v0).g, tone(liquid(p+dir*.015)).b);
+  col+=pow(clamp(.5+v0*.22,0.,1.),14.)*.25;
   // calm the side where the text sits (left, or right in Arabic)
   float side=rtl>.5 ? 1.-uv.x : uv.x;
   // everywhere: calm enough to read; in the hero, the side away from the text shows more liquid
@@ -64,7 +65,7 @@ export function initLiquidBg(canvas) {
   };
   let W = 0, H = 0;
   const size = () => {
-    const d = Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1 : 1.25);
+    const d = innerWidth < 700 ? 0.4 : 0.5;
     W = Math.max(1, canvas.clientWidth * d | 0); H = Math.max(1, canvas.clientHeight * d | 0);
     if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H); }
   };
@@ -78,7 +79,8 @@ export function initLiquidBg(canvas) {
     gl.uniform2f(U.R, W, H); gl.uniform1f(U.T, t); gl.uniform2f(U.M, mouse[0], mouse[1]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   };
-  const loop = now => { draw(now); raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0; };
+  let lastDraw = 0;
+  const loop = now => { if (now - lastDraw >= 40) { lastDraw = now; draw(now); } raf = visible && !document.hidden ? requestAnimationFrame(loop) : 0; };
   const start = () => { if (reduce) { draw(performance.now()); return; } if (!raf) raf = requestAnimationFrame(loop); };
   size(); colours(); start();
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); if (reduce) draw(performance.now()); }, 120); });

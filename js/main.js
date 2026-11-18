@@ -378,8 +378,10 @@ const mBtn = $('.sb-motion'); if (mBtn) mBtn.setAttribute('aria-pressed', String
 initClock();
 initStages();
 $$('.year').forEach(y => { y.textContent = new Date().getFullYear(); });
-initLiquidBg($('.page-liquid'));
-const hero = initHero($('.hero-canvas'));
+// The heavy canvases start only once the loader is gone, so the loader has the CPU/GPU to itself.
+const afterLoader = fn => (root.classList.contains('is-loading') ? document.addEventListener('loader:done', fn, { once: true }) : fn());
+var hero = null;
+afterLoader(() => { initLiquidBg($('.page-liquid')); hero = initHero($('.hero-canvas')); });
 modules = [];
 initTerminal($('.term'));
 initForm($('.cform'), toast, L);

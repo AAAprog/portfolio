@@ -27,28 +27,32 @@ export function initLoader() {
   // match the site: same light/dark colours, same font as the hero name
   const isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   const INK = isDark ? '#f1efe9' : '#111111', BG = isDark ? [0, 0, 0] : [242 / 255, 241 / 255, 238 / 255];
-  let fs = 100, fillLevel = 0, drawnLevel = 0, fillStart = 0, holding = false;
+  let fs = 100, fillLevel = 0, fillStart = 0, holding = false, gw = 0, gh = 0;
+  const geo = (w, h) => { gw = w; gh = h; const bw = Math.min(w * 0.58, fs * 5.6), k = bw / AR.w; return { k, x0: (w - AR.w * k) / 2 + bw * 0.04, y0: h / 2 - AR.h * k * 0.52 }; };
+  // css px of the fill line for a level 0..1 (the ink sits between y 6 and 176 of the outline's box)
+  const fillLine = lv => { const { y0, k } = geo(gw, gh); return y0 + (6 + 170 * (1 - lv)) * k; };
   const glass = createGlass(canvas, {
     tint: [1, 1, 1], glass: 0.07, bg: BG,
     drawBase: (c, w, h) => { fs = Math.min(w * 0.115, h * 0.2); wordmark(c, w, h, { text: 'Ahmed Bawazir', size: fs, weight: 700, family: '"Plus Jakarta Sans"', color: INK, accent, dot: true }); },
-    // Through the glass: the Ruqaa name as a white frame that fills up from the bottom
-    // as the page loads, with the orange dot like the English name.
+    // Through the glass: the Ruqaa name as an outline (with the orange dot) …
     drawReveal: (c, w, h) => {
       c.clearRect(0, 0, w, h);
-      const bw = Math.min(w * 0.58, fs * 5.6), k = bw / AR.w;
-      const x0 = (w - AR.w * k) / 2 + bw * 0.04, y0 = h / 2 - AR.h * k * 0.52;
-      const path = new Path2D(AR.d);
+      const { x0, y0, k } = geo(w, h), path = new Path2D(AR.d);
       c.save(); c.translate(x0, y0); c.scale(k, k);
-      // the ink sits roughly between y 8 and 175 of the outline's box
-      const top = 6, bot = 176, lvl = top + (bot - top) * (1 - fillLevel);
-      c.save(); c.beginPath(); c.rect(-10, lvl, AR.w + 20, AR.h); c.clip();
-      c.fillStyle = INK; c.fill(path); c.restore();
       c.lineWidth = 1.6 / k * Math.max(1, fs / 60); c.lineJoin = 'round'; c.strokeStyle = INK; c.stroke(path);
       c.restore();
-      // orange dot after the name (on its left, as Arabic reads right to left)
-      const d = fs * 0.17;
+      const d = fs * 0.17; // orange dot after the name (on its left, as Arabic reads right to left)
       c.fillStyle = accent; c.fillRect(x0 - d - fs * 0.12, y0 + 128 * k - d, d, d);
     },
+    // … and the same name filled in. The shader shows it below a line that rises, so the
+    // fill animates without redrawing or re-uploading anything.
+    drawFill: (c, w, h) => {
+      c.clearRect(0, 0, w, h);
+      const { x0, y0, k } = geo(w, h);
+      c.save(); c.translate(x0, y0); c.scale(k, k); c.fillStyle = INK; c.fill(new Path2D(AR.d)); c.restore();
+    },
+    // sharp enough for the glass, without giant textures on 3× phones
+    dprMax: 2, ss: 1,
   });
 
   const MIN = 1300, MAX = 3600, t0 = performance.now();
@@ -58,10 +62,14 @@ export function initLoader() {
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
   ]) : Promise.resolve()).catch(() => {});
   const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise(r => addEventListener('load', r, { once: true }));
-  fontsReady.then(() => { target = Math.max(target, 0.6); glass.layout(); });
+  // Build the glass textures once, with the real fonts (wait up to 400 ms for them), instead of
+  // twice. Each build is a big texture upload that freezes a frame.
+  let laidOut = false;
+  const build = () => { if (laidOut) return; laidOut = true; glass.layout(); };
+  fontsReady.then(() => { target = Math.max(target, 0.6); build(); });
+  setTimeout(build, 400);
   loaded.then(() => { target = Math.max(target, 0.85); });
-  glass.layout();
-  const onResize = () => glass.layout();
+  let rz; const onResize = () => { clearTimeout(rz); rz = setTimeout(() => glass.layout(), 150); };
   addEventListener('resize', onResize);
 
   return new Promise(resolve => {
@@ -109,7 +117,7 @@ export function initLoader() {
         }
       }
       glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
-      if (Math.abs(fillLevel - drawnLevel) >= 0.025 || (fillLevel === 1 && drawnLevel < 1)) { drawnLevel = fillLevel; glass.redrawReveal(); }
+      glass.setFillY(fillLine(fillLevel));
       glass.setLens(x, y, r);
 
       if (!finished) {
