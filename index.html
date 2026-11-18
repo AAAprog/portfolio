@@ -103,7 +103,7 @@
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
       </button>
       </div>
-      <a class="btn btn-solid btn-sm btn-cv" href="assets/Ahmed_Bawazir_CV.pdf" download>
+      <a class="btn btn-solid btn-sm btn-cv" href="assets/Ahmed_Bawazir_CV.pdf" download data-goatcounter-click="cv-download-header">
         <span data-i18n="cta.cv">Download CV</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
       </a>
@@ -124,7 +124,7 @@
         <p class="hero-lede" data-i18n="hero.lede">I build software, configure enterprise systems, and break things on purpose — so your users never have to.</p>
         <div class="hero-ctas">
           <a class="btn btn-solid" href="#projects"><span data-i18n="cta.work">See my work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          <button type="button" class="btn btn-ghost btn-intro" data-action="intro"><span class="intro-dot" aria-hidden="true">▶</span><span data-i18n="cta.intro">Watch the intro · 85s</span></button>
+          <button type="button" class="btn btn-ghost btn-intro" data-action="intro" data-goatcounter-click="intro-hero"><span class="intro-dot" aria-hidden="true">▶</span><span data-i18n="cta.intro">Watch the intro · 85s</span></button>
         </div>
         <p class="hero-hint mono" data-i18n="hero.hint">↳ move your cursor over the letters — click to scatter</p>
       </div>
@@ -473,9 +473,9 @@
             <span class="copy-state mono" data-i18n="contact.copy">click to copy</span>
           </button>
           <div class="contact-links">
-            <a class="btn btn-solid" href="mailto:aaa.bawazir0@gmail.com"><span data-i18n="contact.email">Send an email</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="btn btn-ghost" href="https://www.linkedin.com/in/ahmed-bawazir-14b472383/" target="_blank" rel="noopener">LinkedIn ↗</a>
-            <a class="btn btn-ghost" href="https://github.com/aaaprog" target="_blank" rel="noopener">GitHub ↗</a>
+            <a class="btn btn-solid" href="mailto:aaa.bawazir0@gmail.com" data-goatcounter-click="contact-email"><span data-i18n="contact.email">Send an email</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/ahmed-bawazir-14b472383/" data-goatcounter-click="contact-linkedin" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a class="btn btn-ghost" href="https://github.com/aaaprog" data-goatcounter-click="contact-github" target="_blank" rel="noopener">GitHub ↗</a>
             <a class="btn btn-ghost" href="assets/Ahmed_Bawazir_CV.pdf" download data-i18n="cta.cv">Download CV</a>
           </div>
         </div>
@@ -483,7 +483,7 @@
         <form class="cform" novalidate aria-labelledby="cform-title">
           <div class="cform-head">
             <p id="cform-title" class="cform-title" data-i18n="form.title">Write to me</p>
-            <p class="cform-note mono" data-i18n="form.note">Opens your email app, pre-filled.</p>
+            <p class="cform-note mono" data-i18n="form.note">Goes straight to my inbox.</p>
           </div>
           <fieldset class="cform-topics">
             <legend class="mono" data-i18n="form.topic">Topic</legend>
@@ -498,6 +498,11 @@
             <span class="field-err mono" data-i18n="form.errName">Please add your name.</span>
           </div>
           <div class="field">
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder=" " required maxlength="120" />
+            <label for="f-email" data-i18n="form.email">Your email</label>
+            <span class="field-err mono" data-i18n="form.errEmail">Please add an email I can reply to.</span>
+          </div>
+          <div class="field">
             <input id="f-company" name="company" type="text" autocomplete="organization" placeholder=" " maxlength="80" />
             <label for="f-company" data-i18n="form.company">Company (optional)</label>
           </div>
@@ -507,10 +512,11 @@
             <span class="field-err mono" data-i18n="form.errMsg">A short message helps — at least 10 characters.</span>
             <span class="field-count mono"><span class="cnt">0</span>/1000</span>
           </div>
+          <input type="text" name="_honey" class="cform-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <button class="btn cform-submit" type="submit">
-            <span class="cs-idle" data-i18n="form.send">Compose email</span>
-            <span class="cs-busy" aria-hidden="true"><span class="spinner"></span><span data-i18n="form.opening">Opening your email app…</span></span>
-            <span class="cs-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg><span data-i18n="form.done">Ready in your email app</span></span>
+            <span class="cs-idle" data-i18n="form.send">Send message</span>
+            <span class="cs-busy" aria-hidden="true"><span class="spinner"></span><span data-i18n="form.opening">Sending…</span></span>
+            <span class="cs-done" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 7"/></svg><span data-i18n="form.done">Sent, thank you</span></span>
           </button>
         </form>
         </div>
@@ -569,5 +575,7 @@
   <canvas class="confetti" aria-hidden="true"></canvas>
 
   <script type="module" src="js/main.js"></script>
+  <!-- Privacy-friendly visit counter (GoatCounter): no cookies, no personal data. -->
+  <script data-goatcounter="https://ahmedbawazir.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
