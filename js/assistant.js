@@ -284,11 +284,13 @@ export function initAssistant({ goProjects, ask, act = {} }) {
   if (!reduce) (function blink() { setTimeout(() => { eyesOf().forEach(f => f.classList.add('blink')); setTimeout(() => eyesOf().forEach(f => f.classList.remove('blink')), 140); blink(); }, 2600 + Math.random() * 3200); })();
   const seen = new Set(); let tipT;
   const comment = id => {
+    // on phones AB only speaks up in the three sections that matter most, so it never covers the content
+    if (innerWidth < 700 && !['projects', 'experience', 'contact'].includes(id)) return;
     const msg = (L().say || {})[id];
     if (!msg || seen.has(id) || !pill.classList.contains('on') || bubble.classList.contains('on')) return;
     seen.add(id);
     tip.textContent = msg; tip.dir = 'auto'; pill.classList.add('talking'); mood.talk = 1;
-    clearTimeout(tipT); tipT = setTimeout(() => { pill.classList.remove('talking'); mood.talk = 0; }, 4200);
+    clearTimeout(tipT); tipT = setTimeout(() => { pill.classList.remove('talking'); mood.talk = 0; }, innerWidth < 700 ? 3000 : 4200);
   };
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) comment(e.target.id); }), { threshold: 0.35 });
   Object.keys(TXT.en.say).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });

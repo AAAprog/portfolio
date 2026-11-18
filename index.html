@@ -88,8 +88,8 @@
       <span class="logo-mark">AB</span><span class="logo-dot"></span>
     </a>
     <nav class="toplinks" aria-label="Primary">
-      <a href="#experience" data-i18n="nav.experience">Experience</a>
       <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
       <a href="#skills" data-i18n="nav.skills">Skills</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
@@ -124,7 +124,6 @@
         <div class="hero-ctas">
           <a class="btn btn-solid" href="#projects"><span data-i18n="cta.work">See my work</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
           <button type="button" class="btn btn-ghost btn-intro" data-action="intro"><span class="intro-dot" aria-hidden="true">▶</span><span data-i18n="cta.intro">Watch the intro · 85s</span></button>
-          <button type="button" class="btn btn-break" data-action="break"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 9.5 9.5 4 8l4 5-3 6 6-3.5L15 21l.5-6.5L21 12l-6.5-1.5z"/></svg><span data-i18n="cta.break">Break this page</span></button>
         </div>
         <p class="hero-hint mono" data-i18n="hero.hint">↳ move your cursor over the letters — click to scatter</p>
       </div>
@@ -199,7 +198,7 @@
           </article>
 
           <article class="bento-card b-nums reveal">
-            <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.countries">Countries studied in or worked with</span></div>
+            <div class="stat"><span class="stat-value" data-count="2">0</span><span class="stat-label" data-i18n="stats.countries">Countries lived &amp; studied in</span></div>
             <div class="stat"><span class="stat-value" data-count="6">0</span><span class="stat-label" data-i18n="stats.hcm">Oracle HCM modules configured</span></div>
             <div class="stat"><span class="stat-value" data-count="5">0</span><span class="stat-label" data-i18n="stats.certs">Certifications</span></div>
             <div class="stat"><span class="stat-value" data-count="3">0</span><span class="stat-label" data-i18n="stats.projects">Shipped projects</span></div>
@@ -208,67 +207,12 @@
       </div>
     </section>
 
-    <!-- ───────── Experience (git log) ───────── -->
-    <section class="section" id="experience" data-section="experience">
-      <div class="container">
-        <header class="section-head reveal">
-          <p class="kicker mono">02 — <span data-i18n="exp.kicker">Experience</span></p>
-          <h2 data-words data-i18n="exp.title">The commit history.</h2>
-          <p class="section-sub" data-split data-i18n="exp.sub">My career so far, written the way I'd write it in a repository: newest first.</p>
-          <p class="mono gitcmd" aria-hidden="true">$ git log --career --graph</p>
-        </header>
-
-        <ol class="gitlog">
-          <li class="commit reveal">
-            <div class="commit-graph" aria-hidden="true"><span class="commit-dot"></span></div>
-            <div class="commit-body card">
-              <p class="commit-meta mono"><span class="hash">a3f9c21</span> <span class="ref">HEAD → riyadh</span> <span class="date" data-i18n="exp.1.date">Jun 2026 – Aug 2026</span></p>
-              <h3><span class="type mono">feat(hcm):</span> <span data-i18n="exp.1.role">Oracle Fusion HCM Consultant Intern</span> <span class="at">@ Macquires</span></h3>
-              <p class="commit-place" data-i18n="exp.1.place">Riyadh, Saudi Arabia · On-site</p>
-              <ul class="commit-list">
-                <li data-i18n="exp.1.b1">Configured and tested Oracle Fusion HCM across Core HR, Workforce Structures, Absence Management, Documents of Record, Payroll and reporting.</li>
-                <li data-i18n="exp.1.b2">Built DFFs, value sets, SQL-based defaults, validation rules and Groovy/ADF triggers to meet business requirements.</li>
-                <li data-i18n="exp.1.b3">Configured absence plans, accruals, eligibility, balances, approvals and absence-to-payroll integration.</li>
-                <li data-i18n="exp.1.b4">Ran end-to-end functional testing, troubleshooting, validation and documentation of HCM configurations and business processes.</li>
-              </ul>
-              <p class="diffstat mono"><span class="plus">+ Core HR</span> <span class="plus">+ Absence</span> <span class="plus">+ DOR</span> <span class="plus">+ Payroll</span> <span class="plus">+ OTBI</span></p>
-            </div>
-          </li>
-          <li class="commit reveal">
-            <div class="commit-graph" aria-hidden="true"><span class="commit-dot"></span></div>
-            <div class="commit-body card">
-              <p class="commit-meta mono"><span class="hash">7be14d0</span> <span class="ref ref-muted">remote/doha</span> <span class="date" data-i18n="exp.2.date">Feb 2026 – May 2026</span></p>
-              <h3><span class="type mono">fix(qa):</span> <span data-i18n="exp.2.role">Software Engineer · Part-time</span> <span class="at">@ Sifr IDE</span></h3>
-              <p class="commit-place" data-i18n="exp.2.place">Remote · Doha-based company</p>
-              <ul class="commit-list">
-                <li data-i18n="exp.2.b1">Tested interfaces, workflows and business logic to surface functional issues, edge cases and inconsistent behaviour.</li>
-                <li data-i18n="exp.2.b2">Reproduced defects and supported debugging and root-cause analysis by isolating issues and validating expected behaviour.</li>
-                <li data-i18n="exp.2.b3">Proposed practical fixes to improve reliability, functionality and the overall user experience.</li>
-              </ul>
-              <p class="diffstat mono"><span class="minus">− bugs</span> <span class="minus">− edge cases</span> <span class="plus">+ reliability</span></p>
-            </div>
-          </li>
-          <li class="commit reveal">
-            <div class="commit-graph" aria-hidden="true"><span class="commit-dot commit-dot--root"></span></div>
-            <div class="commit-body card">
-              <p class="commit-meta mono"><span class="hash">1c0de23</span> <span class="ref ref-muted">origin/kajang</span> <span class="date">2023 – 2026</span></p>
-              <h3><span class="type mono">init(edu):</span> <span data-i18n="exp.3.role">B.CS (Hons.) in Software Engineering</span> <span class="at">@ Universiti Tenaga Nasional</span></h3>
-              <p class="commit-place" data-i18n="exp.3.place">Kajang, Malaysia · CGPA 3.63 / 4.00</p>
-              <ul class="commit-list">
-                <li data-i18n="exp.3.b1">SDLC, UML, OOP, MVVM, database design and requirements analysis, applied in a final-year project that automates them (Codai).</li>
-              </ul>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
     <!-- ───────── Projects ───────── -->
     <section class="section projects-section" id="projects" data-section="projects">
       <div class="pin"><div class="pin-sticky">
       <div class="container pin-track">
         <header class="section-head reveal project-intro">
-          <p class="kicker mono">03 — <span data-i18n="proj.kicker">Selected projects</span></p>
+          <p class="kicker mono">02 — <span data-i18n="proj.kicker">Selected projects</span></p>
           <h2 data-words data-i18n="proj.title">Things I've shipped.</h2>
           <p class="section-sub" data-split data-i18n="proj.sub">From an AI assistant for software engineers to a ticketing system and a mobile app.</p>
         </header>
@@ -379,12 +323,67 @@
       </div></div>
     </section>
 
+    <!-- ───────── Experience (git log) ───────── -->
+    <section class="section" id="experience" data-section="experience">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="kicker mono">03 — <span data-i18n="exp.kicker">Experience</span></p>
+          <h2 data-words data-i18n="exp.title">The commit history.</h2>
+          <p class="section-sub" data-split data-i18n="exp.sub">My career so far, written the way I'd write it in a repository: newest first.</p>
+          <p class="mono gitcmd" aria-hidden="true">$ git log --career --graph</p>
+        </header>
+
+        <ol class="gitlog">
+          <li class="commit reveal">
+            <div class="commit-graph" aria-hidden="true"><span class="commit-dot"></span></div>
+            <div class="commit-body card">
+              <p class="commit-meta mono"><span class="hash">a3f9c21</span> <span class="ref">HEAD → riyadh</span> <span class="date" data-i18n="exp.1.date">Jun 2026 – Aug 2026</span></p>
+              <h3><span class="type mono">feat(hcm):</span> <span data-i18n="exp.1.role">Oracle Fusion HCM Consultant Intern</span> <span class="at">@ Macquires</span></h3>
+              <p class="commit-place" data-i18n="exp.1.place">Riyadh, Saudi Arabia · On-site</p>
+              <ul class="commit-list">
+                <li data-i18n="exp.1.b1">Configured and tested Oracle Fusion HCM across Core HR, Workforce Structures, Absence Management, Documents of Record, Payroll and reporting.</li>
+                <li data-i18n="exp.1.b2">Built DFFs, value sets, SQL-based defaults, validation rules and Groovy/ADF triggers to meet business requirements.</li>
+                <li data-i18n="exp.1.b3">Configured absence plans, accruals, eligibility, balances, approvals and absence-to-payroll integration.</li>
+                <li data-i18n="exp.1.b4">Ran end-to-end functional testing, troubleshooting, validation and documentation of HCM configurations and business processes.</li>
+              </ul>
+              <p class="diffstat mono"><span class="plus">+ Core HR</span> <span class="plus">+ Absence</span> <span class="plus">+ DOR</span> <span class="plus">+ Payroll</span> <span class="plus">+ OTBI</span></p>
+            </div>
+          </li>
+          <li class="commit reveal">
+            <div class="commit-graph" aria-hidden="true"><span class="commit-dot"></span></div>
+            <div class="commit-body card">
+              <p class="commit-meta mono"><span class="hash">7be14d0</span> <span class="ref ref-muted">remote/doha</span> <span class="date" data-i18n="exp.2.date">Feb 2026 – May 2026</span></p>
+              <h3><span class="type mono">fix(qa):</span> <span data-i18n="exp.2.role">Software Engineer · Part-time</span> <span class="at">@ Sifr IDE</span></h3>
+              <p class="commit-place" data-i18n="exp.2.place">Remote · Doha-based company</p>
+              <ul class="commit-list">
+                <li data-i18n="exp.2.b1">Tested interfaces, workflows and business logic to surface functional issues, edge cases and inconsistent behaviour.</li>
+                <li data-i18n="exp.2.b2">Reproduced defects and supported debugging and root-cause analysis by isolating issues and validating expected behaviour.</li>
+                <li data-i18n="exp.2.b3">Proposed practical fixes to improve reliability, functionality and the overall user experience.</li>
+              </ul>
+              <p class="diffstat mono"><span class="minus">− bugs</span> <span class="minus">− edge cases</span> <span class="plus">+ reliability</span></p>
+            </div>
+          </li>
+          <li class="commit reveal">
+            <div class="commit-graph" aria-hidden="true"><span class="commit-dot commit-dot--root"></span></div>
+            <div class="commit-body card">
+              <p class="commit-meta mono"><span class="hash">1c0de23</span> <span class="ref ref-muted">origin/kajang</span> <span class="date">2023 – 2026</span></p>
+              <h3><span class="type mono">init(edu):</span> <span data-i18n="exp.3.role">B.CS (Hons.) in Software Engineering</span> <span class="at">@ Universiti Tenaga Nasional</span></h3>
+              <p class="commit-place" data-i18n="exp.3.place">Kajang, Malaysia · CGPA 3.63 / 4.00</p>
+              <ul class="commit-list">
+                <li data-i18n="exp.3.b1">SDLC, UML, OOP, MVVM, database design and requirements analysis, applied in a final-year project that automates them (Codai).</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
 
     <!-- ───────── Skills ───────── -->
     <section class="section" id="skills" data-section="skills">
       <div class="container">
         <header class="section-head reveal">
-          <p class="kicker mono">05 — <span data-i18n="skills.kicker">Toolbox</span></p>
+          <p class="kicker mono">04 — <span data-i18n="skills.kicker">Toolbox</span></p>
           <h2 data-words data-i18n="skills.title">What's in the stack.</h2>
         </header>
         <div class="skill-tabs reveal" role="tablist" aria-label="Skill groups">
@@ -416,7 +415,7 @@
     <section class="section" id="credentials" data-section="credentials">
       <div class="container cred-grid">
         <div class="reveal">
-          <p class="kicker mono">06 — <span data-i18n="cred.kicker">Credentials</span></p>
+          <p class="kicker mono">05 — <span data-i18n="cred.kicker">Credentials</span></p>
           <h2 data-words data-i18n="cred.title">Certified &amp; bilingual.</h2>
         </div>
         <ul class="certs reveal">
@@ -437,7 +436,7 @@
     <section class="section" id="terminal" data-section="terminal">
       <div class="container">
         <header class="section-head reveal">
-          <p class="kicker mono">07 — <span data-i18n="term.kicker">Terminal</span></p>
+          <p class="kicker mono">06 — <span data-i18n="term.kicker">Terminal</span></p>
           <h2 data-words data-i18n="term.title">Or just ask the terminal.</h2>
           <p class="section-sub" data-i18n="term.sub">Type <code>help</code> to see what it knows. Tab autocompletes, ↑ brings back history.</p>
         </header>
@@ -463,7 +462,7 @@
     <!-- ───────── Contact ───────── -->
     <section class="contact" id="contact" data-section="contact">
       <div class="container">
-        <p class="kicker mono">08 — <span data-i18n="contact.kicker">Contact</span></p>
+        <p class="kicker mono">07 — <span data-i18n="contact.kicker">Contact</span></p>
         <h2 class="contact-title" data-words data-i18n="contact.title">Let's build something that doesn't break.</h2>
         <p class="contact-sub" data-split data-i18n="contact.sub">Open to software engineering, Oracle HCM and QA roles in Riyadh, or remote. The fastest way to reach me is email.</p>
         <div class="contact-grid">
@@ -519,7 +518,7 @@
       <footer class="footer container mono">
         <span>© <span class="year">2026</span> Ahmed Bawazir · <span data-i18n="footer.rights">All rights reserved</span></span>
         <div class="signmark signmark--end" data-signmark="end"></div>
-        <a href="#hero" data-i18n="footer.top">Back to top ↑</a>
+        <span class="foot-links"><button type="button" class="foot-break" data-action="break"><span data-i18n="cta.break">Break this page</span></button><a href="#hero" data-i18n="footer.top">Back to top ↑</a></span>
       </footer>
     </section>
   </main>

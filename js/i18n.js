@@ -21,7 +21,7 @@ export const ar = {
   'about.kicker': 'نبذة',
   'about.statement': 'خرّيج هندسة برمجيات يعيش بين الكود والتهيئة. أحوّل قواعد العمل إلى أنظمة تعمل فعلاً — Oracle Fusion HCM وتطبيقات الويب والجوال — ثم أبحث عن الحالة الحدّية التي لم يفكّر بها أحد.',
   'stats.cgpa': 'المعدل التراكمي من 4.00',
-  'stats.countries': 'دول درست فيها أو عملت معها',
+  'stats.countries': 'دول عشت ودرست فيها',
   'stats.hcm': 'وحدات Oracle HCM هيّأتها',
   'stats.certs': 'شهادات مهنية',
   'stats.projects': 'مشاريع منجزة',
