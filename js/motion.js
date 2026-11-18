@@ -50,21 +50,12 @@ function splitHero() {
 }
 
 /* ───────────── Kicker scramble ───────────── */
-const GLYPHS = '!<>-_\\/[]{}=+*^?#01ABCDEF';
+// Kicker reveal: the label wipes in from the start, never shows scrambled characters.
 function scramble(el) {
-  if (reduce || isAr()) return;
-  const final = el.textContent;
-  let frame = 0;
-  const total = 22;
-  const tick = () => {
-    frame++;
-    el.textContent = [...final].map((c, i) => {
-      if (c === ' ') return c;
-      return frame / total > i / final.length ? c : GLYPHS[(Math.random() * GLYPHS.length) | 0];
-    }).join('');
-    if (frame < total) requestAnimationFrame(tick); else el.textContent = final;
-  };
-  tick();
+  if (reduce || !el.animate) return;
+  const rtl = isAr();
+  el.animate([{ clipPath: rtl ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)', opacity: .2 }, { clipPath: 'inset(0 0 0 0)', opacity: 1 }],
+    { duration: 520, easing: 'cubic-bezier(.22,1,.36,1)' });
 }
 const kickIO = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { kickIO.unobserve(e.target); const s = e.target.querySelector('[data-i18n]'); s && scramble(s); }

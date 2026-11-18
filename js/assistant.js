@@ -225,22 +225,29 @@ export function initAssistant({ goProjects, ask, act = {} }) {
   bubble.querySelector('.abot-mic').addEventListener('click', () => { voiceOut.stop(); ask && ask(); });
   bubble.querySelector('.abot-form').addEventListener('submit', e => { e.preventDefault(); const q = input.value.trim(); if (q) { input.value = ''; chat(q); } });
   const add = (who, txt) => { const p = document.createElement('p'); p.className = 'abot-m ' + who; p.dir = 'auto'; p.textContent = txt; log.append(p); log.scrollTop = log.scrollHeight; return p; };
-  let busy = Promise.resolve();
+  let busy = Promise.resolve(), flush = null, waiting = 0;
   // One exchange: show the question, AB "thinks" briefly, then types and speaks the answer at a calm pace.
   function chat(q) {
     openChat(); voiceOut.stop();
+    if (flush) flush(); // finish the answer being typed at once, so the new question is answered straight away
+    waiting++;
     add('me', q);
     const a = answer(q, root.lang === 'ar' ? 'ar' : 'en');
     busy = busy.then(() => new Promise(done => {
+      waiting--;
       const p = add('ab', ''); p.classList.add('thinking'); p.dir = a.lang === 'ar' ? 'rtl' : 'ltr';
       mood.think = 1; feel('think');
       setTimeout(() => {
         p.classList.remove('thinking'); mood.think = 0; mood.talk = 1; feel(a.mood);
         voiceOut.speak(a.text);
-        let i = 0;
-        const step = () => { p.textContent = a.text.slice(0, ++i); log.scrollTop = log.scrollHeight; if (i < a.text.length) setTimeout(step, reduce ? 0 : 28); else { mood.talk = 0; done(); if (a.act && act[a.act]) setTimeout(act[a.act], 900); } };
+        let i = 0, over = false;
+        // calm pace, but a long answer never takes more than about 3 seconds to appear
+        const gap = reduce ? 0 : Math.min(28, 3000 / a.text.length);
+        const end = () => { if (over) return; over = true; flush = null; p.textContent = a.text; log.scrollTop = log.scrollHeight; mood.talk = 0; done(); if (a.act && act[a.act]) setTimeout(act[a.act], 900); };
+        flush = end;
+        const step = () => { if (over) return; if (waiting > 0) return end(); /* another question is waiting: show this one whole */ p.textContent = a.text.slice(0, ++i); log.scrollTop = log.scrollHeight; if (i < a.text.length) setTimeout(step, gap); else end(); };
         step();
-      }, reduce ? 0 : 750);
+      }, reduce || waiting > 0 ? 0 : 750);
     }));
     return a;
   }
