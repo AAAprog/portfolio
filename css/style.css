@@ -1441,3 +1441,6 @@ body::after {
 .foot-break { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; border-bottom: 1px dashed currentColor; }
 .foot-break:hover { border-bottom-style: solid; }
 @media (hover: none), (pointer: coarse) { .hero-hint { display: none; } }
+
+/* phones: keep the footer links clear of AB in the corner */
+@media (max-width: 700px) { .footer { padding-bottom: 96px; } }
