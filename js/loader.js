@@ -51,8 +51,8 @@ export function initLoader() {
     },
   });
 
-  const MIN = 1700, MAX = 4000, t0 = performance.now();
-  let target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
+  const MIN = 1300, MAX = 3600, t0 = performance.now();
+  let readyAt = 0, target = 0.15, shown = 0, finished = false, raf, expandStart = 0;
   const fontsReady = (document.fonts ? Promise.all([
     document.fonts.load('700 80px "Plus Jakarta Sans"'),
     document.fonts.load('700 80px "IBM Plex Sans Arabic"', 'أحمد'),
@@ -76,7 +76,7 @@ export function initLoader() {
         document.dispatchEvent(new Event('loader:done'));
         el.remove();
         resolve();
-      }, 850);
+      }, 700);
     };
     const done = () => {
       if (finished) return;
@@ -103,9 +103,9 @@ export function initLoader() {
         // Once the bubble fills the screen, the outlined name fills with white from the bottom up.
         if (e >= 1) {
           if (!fillStart) fillStart = now;
-          const f = Math.min(1, (now - fillStart) / 1300);
+          const f = Math.min(1, (now - fillStart) / 950);
           fillLevel = 0.12 + 0.88 * (f < .5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2);
-          if (f >= 1 && !el.classList.contains('out') && !holding) { holding = true; setTimeout(finish, 350); }
+          if (f >= 1 && !el.classList.contains('out') && !holding) { holding = true; setTimeout(finish, 180); }
         }
       }
       glass.setGlass(expandStart ? 0.07 * (1 - Math.min(1, (now - expandStart) / 500)) : 0.07); // no grey film when full-screen
@@ -114,10 +114,12 @@ export function initLoader() {
 
       if (!finished) {
         const floor = Math.min(0.9, (t / MIN) * 0.9);
-        shown += (Math.max(target, floor) - shown) * 0.08;
+        shown += (Math.max(target, floor) - shown) * (target === 1 ? 0.14 : 0.08);
         roll(pct, String(Math.min(99, Math.round(shown * 100))).padStart(3, '0'));
         bar.style.transform = `scaleX(${shown.toFixed(3)})`;
         fillLevel = Math.min(0.12, shown * 0.12); // just a hint of ink while loading
+        // once everything is ready, finish counting in 350 ms whatever the frame rate
+        if (target === 1) { if (!readyAt) readyAt = now; shown = Math.max(shown, 0.6 + 0.4 * Math.min(1, (now - readyAt) / 350)); if (now - readyAt >= 350) done(); }
         if (t > MAX) done();
       }
       raf = requestAnimationFrame(tick);
@@ -126,7 +128,7 @@ export function initLoader() {
 
     Promise.all([fontsReady, loaded]).then(() => {
       const wait = Math.max(0, MIN - (performance.now() - t0));
-      setTimeout(() => { target = 1; setTimeout(done, 150); }, wait);
+      setTimeout(() => { target = 1; }, wait);
     });
     const onKey = e => { if (['Escape', 'Enter', ' '].includes(e.key)) { removeEventListener('keydown', onKey); done(); } };
     el.addEventListener('click', done);
