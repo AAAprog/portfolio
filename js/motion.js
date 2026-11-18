@@ -270,7 +270,7 @@ export function initMotion() {
   splitWords();
   splitHero();
   $$('.kicker').forEach(k => kickIO.observe(k));
-  const cursorTick = initCursor();
+  const cursorTick = null; // the cursor is now a CSS (Mac-style) cursor drawn by the browser
   initMagnetic();
   initTilt();
   initRipple();
