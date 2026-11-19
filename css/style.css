@@ -1482,3 +1482,8 @@ body::after {
 .abot-msg, .abot-m, .abot-tap, .abot-actions button, .abot-sugg button, .abot-name, .abot-in, .abot-tip { unicode-bidi: plaintext; }
 [dir="rtl"] .abot-msg, [dir="rtl"] .abot-in, [dir="rtl"] .abot-tip { direction: rtl; text-align: right; }
 [dir="rtl"] .abot-m { direction: rtl; }
+
+/* bigger tap targets for the small footer links */
+.foot-links a, .foot-links button { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 2px; }
+/* the little demo windows never spill past a narrow phone screen */
+.stage-canvas .win { max-width: 100%; }
