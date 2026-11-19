@@ -35,6 +35,8 @@ export const ar = {
   'sb.motion': 'الحركة',
   'loader.role': 'مهندس برمجيات · الرياض',
   'loader.skip': 'انقر في أي مكان للتخطي',
+  'bento.gpaLabel': 'المعدل · UNITEN',
+  'footer.name': 'أحمد باوزير',
   'form.title': 'راسلني',
   'form.note': 'توصلني مباشرة على بريدي.',
   'form.topic': 'الموضوع',
@@ -94,7 +96,7 @@ export const ar = {
 
   'term.kicker': 'الطرفية',
   'term.title': 'أو اسأل الطرفية مباشرة.',
-  'term.sub': 'اكتب <code>help</code> لترى ما تعرفه. زر Tab يكمل الأمر، و↑ يعيد الأوامر السابقة.',
+  'term.sub': 'اكتب <code>مساعدة</code> أو <code>help</code> وشوف وش تعرف. زر Tab يكمّل الأمر، و↑ يرجّع الأوامر اللي قبل.',
 
   'play.kicker': 'جرّب بنفسك',
   'play.title': 'لا تقرأ عنه. جرّبه.',

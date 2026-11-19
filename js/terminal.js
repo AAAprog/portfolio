@@ -1,6 +1,8 @@
 // A small fake shell. Output is built with DOM nodes (never innerHTML from input).
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'off';
 const EMAIL = 'aaa.bawazir0@gmail.com';
+const ar = () => document.documentElement.lang === 'ar';
+const t = (en, arText) => (ar() ? arText : en);
 
 export function initTerminal(root) {
   const out = root.querySelector('.term-out');
@@ -13,6 +15,9 @@ export function initTerminal(root) {
   const line = (parts, cls) => {
     const p = document.createElement('p');
     if (cls) p.className = cls;
+    // Arabic lines read right to left; prompts and English stay left to right
+    const plain = (Array.isArray(parts) ? parts : [parts]).map(x => typeof x === 'string' ? x : (x.t || x.text || '')).join('');
+    if (/[\u0600-\u06FF]/.test(plain) && !plain.startsWith('ahmed@')) p.dir = 'rtl';
     (Array.isArray(parts) ? parts : [parts]).forEach(x => {
       if (typeof x === 'string') p.append(x);
       else if (x.href) {
@@ -43,30 +48,35 @@ export function initTerminal(root) {
   /* ── commands ── */
   const C = {
     help: () => [
-      [hl('Available commands')],
+      [hl(t('Available commands', 'الأوامر المتاحة'))],
       ...[
-        ['whoami', 'who is this guy?'], ['about', 'the short version'], ['experience', 'work history (git log style)'],
-        ['projects', 'things I shipped, with links'], ['skills [--code|--data|--hcm|--eng]', 'the toolbox'],
-        ['education', 'degree & CGPA'], ['certs', 'certifications'], ['contact', 'ways to reach me'],
-        ['cv', 'download the PDF'], ['ls / cat <file>', 'browse files'], ['theme / lang', 'toggle theme or language'],
-        ['matrix', 'you know you want to'], ['sudo hire ahmed', 'the best command'], ['clear', 'clean the screen'],
-      ].map(([c, d]) => [acc(c.padEnd(36, ' ')), dim(d)]),
+        ['whoami', 'who is this guy?', 'مين أحمد؟'], ['about', 'the short version', 'نبذة مختصرة'], ['experience', 'work history (git log style)', 'الخبرات بأسلوب git log'],
+        ['projects', 'things I shipped, with links', 'المشاريع مع الروابط'], ['skills [--code|--data|--hcm|--eng]', 'the toolbox', 'المهارات'],
+        ['education', 'degree & CGPA', 'الشهادة والمعدل'], ['certs', 'certifications', 'الشهادات المهنية'], ['contact', 'ways to reach me', 'طرق التواصل'],
+        ['cv', 'download the PDF', 'تحميل السيرة'], ['ls / cat <file>', 'browse files', 'تصفّح الملفات'], ['theme / lang', 'toggle theme or language', 'تبديل الوضع أو اللغة'],
+        ['matrix', 'you know you want to', 'جرّبه وبتعرف'], ['sudo hire ahmed', 'the best command', 'أفضل أمر 😉'], ['clear', 'clean the screen', 'مسح الشاشة'],
+      ].map(([c, d, da]) => [acc(c.padEnd(36, ' ')), dim(t(d, da))]),
+      [dim(t('Arabic works too: مساعدة، مين، خبرات، مشاريع، مهارات، تواصل، سيرة', 'تقدر تكتب بالعربي: مساعدة، مين، خبرات، مشاريع، مهارات، تعليم، شهادات، تواصل، سيرة'))],
     ],
-    whoami: () => [[hl('Ahmed Bawazir')], 'Software Engineer · Oracle Fusion HCM Consultant · bug hunter', [dim('📍 Riyadh, Saudi Arabia   🗣 Arabic (native) · English (professional)')]],
-    about: () => [
+    whoami: () => [[hl(t('Ahmed Bawazir', 'أحمد باوزير'))], t('Software Engineer · Oracle Fusion HCM Consultant · bug hunter', 'مهندس برمجيات · مستشار Oracle Fusion HCM · صيّاد أخطاء'), [dim(t('📍 Riyadh, Saudi Arabia   🗣 Arabic (native) · English (professional)', '📍 الرياض، السعودية   🗣 العربية (اللغة الأم) · الإنجليزية (مستوى مهني)'))]],
+    about: () => ar() ? [
+      'خريج هندسة برمجيات عنده خبرة عملية في تطوير البرمجيات،',
+      'وOracle Fusion HCM، وتصميم قواعد البيانات، وتهيئة الأنظمة، واختبارها.',
+      [dim('أحوّل قواعد العمل إلى أنظمة شغّالة، وبعدين أدوّر على الحالة اللي محد فكّر فيها.')],
+    ] : [
       'Software engineering graduate with hands-on experience in software development,',
       'Oracle Fusion HCM, database design, system configuration and software testing.',
       [dim('I turn business rules into working systems — then hunt for the edge case.')],
     ],
     experience: () => [
-      [acc('* a3f9c21 '), ok('(HEAD → riyadh) '), 'Oracle Fusion HCM Consultant Intern @ Macquires ', dim('Jun–Aug 2026')],
-      [acc('* 7be14d0 '), dim('(remote/doha) '), 'Software Engineer, part-time @ Sifr IDE ', dim('Feb–May 2026')],
-      [acc('* 1c0de23 '), dim('(origin/kajang) '), 'B.CS (Hons.) Software Engineering @ UNITEN ', dim('2023–2026')],
+      [acc('* a3f9c21 '), ok('(HEAD → riyadh) '), t('Oracle Fusion HCM Consultant Intern @ Macquires ', 'متدرّب مستشار Oracle Fusion HCM @ Macquires '), dim(t('Jun–Aug 2026', 'يونيو–أغسطس 2026'))],
+      [acc('* 7be14d0 '), dim('(remote/doha) '), t('Software Engineer, part-time @ Sifr IDE ', 'مهندس برمجيات، دوام جزئي @ Sifr IDE '), dim(t('Feb–May 2026', 'فبراير–مايو 2026'))],
+      [acc('* 1c0de23 '), dim('(origin/kajang) '), t('B.CS (Hons.) Software Engineering @ UNITEN ', 'بكالوريوس هندسة برمجيات (مرتبة الشرف) @ UNITEN '), dim('2023–2026')],
     ],
     projects: () => [
-      [hl('codai/       '), 'AI assistant for SDLC, UML, schema design & test cases  ', link('live ↗', 'https://codai-murex.vercel.app/')],
-      [hl('ufc-tickets/ '), 'full-stack booking system · PHP + MySQL                ', link('live ↗', 'https://aaaprog.github.io/ufc-event-system/')],
-      [hl('easycal/     '), 'Android calorie tracker · C# + .NET MAUI              ', dim('demo on request')],
+      [hl('codai/       '), t('AI assistant for SDLC, UML, schema design & test cases  ', 'مساعد ذكي لدورة التطوير وUML وقواعد البيانات والاختبارات  '), link(t('live ↗', 'جرّبه ↗'), 'https://codai-murex.vercel.app/')],
+      [hl('ufc-tickets/ '), t('full-stack booking system · PHP + MySQL                ', 'نظام حجز فعاليات كامل · PHP + MySQL  '), link(t('live ↗', 'جرّبه ↗'), 'https://aaaprog.github.io/ufc-event-system/')],
+      [hl('easycal/     '), t('Android calorie tracker · C# + .NET MAUI              ', 'تطبيق أندرويد لحساب السعرات · C# + .NET MAUI  '), dim(t('demo on request', 'العرض عند الطلب'))],
     ],
     skills: args => {
       const g = {
@@ -79,42 +89,45 @@ export function initTerminal(root) {
       const keys = g[pick] ? [pick] : Object.keys(g);
       return keys.flatMap(k => [[acc(`# ${k}`)], ...g[k].map(s => '  ' + s)]);
     },
-    education: () => [[hl('Universiti Tenaga Nasional'), ' — Kajang, Malaysia'], 'B.CS (Hons.) in Software Engineering · 2023–2026', [ok('CGPA 3.63 / 4.00')]],
+    education: () => [[hl('Universiti Tenaga Nasional'), t(' — Kajang, Malaysia', ' — كاجانق، ماليزيا')], t('B.CS (Hons.) in Software Engineering · 2023–2026', 'بكالوريوس علوم الحاسب (مرتبة الشرف) · هندسة البرمجيات · 2023–2026'), [ok(t('CGPA 3.63 / 4.00 · First Class Honours', 'المعدل 3.63 من 4 · مرتبة الشرف الأولى'))]],
     certs: () => ['✓ CCNA: Introduction to Networks', '✓ Build Smarter AI with Embeddings', '✓ AI4I® Literacy in AI — AI Singapore', '✓ AI4I® Foundations in AI — AI Singapore', '✓ AI4E® Theory — AI Singapore'],
     contact: () => [
       [dim('email    '), link(EMAIL, 'mailto:' + EMAIL)],
       [dim('linkedin '), link('in/ahmed-bawazir', 'https://www.linkedin.com/in/ahmed-bawazir-14b472383/')],
       [dim('github   '), link('github.com/aaaprog', 'https://github.com/aaaprog')],
     ],
-    cv: () => [[ok('↓ '), link('Ahmed_Bawazir_CV.pdf', 'assets/Ahmed_Bawazir_CV.pdf', true), dim('  (click to download)')]],
+    cv: () => [[ok('↓ '), link('Ahmed_Bawazir_CV.pdf', 'assets/Ahmed_Bawazir_CV.pdf', true), dim(t('  (click to download)', '  (اضغط للتحميل)'))]],
     ls: () => [[hl('about.txt  '), hl('experience/  '), hl('projects/  '), 'skills.json  ', acc('cv.pdf')]],
     cat: args => {
       const f = (args[0] || '').replace(/\/$/, '');
       const map = { 'about.txt': 'about', experience: 'experience', projects: 'projects', 'skills.json': 'skills', 'cv.pdf': 'cv' };
-      if (!f) return [[dim('usage: cat <file>')]];
-      return map[f] ? C[map[f]]([]) : [[{ c: 't-err', t: `cat: ${f}: No such file or directory` }]];
+      if (!f) return [[dim(t('usage: cat <file>', 'الاستخدام: cat <اسم الملف>'))]];
+      return map[f] ? C[map[f]]([]) : [[{ c: 't-err', t: t(`cat: ${f}: No such file or directory`, `cat: ${f}: الملف غير موجود`) }]];
     },
     date: () => [new Date().toString()],
     echo: args => [args.join(' ')],
-    theme: () => { document.querySelector('[data-action=theme]').click(); return [[ok('✓ '), 'theme toggled']]; },
+    theme: () => { document.querySelector('[data-action=theme]').click(); return [[ok('✓ '), t('theme toggled', 'تم تبديل الوضع')]]; },
     lang: () => { document.querySelector('[data-action=lang]').click(); return [[ok('✓ '), 'language toggled · تم تبديل اللغة']]; },
-    exit: () => [[dim('There is no escape. Try '), acc('contact'), dim(' instead.')]],
+    exit: () => [[dim(t('There is no escape. Try ', 'ما فيه مهرب 😄 جرّب ')), acc('contact'), dim(t(' instead.', ' بداله.'))]],
     history: () => history.map((h, i) => `  ${String(i + 1).padStart(3)}  ${h}`),
     clear: () => { out.innerHTML = ''; return []; },
-    matrix: () => { matrix(); return [[ok('Wake up, recruiter…')]]; },
+    matrix: () => { matrix(); return [[ok(t('Wake up, recruiter…', 'اصحى يا موظِّف…'))]]; },
     sudo: async args => {
-      if (args.join(' ').toLowerCase() !== 'hire ahmed') return [[{ c: 't-err', t: 'Nice try. This incident will be reported. 😄' }]];
-      await print([[dim('[sudo] password for recruiter: '), '••••••••']]);
+      if (args.join(' ').toLowerCase() !== 'hire ahmed') return [[{ c: 't-err', t: t('Nice try. This incident will be reported. 😄', 'محاولة حلوة، بس بنبلّغ عنها 😄') }]];
+      await print([[dim(t('[sudo] password for recruiter: ', '[sudo] كلمة مرور الموظِّف: ')), '••••••••']]);
       await new Promise(r => setTimeout(r, reduce ? 0 : 500));
       const r = root.getBoundingClientRect();
       document.dispatchEvent(new CustomEvent('celebrate', { detail: { x: r.left + r.width / 2, y: r.top + r.height / 2 } }));
       return [
-        [ok('✓ Access granted.'), ' Excellent decision.'],
-        ['Next step → ', link('send Ahmed an email', `mailto:${EMAIL}?subject=${encodeURIComponent("Let's talk about a role")}`)],
+        [ok(t('✓ Access granted.', '✓ تم القبول.')), t(' Excellent decision.', ' قرار ممتاز.')],
+        [t('Next step → ', 'الخطوة الجاية ← '), link(t('send Ahmed an email', 'راسل أحمد'), `mailto:${EMAIL}?subject=${encodeURIComponent("Let's talk about a role")}`)],
       ];
     },
   };
-  const aliases = { exp: 'experience', work: 'experience', '?': 'help', social: 'contact', resume: 'cv', edu: 'education', man: 'help' };
+  const aliases = { exp: 'experience', work: 'experience', '?': 'help', social: 'contact', resume: 'cv', edu: 'education', man: 'help',
+    'مساعدة': 'help', 'مساعده': 'help', 'اوامر': 'help', 'الأوامر': 'help', 'مين': 'whoami', 'من': 'whoami', 'نبذة': 'about', 'نبذه': 'about', 'خبرات': 'experience', 'الخبرات': 'experience', 'مشاريع': 'projects', 'المشاريع': 'projects', 'مهارات': 'skills', 'المهارات': 'skills', 'تعليم': 'education', 'دراسة': 'education', 'شهادات': 'certs', 'تواصل': 'contact', 'سيرة': 'cv', 'السيرة': 'cv', 'مسح': 'clear', 'الوضع': 'theme', 'اللغة': 'lang', 'ماتركس': 'matrix', 'وظفه': 'hire' };
+  // "وظف احمد" and "hire" are friendly shortcuts to the sudo easter egg
+  C.hire = () => C.sudo(['hire', 'ahmed']);
   const names = [...Object.keys(C), 'sudo hire ahmed', 'skills --hcm', 'skills --code', 'skills --data', 'skills --eng'];
 
   async function run(raw) {
@@ -122,11 +135,11 @@ export function initTerminal(root) {
     out.append(line([acc('ahmed@riyadh:~$ '), cmd]));
     if (!cmd) return;
     history.push(cmd); hIdx = history.length;
-    const [name, ...args] = cmd.split(/\s+/);
+    const [name, ...args] = cmd.replace(/^وظ[ّ]?ف\s+أ?احمد$|^وظف\s+أحمد$/, 'hire').split(/\s+/);
     const key = aliases[name.toLowerCase()] || name.toLowerCase();
     const fn = C[key];
     busy = true;
-    if (!fn) await print([[{ c: 't-err', t: `command not found: ${name}` }, dim('  — try '), acc('help')]]);
+    if (!fn) await print([[{ c: 't-err', t: t(`command not found: ${name}`, `الأمر غير موجود: ${name}`) }, dim(t('  — try ', '  — جرّب ')), acc(t('help', 'مساعدة'))]]);
     else await print(await fn(args));
     busy = false;
     out.scrollTop = out.scrollHeight;
@@ -187,9 +200,9 @@ export function initTerminal(root) {
     if (!en.isIntersecting || booted) return;
     booted = true; io.disconnect();
     print([
-      [dim(`Last login: ${new Date().toDateString()} on ttys001`)],
-      [ok('✓ '), 'loaded ', hl('ahmed.sh'), dim(' v2026.11')],
-      [dim('Type '), acc('help'), dim(' to get started, or tap a command below.')],
+      [dim(t(`Last login: ${new Date().toDateString()} on ttys001`, `آخر دخول: ${new Date().toLocaleDateString('ar-SA-u-nu-latn')}`))],
+      [ok('✓ '), t('loaded ', 'تم تحميل '), hl('ahmed.sh'), dim(' v2026.11')],
+      [dim(t('Type ', 'اكتب ')), acc(t('help', 'مساعدة')), dim(t(' to get started, or tap a command below.', ' عشان تبدأ، أو اضغط أمر من تحت.'))],
     ]);
   }, { threshold: 0.4 }).observe(root);
 }

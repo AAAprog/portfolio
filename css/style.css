@@ -1477,3 +1477,5 @@ body::after {
 /* footer + contact leftovers from the old inverted (dark) contact block: follow the theme */
 .signmark--end { color: var(--ink); }
 .email-btn { border-bottom-color: var(--line-strong); }
+
+.term-out p[dir="rtl"] { text-align: right; }
