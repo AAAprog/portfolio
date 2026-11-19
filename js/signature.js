@@ -29,15 +29,15 @@ export function initSignature(wrap) {
   let hover = false, visible = false, raf = 0, t0 = performance.now();
 
   const loop = now => {
-    const w = canvas.clientWidth, h = canvas.clientHeight, R = fs * 0.62;
+    const w = canvas.clientWidth, h = canvas.clientHeight, R = Math.min(fs * 0.62, h * 0.42 - 10);
     if (!hover) {
       const t = (now - t0) / 1000;
       target.x = w / 2 + Math.sin(t * 0.45) * w * 0.36;
-      target.y = h * 0.42 + Math.sin(t * 0.9) * fs * 0.12;
+      target.y = h * 0.42 + Math.sin(t * 0.9) * Math.min(fs * 0.12, 6);
     }
     const k = reduce ? 1 : hover ? 0.16 : 0.05;
     pos.x += (target.x - pos.x) * k; pos.y += (target.y - pos.y) * k;
-    glass.setLens(pos.x, pos.y, R);
+    glass.setLens(pos.x, Math.max(R + 8, Math.min(h - R * 1.25, pos.y)), R); // stay inside the canvas
     raf = visible && !reduce ? requestAnimationFrame(loop) : 0;
   };
   const start = () => { if (!raf) raf = requestAnimationFrame(loop); };

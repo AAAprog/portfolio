@@ -1473,3 +1473,7 @@ body::after {
 .topbar .logo-mark { font-size: 30px; }
 .topbar .logo-dot { width: 10px; height: 10px; margin-bottom: 5px; }
 @media (max-width: 560px) { .topbar .logo-mark { font-size: 27px; } }
+
+/* footer + contact leftovers from the old inverted (dark) contact block: follow the theme */
+.signmark--end { color: var(--ink); }
+.email-btn { border-bottom-color: var(--line-strong); }
