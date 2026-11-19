@@ -9,7 +9,8 @@ in vec2 a; void main(){ gl_Position = vec4(a, 0., 1.); }`;
 
 const FS = `#version 300 es
 precision highp float;
-uniform sampler2D uBase, uReveal;
+uniform sampler2D uBase, uReveal, uFill;
+uniform float uFillY;   // device px from the top: below this line the reveal shows the filled layer (-1 = off)
 uniform vec2 uRes;      // device px
 uniform vec3 uLens;     // centre x, y (device px, top-left origin), radius
 uniform float uGlass;   // glass fill strength (0..1)
@@ -43,6 +44,7 @@ void main(){
   vec2 q  = c + v * s;
   vec2 qr = c + v * (s - ca), qb = c + v * (s + ca);
   vec4 tr = tex(uReveal, qr), tg = tex(uReveal, q), tb = tex(uReveal, qb);
+  if (uFillY >= 0. && q.y > uFillY) { tr = max(tr, tex(uFill, qr)); tg = max(tg, tex(uFill, q)); tb = max(tb, tex(uFill, qb)); }
   vec4 txt = vec4(tr.r, tg.g, tb.b, max(max(tr.a, tg.a), tb.a));
 
   // glass body: faint tint, brighter fresnel rim, specular arc top-left
@@ -64,9 +66,9 @@ function makeLayer(w, h) {
   return c;
 }
 
-export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], glass = 0.08, bg = [0, 0, 0], clear = false }) {
-  const dprMax = 3;
-  const SS = 2; // text layers are drawn at 2× so the magnified glass stays sharp
+export function createGlass(canvas, { drawBase, drawReveal, drawFill = null, tint = [1, 1, 1], glass = 0.08, bg = [0, 0, 0], clear = false, dprMax = 3, ss = 2 }) {
+  const SS = ss; // text layers are drawn larger so the magnified glass stays sharp
+  let fillY = -1, fillLayer = null, tFill = null;
   let W = 0, H = 0, dpr = 1, base, reveal, cssW = 0, cssH = 0, rs = 1;
   let lens = { x: -9999, y: -9999, r: 80 };
   let gl = null, prog, uni = {}, tBase, tReveal, ctx2d = null;
@@ -90,12 +92,12 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     const loc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    ['uBase', 'uReveal', 'uRes', 'uLens', 'uGlass', 'uTint', 'uBg', 'uClear'].forEach(n => { uni[n] = gl.getUniformLocation(prog, n); });
+    ['uBase', 'uReveal', 'uFill', 'uFillY', 'uRes', 'uLens', 'uGlass', 'uTint', 'uBg', 'uClear'].forEach(n => { uni[n] = gl.getUniformLocation(prog, n); });
     const mk = () => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
-    tBase = mk(); tReveal = mk();
-    gl.uniform1i(uni.uBase, 0); gl.uniform1i(uni.uReveal, 1);
+    tBase = mk(); tReveal = mk(); tFill = mk();
+    gl.uniform1i(uni.uBase, 0); gl.uniform1i(uni.uReveal, 1); gl.uniform1i(uni.uFill, 2);
     gl.disable(gl.BLEND); // single full-screen pass writes straight alpha; blending would square it
   } else {
     ctx2d = canvas.getContext('2d');
@@ -112,12 +114,15 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     rs = dpr * TS; cssW = r.width; cssH = r.height;
     b.scale(rs, rs); v.scale(rs, rs);
     drawBase(b, r.width, r.height); drawReveal(v, r.width, r.height);
+    if (drawFill) { fillLayer = makeLayer(base.width, base.height); const fc = fillLayer.getContext('2d'); fc.scale(dpr * TS, dpr * TS); drawFill(fc, r.width, r.height); }
     if (gl) {
       gl.viewport(0, 0, W, H);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, tBase);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, base);
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, tReveal);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, reveal);
+      gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, tFill);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, fillLayer || reveal);
     }
     render();
   }
@@ -133,6 +138,7 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
       gl.uniform1f(uni.uGlass, glass);
       gl.uniform3f(uni.uTint, tint[0], tint[1], tint[2]);
       gl.uniform3f(uni.uBg, bg[0], bg[1], bg[2]);
+      gl.uniform1f(uni.uFillY, drawFill ? fillY * dpr : -1);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       return;
     }
@@ -170,6 +176,8 @@ export function createGlass(canvas, { drawBase, drawReveal, tint = [1, 1, 1], gl
     webgl: !!gl,
     layout,
     redrawReveal,
+    /** css px from the top of the canvas; the filled layer shows below it (inside the lens) */
+    setFillY(y) { fillY = y; },
     setLens(x, y, r) { lens = { x, y, r }; render(); },
     setGlass(g) { glass = g; },
     get lens() { return lens; },
