@@ -1224,7 +1224,6 @@ body::after {
   border: 1px solid var(--line-strong); box-shadow: var(--glass-shine), 0 30px 70px -24px rgba(0,0,0,.6);
   backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
   opacity: 0; translate: 0 18px; scale: .97; pointer-events: none; transition: opacity .4s var(--ease), translate .5s var(--ease), scale .5s var(--ease); }
-[dir="rtl"] .abot { right: auto; left: 22px; }
 .abot.on { opacity: 1; translate: none; scale: 1; pointer-events: auto; }
 .abot-snd { margin-inline-start: auto; background: none; border: 0; cursor: pointer; font-size: 15px; opacity: .8; padding: 4px; }
 .abot-snd:hover { opacity: 1; }
@@ -1278,9 +1277,7 @@ body::after {
 .abot-tip { position: absolute; bottom: calc(100% + 10px); right: 0; width: max-content; max-width: min(240px, 70vw); padding: 9px 12px; border-radius: 14px 14px 4px 14px;
   background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); box-shadow: 0 14px 30px -14px rgba(0,0,0,.5); font-size: 13.5px; line-height: 1.45; text-align: start;
   opacity: 0; translate: 0 6px; pointer-events: none; transition: opacity .3s, translate .3s var(--ease); }
-[dir="rtl"] .abot-tip { right: auto; left: 0; border-radius: 14px 14px 14px 4px; }
 .abot-pill.talking .abot-tip { opacity: 1; translate: none; }
-[dir="rtl"] .abot-pill { right: auto; left: 22px; }
 .vmode-on .abot-pill, .presenting .abot-pill, .chaos .abot-pill { display: none; }
 .abot-head { display: flex; align-items: center; gap: 10px; }
 .abot-av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 700 13px "Plus Jakarta Sans", sans-serif; position: relative; }
@@ -1479,3 +1476,9 @@ body::after {
 .email-btn { border-bottom-color: var(--line-strong); }
 
 .term-out p[dir="rtl"] { text-align: right; }
+
+/* AB sits in the same corner and keeps the same layout in both languages; only its text reads right to left in Arabic */
+.abot, .abot-pill, .abot-tip { direction: ltr; }
+.abot-msg, .abot-m, .abot-tap, .abot-actions button, .abot-sugg button, .abot-name, .abot-in, .abot-tip { unicode-bidi: plaintext; }
+[dir="rtl"] .abot-msg, [dir="rtl"] .abot-in, [dir="rtl"] .abot-tip { direction: rtl; text-align: right; }
+[dir="rtl"] .abot-m { direction: rtl; }
