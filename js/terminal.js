@@ -76,14 +76,14 @@ export function initTerminal(root) {
     projects: () => [
       [hl('codai/       '), t('AI assistant for SDLC, UML, schema design & test cases  ', 'مساعد ذكي لدورة التطوير وUML وقواعد البيانات والاختبارات  '), link(t('live ↗', 'جرّبه ↗'), 'https://codai-murex.vercel.app/')],
       [hl('ufc-tickets/ '), t('full-stack booking system · PHP + MySQL                ', 'نظام حجز فعاليات كامل · PHP + MySQL  '), link(t('live ↗', 'جرّبه ↗'), 'https://aaaprog.github.io/ufc-event-system/')],
-      [hl('easycal/     '), t('Android calorie tracker · C# + .NET MAUI              ', 'تطبيق أندرويد لحساب السعرات · C# + .NET MAUI  '), dim(t('demo on request', 'العرض عند الطلب'))],
+      [hl('mycal/       '), t('Calorie tracker for iOS & Android · Flutter + Dart    ', 'تطبيق سعرات للآيفون والأندرويد · Flutter + Dart  '), dim(t('in development', 'قيد التطوير'))],
     ],
     skills: args => {
       const g = {
-        code: ['Java · C++ · C# · JavaScript · PHP · HTML · CSS', 'React · Next.js · Tailwind · Node.js · REST · Firebase Functions'],
-        data: ['PostgreSQL · MySQL · SQLite · Oracle · SQL Server · Supabase', 'Tableau · text analytics · data visualisation'],
+        code: ['Java · Dart · C++ · C# · JavaScript · PHP', 'Flutter · Riverpod · React · Next.js · Tailwind · Node.js · REST'],
+        data: ['PostgreSQL · MySQL · SQLite · Oracle · SQL Server · Supabase', 'Firebase Functions · Tableau'],
         hcm: ['Core HR · Workforce Structures · Absence Management · DOR · Payroll', 'DFF · Value Sets · Groovy/ADF · OTBI · BI Publisher'],
-        eng: ['SDLC · UML · OOP · MVVM · requirements analysis', 'functional testing · debugging · troubleshooting · Docker · Figma'],
+        eng: ['SDLC · UML · OOP · MVVM · requirements analysis', 'functional & automated testing · Git · GitHub Actions · Codemagic · Docker'],
       };
       const pick = (args[0] || '').replace(/^--/, '');
       const keys = g[pick] ? [pick] : Object.keys(g);

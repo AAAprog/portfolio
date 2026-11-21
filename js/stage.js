@@ -129,7 +129,7 @@ const defs = {
     },
   },
 
-  // EasyCal: add a meal → ring fills, kcal rolls → remove it.
+  // MyCal: add a meal → ring fills, kcal rolls → remove it.
   easycal: {
     size: [400, 275], home: { x: 90, y: 210 },
     setup: s => s.roll('.ec-kcal', '1,320'),
