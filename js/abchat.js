@@ -68,20 +68,23 @@ const T = [
     en: () => 'In Oracle Fusion HCM, Ahmed works on Core HR, Workforce Structures, Absence Management, Documents of Record and Payroll, plus DFFs, value sets, Groovy/ADF, OTBI and BI Publisher.',
     ar: () => 'في Oracle Fusion HCM يشتغل على Core HR وهيكلة الموظفين والإجازات والرواتب وDocuments of Record، ومعها DFFs وValue Sets وGroovy وOTBI وBI Publisher.' },
   { id: 'projects', g: 'proj', act: 'projects', w: ['project', 'portfolio', 'built', 'apps', 'his work', 'best project', 'افضل مشروع', 'احسن مشروع', 'مشاريع', 'المشاريع', 'مشاريعه', 'مشروع', 'اعماله', 'وش بنى', 'وش سوى'],
-    en: () => 'His main projects are Codai, an AI assistant for software engineers; UFC Ticketing, a full-stack booking system; and MyCal, a Flutter calorie tracker in development. I’ll scroll you to them.',
-    ar: () => 'عنده ثلاث مشاريع: Codai مساعد ذكي للمبرمجين، وUFC Ticketing نظام حجز تذاكر، وMyCal تطبيق سعرات بـ Flutter قيد التطوير. تعال أوريك 👇' },
+    en: () => 'His main projects are Codai, an AI assistant for software engineers; UFC Ticketing, a full-stack booking system; and MyCal, a Flutter calorie tracker in development. There’s also a Tableau dashboard. I’ll scroll you to them.',
+    ar: () => 'أبرز مشاريعه: Codai مساعد ذكي للمبرمجين، وUFC Ticketing نظام حجز تذاكر، وMyCal تطبيق سعرات بـ Flutter قيد التطوير، وداشبورد على Tableau. تعال أوريك 👇' },
   { id: 'codai', g: 'proj', mood: 'happy', w: ['codai', 'final year', 'fyp', 'graduation project', 'كوداي', 'مشروع التخرج', 'مشروع تخرجه'],
     en: () => 'Codai is Ahmed’s final-year project: a web assistant for software engineers. It can generate the project idea itself, then requirements, UML diagrams, a database schema, code and test cases, all in one place. It’s built with Next.js, Supabase and the Gemini API, and it’s live on Vercel.',
     ar: () => 'Codai مشروع تخرّجه، وهو أحلى شي سوّاه: مساعد للمبرمجين يطلع لك فكرة المشروع، وبعدها المتطلبات ومخططات UML وقاعدة البيانات والكود والاختبارات، كله بمكان واحد. مبني بـ Next.js وSupabase وGemini ومنشور على Vercel.' },
   { id: 'ufc', g: 'proj', w: ['ufc', 'ticket', 'ticketing', 'booking', 'تذاكر', 'حجز'],
     en: () => 'UFC Ticketing is a full-stack event booking system in PHP and MySQL, with user and admin sides, seat booking and the back-end logic behind it.',
     ar: () => 'UFC Ticketing نظام حجز فعاليات بـ PHP وMySQL: واجهة للمستخدم، ولوحة تحكم للأدمن، وحجز مقاعد.' },
+  { id: 'tableau', g: 'proj', w: ['tableau', 'dashboard', 'data viz', 'visualization', 'تابلو', 'لوحة بيانات', 'داشبورد'],
+    en: () => 'Ahmed has an interactive dashboard on Tableau Public: charts, filters and key numbers built from raw data. It’s in the Projects section.',
+    ar: () => 'عنده داشبورد تفاعلي على Tableau Public، رسوم وفلاتر وأرقام مرتبة من بيانات خام. تلقاه مع المشاريع 👇' },
   { id: 'easycal', g: 'proj', w: ['mycal', 'easycal', 'calorie', 'flutter', 'dart', 'riverpod', 'mobile app', 'android', 'سعرات', 'تطبيق جوال', 'اندرويد'],
     en: () => 'MyCal is a calorie-tracking app Ahmed is building in Flutter for iOS and Android, in Arabic and English: food search with local dishes, barcode scanning, daily goals, water and weight tracking, and progress charts.',
     ar: () => 'MyCal تطبيق سعرات يشتغل عليه أحمد بـ Flutter للآيفون والأندرويد، بالعربي والإنجليزي: تدوّر أكلك حتى الأكلات المحلية، تمسح الباركود، تحط هدف يومي، وتتابع الماء والوزن برسوم واضحة.' },
   { id: 'skills', g: 'skills', w: ['skill', 'stack', 'tech', 'technologies', 'languages does he', 'programming', 'react', 'java', 'javascript', 'php', 'sql', 'node', 'docker', 'good at', 'frameworks', 'tools', 'مهارات', 'المهارات', 'مهاراته', 'وش يعرف', 'ايش يعرف', 'وش يجيد', 'يتقن', 'تقنيات', 'لغات البرمجه', 'برمجه', 'يبرمج', 'ادواته'],
-    en: () => 'He codes in Java, Dart, C#, C++, JavaScript and PHP, builds with Flutter, React, Next.js, Node.js and Tailwind, and works with PostgreSQL, MySQL, SQLite, Oracle and Supabase. Plus Git, GitHub Actions, Codemagic, Docker and Figma. He also has a Tableau Public dashboard, linked in the Skills section.',
-    ar: () => 'يبرمج بـ Java وDart وC# وC++ وJavaScript وPHP، ويبني بـ Flutter وReact وNext.js وNode.js، وقواعد بياناته PostgreSQL وMySQL وOracle وSupabase. ويستخدم Git وGitHub Actions وCodemagic وDocker وFigma، وعنده لوحة بيانات على Tableau Public تقدر تشوفها من قسم المهارات.' },
+    en: () => 'He codes in Java, Dart, C#, C++, JavaScript and PHP, builds with Flutter, React, Next.js, Node.js and Tailwind, and works with PostgreSQL, MySQL, SQLite, Oracle and Supabase. Plus Git, GitHub Actions, Codemagic, Docker and Figma. He also has a Tableau Public dashboard, listed with his projects.',
+    ar: () => 'يبرمج بـ Java وDart وC# وC++ وJavaScript وPHP، ويبني بـ Flutter وReact وNext.js وNode.js، وقواعد بياناته PostgreSQL وMySQL وOracle وSupabase. ويستخدم Git وGitHub Actions وCodemagic وDocker وFigma، وعنده لوحة بيانات على Tableau Public تلقاها في المشاريع.' },
   { id: 'langs', g: 'langs', w: ['speak', 'arabic', 'english', 'spoken languages', 'bilingual', 'يتكلم', 'لغاته', 'عربي', 'انجليزي', 'انقليزي', 'يتحدث'],
     en: () => 'Arabic is his native language, and his English is professional.',
     ar: () => 'العربي لغته الأم، وإنجليزيته ممتازة وبمستوى مهني.' },
@@ -189,7 +192,7 @@ function rank(t) {
 function offTopic(t, ranked) {
   if (has(NEVER, t) || otherPerson(t)) return true;
   // a specific thing of Ahmed's (Codai, UNITEN, Macquires…) keeps a general-sounding question on topic
-  const specific = ranked.some(x => ['codai', 'ufc', 'easycal', 'sifr', 'hcm', 'cmd'].includes(x.tp.id) || x.tp.g === 'cmd');
+  const specific = ranked.some(x => ['codai', 'ufc', 'easycal', 'tableau', 'sifr', 'hcm', 'cmd'].includes(x.tp.id) || x.tp.g === 'cmd');
   const strong = ranked.some(x => x.tp.g !== 'chat' && x.s >= 7); // clearly about one of Ahmed's topics
   return has(GENERAL, t) && !ABOUT.test(t) && !specific && !strong;
 }
