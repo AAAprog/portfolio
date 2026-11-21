@@ -1499,3 +1499,4 @@ body::after {
 .project--easycal .stage { background: radial-gradient(70% 80% at 60% 40%, color-mix(in srgb, var(--mc-lime) 45%, transparent), transparent 70%); }
 .mc-title { display: inline-flex; align-items: center; gap: .3em; }
 .mc-mark--title { width: 1.05em; height: .7em; padding: .12em .14em; box-sizing: content-box; border-radius: .22em; background: var(--mc-lime); fill: var(--mc-ink); }
+.skill-group .link { display: inline-block; margin-top: 10px; font-size: 14px; }

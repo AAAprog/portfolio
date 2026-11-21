@@ -132,6 +132,7 @@ export const ar = {
   'skills.db': 'قواعد البيانات',
   'skills.se': 'هندسة البرمجيات',
   'skills.tools': 'الأدوات وDevOps',
+  'skills.tableau': 'شوف لوحتي على Tableau',
 
   'jour.kicker': 'الرحلة',
   'jour.title': 'ثلاث مدن، واتجاه واحد.',
