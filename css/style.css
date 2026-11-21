@@ -1224,7 +1224,6 @@ body::after {
   border: 1px solid var(--line-strong); box-shadow: var(--glass-shine), 0 30px 70px -24px rgba(0,0,0,.6);
   backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
   opacity: 0; translate: 0 18px; scale: .97; pointer-events: none; transition: opacity .4s var(--ease), translate .5s var(--ease), scale .5s var(--ease); }
-[dir="rtl"] .abot { right: auto; left: 22px; }
 .abot.on { opacity: 1; translate: none; scale: 1; pointer-events: auto; }
 .abot-snd { margin-inline-start: auto; background: none; border: 0; cursor: pointer; font-size: 15px; opacity: .8; padding: 4px; }
 .abot-snd:hover { opacity: 1; }
@@ -1278,9 +1277,7 @@ body::after {
 .abot-tip { position: absolute; bottom: calc(100% + 10px); right: 0; width: max-content; max-width: min(240px, 70vw); padding: 9px 12px; border-radius: 14px 14px 4px 14px;
   background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); box-shadow: 0 14px 30px -14px rgba(0,0,0,.5); font-size: 13.5px; line-height: 1.45; text-align: start;
   opacity: 0; translate: 0 6px; pointer-events: none; transition: opacity .3s, translate .3s var(--ease); }
-[dir="rtl"] .abot-tip { right: auto; left: 0; border-radius: 14px 14px 14px 4px; }
 .abot-pill.talking .abot-tip { opacity: 1; translate: none; }
-[dir="rtl"] .abot-pill { right: auto; left: 22px; }
 .vmode-on .abot-pill, .presenting .abot-pill, .chaos .abot-pill { display: none; }
 .abot-head { display: flex; align-items: center; gap: 10px; }
 .abot-av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font: 700 13px "Plus Jakarta Sans", sans-serif; position: relative; }
@@ -1477,3 +1474,37 @@ body::after {
 /* footer + contact leftovers from the old inverted (dark) contact block: follow the theme */
 .signmark--end { color: var(--ink); }
 .email-btn { border-bottom-color: var(--line-strong); }
+
+.term-out p[dir="rtl"] { text-align: right; }
+
+/* AB sits in the same corner and keeps the same layout in both languages; only its text reads right to left in Arabic */
+.abot, .abot-pill, .abot-tip { direction: ltr; }
+.abot-msg, .abot-m, .abot-tap, .abot-actions button, .abot-sugg button, .abot-name, .abot-in, .abot-tip { unicode-bidi: plaintext; }
+[dir="rtl"] .abot-msg, [dir="rtl"] .abot-in, [dir="rtl"] .abot-tip { direction: rtl; text-align: right; }
+[dir="rtl"] .abot-m { direction: rtl; }
+
+/* bigger tap targets for the small footer links */
+.foot-links a, .foot-links button { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 2px; }
+/* the little demo windows never spill past a narrow phone screen */
+.stage-canvas .win { max-width: 100%; }
+
+/* MyCal brand */
+.project--easycal { --mc-ink: #0c2a1f; --mc-lime: #bdf46d; }
+.project--easycal .ec-h { display: flex; justify-content: space-between; align-items: center; }
+.mc-logo { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; letter-spacing: -.04em; color: var(--mc-ink); }
+.mc-mark { width: 18px; height: 12px; fill: var(--mc-ink); flex: none; }
+.project--easycal .ec-h > span:last-child { font-weight: 500; font-size: 11px; opacity: .6; }
+.project--easycal .ec-ring .fg { stroke: #7cc932; }
+.project--easycal .ec-toast b { color: #4e9a12; }
+.project--easycal .stage { background: radial-gradient(70% 80% at 60% 40%, color-mix(in srgb, var(--mc-lime) 45%, transparent), transparent 70%); }
+.mc-title { display: inline-flex; align-items: center; gap: .3em; }
+.mc-mark--title { width: 1.05em; height: .7em; padding: .12em .14em; box-sizing: content-box; border-radius: .22em; background: var(--mc-lime); fill: var(--mc-ink); }
+.skill-group .link { display: inline-block; margin-top: 10px; font-size: 14px; }
+/* Tableau project visual */
+.tb-dash { position: absolute; inset: 10% 10% 12%; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; gap: 12px; padding: 16px; border-radius: 16px; background: #fff; color: #1f2d3d; box-shadow: 0 20px 40px -24px rgba(0,0,0,.35); }
+.tb-kpis { display: flex; gap: 10px; } .tb-kpis span { flex: 1; padding: 8px 10px; border-radius: 10px; background: #f1f5f9; }
+.tb-kpis b { display: block; font-size: 16px; } .tb-kpis small { font-size: 10px; opacity: .6; }
+.tb-bars { display: flex; align-items: end; gap: 8px; min-height: 0; }
+.tb-bars i { flex: 1; height: var(--h); border-radius: 4px 4px 0 0; background: linear-gradient(#4e79a7, #76a0cf); transform-origin: bottom; transition: transform .6s var(--ease); }
+.project--tableau:hover .tb-bars i:nth-child(odd) { transform: scaleY(1.08); } .project--tableau:hover .tb-bars i:nth-child(even) { transform: scaleY(.9); }
+.tb-line { height: 34px; width: 100%; } .tb-line path { fill: none; stroke: #f28e2b; stroke-width: 2.5; vector-effect: non-scaling-stroke; }

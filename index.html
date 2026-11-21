@@ -155,7 +155,7 @@
           </article>
 
           <article class="bento-card b-gpa reveal">
-            <p class="b-label mono">CGPA · UNITEN</p>
+            <p class="b-label mono" data-i18n="bento.gpaLabel">CGPA · UNITEN</p>
             <div class="gauge">
               <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="g-bg" cx="60" cy="60" r="50" pathLength="100"/><circle class="g-fg" cx="60" cy="60" r="50" pathLength="100"/></svg>
               <p class="g-val"><span data-count="3.63" data-decimals="2">0</span><small>/ 4.00</small></p>
@@ -249,9 +249,9 @@
               </div>
             </div>
             <div class="project-body">
-              <p class="project-tags mono">SDLC · UML · Database design · AI</p>
+              <p class="project-tags mono">Next.js · React · Supabase · Gemini API</p>
               <h3>Codai <span class="badge" data-i18n="proj.fyp">Final-year project</span></h3>
-              <p data-i18n="proj.codai">A web-based assistant for software engineers: requirements analysis, UML diagrams, database schema design, code generation and review, and test-case generation — in one place.</p>
+              <p data-i18n="proj.codai">A full-stack AI assistant covering the SDLC: requirements, Mermaid UML diagrams, database schemas, code generation and review, and test cases. Built on Google Gemini with validated JSON output, Supabase Auth and Postgres.</p>
               <a data-cursor="open" class="link" href="https://codai-murex.vercel.app/" target="_blank" rel="noopener"><span data-i18n="proj.live">Open live demo</span> ↗</a>
             </div>
           </article>
@@ -289,7 +289,7 @@
                 <div class="stage-canvas">
                   <div class="phone2" style="left:150px;top:20px">
                     <div class="ph-notch"></div>
-                    <p class="ec-h">Today</p>
+                    <p class="ec-h"><span class="mc-logo"><svg class="mc-mark" viewBox="0 0 64 40" aria-hidden="true"><path d="M0 18a17 17 0 0 1 17-17h17v17a17 17 0 0 1-17 17H0z"/><circle cx="45" cy="9" r="5"/></svg>mycal</span><span>Today</span></p>
                     <div class="ec-ring">
                       <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="50" pathLength="100"/><circle class="fg" cx="60" cy="60" r="50" pathLength="100"/></svg>
                       <p><span class="ec-kcal">1,320</span><small>of 2,200 kcal</small></p>
@@ -307,10 +307,26 @@
               </div>
             </div>
             <div class="project-body">
-              <p class="project-tags mono">C# · .NET MAUI · Android</p>
-              <h3>EasyCal</h3>
-              <p data-i18n="proj.easycal">An Android calorie-tracking app built with .NET MAUI: UI development, debugging and functional testing end to end.</p>
-              <span class="link link-muted" data-i18n="proj.private">Mobile app · demo on request</span>
+              <p class="project-tags mono">Flutter · Dart · Riverpod · SQLite</p>
+              <h3><span class="mc-title"><svg class="mc-mark mc-mark--title" viewBox="0 0 64 40" aria-hidden="true"><path d="M0 18a17 17 0 0 1 17-17h17v17a17 17 0 0 1-17 17H0z"/><circle cx="45" cy="9" r="5"/></svg>MyCal</span> <span class="badge" data-i18n="proj.dev">In development</span></h3>
+              <p data-i18n="proj.easycal">A calorie-tracking app for iOS and Android, in Arabic and English: food search with local dishes, barcode scanning, daily goals, water and weight tracking, and progress charts.</p>
+              <span class="link link-muted" data-i18n="proj.private">iOS &amp; Android · coming soon</span>
+            </div>
+          </article>
+
+          <article data-tilt class="project card reveal project--tableau">
+            <div class="project-visual" aria-hidden="true">
+              <div class="tb-dash">
+                <div class="tb-kpis"><span><b>12.4K</b><small>Total</small></span><span><b>+18%</b><small>Growth</small></span><span><b>7</b><small>Regions</small></span></div>
+                <div class="tb-bars"><i style="--h:42%"></i><i style="--h:68%"></i><i style="--h:55%"></i><i style="--h:80%"></i><i style="--h:62%"></i><i style="--h:90%"></i><i style="--h:74%"></i></div>
+                <svg class="tb-line" viewBox="0 0 200 50" preserveAspectRatio="none"><path d="M0 40 C30 34 45 18 70 24 S110 8 140 16 S180 4 200 6"/></svg>
+              </div>
+            </div>
+            <div class="project-body">
+              <p class="project-tags mono">Tableau · Data visualisation · Dashboards</p>
+              <h3>Tableau Dashboard</h3>
+              <p data-i18n="proj.tableau">An interactive dashboard on Tableau Public that turns raw data into clear charts, filters and key numbers you can explore.</p>
+              <a data-cursor="open" class="link" href="https://public.tableau.com/app/profile/ahmed.bawazir/viz/shared/BK3Q386ZX" target="_blank" rel="noopener"><span data-i18n="proj.viewTableau">View on Tableau Public</span> ↗</a>
             </div>
           </article>
 
@@ -395,19 +411,19 @@
           <button role="tab" class="tab" data-filter="eng" aria-selected="false" data-i18n="skills.eng">Engineering</button>
         </div>
         <div class="skills reveal">
-          <div class="skill-group" data-group="code"><h3 data-i18n="skills.lang">Languages</h3><p>Java · C++ · C# · JavaScript · PHP · HTML · CSS</p></div>
-          <div class="skill-group" data-group="code"><h3 data-i18n="skills.front">Front-end &amp; web</h3><p>React · Next.js · Tailwind CSS · Responsive UI</p></div>
-          <div class="skill-group" data-group="code"><h3 data-i18n="skills.back">Back-end &amp; APIs</h3><p>Node.js · PHP · REST APIs · Firebase Cloud Functions</p></div>
+          <div class="skill-group" data-group="code"><h3 data-i18n="skills.lang">Languages</h3><p>Java · Dart · C++ · C# · JavaScript · PHP · HTML · CSS</p></div>
+          <div class="skill-group" data-group="code"><h3 data-i18n="skills.front">Front-end &amp; mobile</h3><p>Flutter · Riverpod · React · Next.js · Tailwind CSS · RTL/Arabic localisation</p></div>
+          <div class="skill-group" data-group="code"><h3 data-i18n="skills.back">Back-end &amp; APIs</h3><p>Node.js · REST APIs · Firebase Cloud Functions · Supabase</p></div>
           <div class="skill-group" data-group="data"><h3 data-i18n="skills.db">Databases</h3><p>PostgreSQL · MySQL · SQLite · Oracle · SQL Server · Supabase</p></div>
           <div class="skill-group" data-group="hcm"><h3>Oracle Fusion HCM</h3><p>Core HR · Workforce Structures · Absence Management · DOR · Payroll · DFF · Value Sets · Groovy/ADF · OTBI · BI Publisher</p></div>
-          <div class="skill-group" data-group="eng"><h3 data-i18n="skills.se">Software engineering</h3><p>SDLC · UML · OOP · MVVM · Requirements analysis · Functional testing · Debugging</p></div>
-          <div class="skill-group" data-group="data eng"><h3 data-i18n="skills.tools">Tools &amp; analytics</h3><p>VS Code · Visual Studio · Docker · Figma · Tableau · Text analytics · Data visualisation</p></div>
+          <div class="skill-group" data-group="eng"><h3 data-i18n="skills.se">Software engineering</h3><p>SDLC · UML · OOP · MVVM · Requirements analysis · Functional &amp; automated testing · Debugging</p></div>
+          <div class="skill-group" data-group="data eng"><h3 data-i18n="skills.tools">Tools &amp; DevOps</h3><p>Git · GitHub Actions · Codemagic · VS Code · Docker · Figma · Tableau</p></div>
         </div>
       </div>
       <div class="marquee" aria-hidden="true">
         <div class="marquee-track mono">
-          <span>React</span><span>Oracle HCM</span><span>Next.js</span><span>PostgreSQL</span><span>Groovy</span><span>C#</span><span>.NET MAUI</span><span>Docker</span><span>Supabase</span><span>UML</span><span>Java</span><span>Tableau</span>
-          <span>React</span><span>Oracle HCM</span><span>Next.js</span><span>PostgreSQL</span><span>Groovy</span><span>C#</span><span>.NET MAUI</span><span>Docker</span><span>Supabase</span><span>UML</span><span>Java</span><span>Tableau</span>
+          <span>React</span><span>Oracle HCM</span><span>Next.js</span><span>PostgreSQL</span><span>Groovy</span><span>Flutter</span><span>Dart</span><span>Docker</span><span>Supabase</span><span>UML</span><span>Java</span><span>Tableau</span>
+          <span>React</span><span>Oracle HCM</span><span>Next.js</span><span>PostgreSQL</span><span>Groovy</span><span>Flutter</span><span>Dart</span><span>Docker</span><span>Supabase</span><span>UML</span><span>Java</span><span>Tableau</span>
         </div>
       </div>
     </section>
@@ -523,7 +539,7 @@
       </div>
       <div class="signature" aria-hidden="true" data-cursor-hide><canvas></canvas></div>
       <footer class="footer container mono">
-        <span>© <span class="year">2026</span> Ahmed Bawazir · <span data-i18n="footer.rights">All rights reserved</span></span>
+        <span>© <span class="year">2026</span> <span data-i18n="footer.name">Ahmed Bawazir</span> · <span data-i18n="footer.rights">All rights reserved</span></span>
         <div class="signmark signmark--end" data-signmark="end"></div>
         <span class="foot-links"><button type="button" class="foot-break" data-action="break"><span data-i18n="cta.break">Break this page</span></button><a href="#hero" data-i18n="footer.top">Back to top ↑</a></span>
       </footer>

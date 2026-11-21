@@ -69,14 +69,14 @@ function createVideoMode() {
       <button type="button" class="vm-btn vm-close" aria-label="Close">✕</button>
     </div>
     <div class="vm-end" hidden>
-      <a class="btn btn-solid vm-talk" href="#contact"></a>
-      <button type="button" class="btn btn-ghost vm-replay"></button>
+      <a class="btn btn-solid vm-talk" href="#contact" aria-label="Let's talk"></a>
+      <button type="button" class="btn btn-ghost vm-replay" aria-label="Replay"></button>
     </div>
     <div class="vm-bar">
       <button type="button" class="vm-btn vm-play" aria-label="Play or pause">❚❚</button>
       <div class="vm-track"><i></i></div>
       <span class="vm-time mono">0:00</span>
-      <button type="button" class="vm-btn vm-sound"></button>
+      <button type="button" class="vm-btn vm-sound" aria-label="Sound"></button>
     </div>`;
   document.body.append(el);
   const v = el.querySelector('video');

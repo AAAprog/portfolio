@@ -25,8 +25,8 @@ const T = [
     en: () => "I'm AB, the assistant on Ahmed's portfolio. I'm not a general chatbot: I only talk about Ahmed. I can tell you about his studies, experience, projects and skills, and take you to any part of the site.",
     ar: () => 'أنا AB، مساعد أحمد في موقعه. ما أعرف إلا عن أحمد: دراسته، شغله، مشاريعه، ومهاراته. وأقدر أوديك لأي قسم بالموقع.' },
   { id: 'who', g: 'who', w: ['who is ahmed', 'who is he', 'who s ahmed', 'who s he', 'about ahmed', 'about him', 'tell me about ahmed', 'tell me about him', 'introduce', 'what does he do', 'what does ahmed do', 'summary', 'bawazir', 'مين احمد', 'من هو احمد', 'من احمد', 'احكي لي عنه', 'احكيلي عنه', 'كلمني عنه', 'تكلم عن احمد', 'ابي اعرف عنه', 'مين هو', 'من هو', 'عرفني', 'عن احمد', 'نبذه', 'تعريف', 'وش يسوي', 'ايش يسوي', 'وش شغله', 'ايش شغله', 'وش يشتغل', 'ايش يشتغل', 'وش وظيفته', 'ايش وظيفته', 'باوزير'],
-    en: () => 'Ahmed Bawazir is a software engineer and Oracle Fusion HCM consultant based in Riyadh. He builds full-stack products, like Codai, UFC Ticketing and EasyCal, and configures enterprise HR systems.',
-    ar: () => 'أحمد باوزير مهندس برمجيات ومستشار Oracle Fusion HCM من الرياض. يبني منتجات من الصفر لين تشتغل، مثل Codai وUFC Ticketing وEasyCal، ويضبط أنظمة الموارد البشرية للشركات.',
+    en: () => 'Ahmed Bawazir is a software engineer and Oracle Fusion HCM consultant based in Riyadh. He builds full-stack products, like Codai, UFC Ticketing and MyCal, and configures enterprise HR systems.',
+    ar: () => 'أحمد باوزير مهندس برمجيات ومستشار Oracle Fusion HCM من الرياض. يبني منتجات من الصفر لين تشتغل، مثل Codai وUFC Ticketing وMyCal، ويضبط أنظمة الموارد البشرية للشركات.',
     more: { en: () => 'He was born in 2002, studied Software Engineering in Malaysia, and graduated with First Class Honours.', ar: () => 'مواليد 2002، درس هندسة برمجيات في ماليزيا وتخرّج بمرتبة الشرف الأولى.' } },
   { id: 'age', g: 'age', w: ['how old', 'age', 'born', 'birth', 'birthday', 'year of birth', 'كم عمره', 'عمره', 'متى ولد', 'متى انولد', 'سنه ميلاده', 'العمر', 'مواليد', 'ميلاد', 'تولد', 'انولد', 'كم سنه عمره'],
     en: () => `Ahmed was born in 2002, so he's about ${age()}.`,
@@ -68,20 +68,23 @@ const T = [
     en: () => 'In Oracle Fusion HCM, Ahmed works on Core HR, Workforce Structures, Absence Management, Documents of Record and Payroll, plus DFFs, value sets, Groovy/ADF, OTBI and BI Publisher.',
     ar: () => 'في Oracle Fusion HCM يشتغل على Core HR وهيكلة الموظفين والإجازات والرواتب وDocuments of Record، ومعها DFFs وValue Sets وGroovy وOTBI وBI Publisher.' },
   { id: 'projects', g: 'proj', act: 'projects', w: ['project', 'portfolio', 'built', 'apps', 'his work', 'best project', 'افضل مشروع', 'احسن مشروع', 'مشاريع', 'المشاريع', 'مشاريعه', 'مشروع', 'اعماله', 'وش بنى', 'وش سوى'],
-    en: () => 'His main projects are Codai, an AI assistant for software engineers; UFC Ticketing, a full-stack booking system; and EasyCal, an Android calorie tracker. I’ll scroll you to them.',
-    ar: () => 'عنده ثلاث مشاريع: Codai مساعد ذكي للمبرمجين، وUFC Ticketing نظام حجز تذاكر، وEasyCal تطبيق سعرات للأندرويد. تعال أوريك 👇' },
+    en: () => 'His main projects are Codai, an AI assistant for software engineers; UFC Ticketing, a full-stack booking system; and MyCal, a Flutter calorie tracker in development. There’s also a Tableau dashboard. I’ll scroll you to them.',
+    ar: () => 'أبرز مشاريعه: Codai مساعد ذكي للمبرمجين، وUFC Ticketing نظام حجز تذاكر، وMyCal تطبيق سعرات بـ Flutter قيد التطوير، وداشبورد على Tableau. تعال أوريك 👇' },
   { id: 'codai', g: 'proj', mood: 'happy', w: ['codai', 'final year', 'fyp', 'graduation project', 'كوداي', 'مشروع التخرج', 'مشروع تخرجه'],
-    en: () => 'Codai is Ahmed’s final-year project: a web assistant for software engineers. It can generate the project idea itself, then requirements, UML diagrams, a database schema, code and test cases, all in one place.',
-    ar: () => 'Codai مشروع تخرّجه، وهو أحلى شي سوّاه: مساعد للمبرمجين يطلع لك فكرة المشروع، وبعدها المتطلبات ومخططات UML وقاعدة البيانات والكود والاختبارات، كله بمكان واحد.' },
+    en: () => 'Codai is Ahmed’s final-year project: a web assistant for software engineers. It can generate the project idea itself, then requirements, UML diagrams, a database schema, code and test cases, all in one place. It’s built with Next.js, Supabase and the Gemini API, and it’s live on Vercel.',
+    ar: () => 'Codai مشروع تخرّجه، وهو أحلى شي سوّاه: مساعد للمبرمجين يطلع لك فكرة المشروع، وبعدها المتطلبات ومخططات UML وقاعدة البيانات والكود والاختبارات، كله بمكان واحد. مبني بـ Next.js وSupabase وGemini ومنشور على Vercel.' },
   { id: 'ufc', g: 'proj', w: ['ufc', 'ticket', 'ticketing', 'booking', 'تذاكر', 'حجز'],
     en: () => 'UFC Ticketing is a full-stack event booking system in PHP and MySQL, with user and admin sides, seat booking and the back-end logic behind it.',
     ar: () => 'UFC Ticketing نظام حجز فعاليات بـ PHP وMySQL: واجهة للمستخدم، ولوحة تحكم للأدمن، وحجز مقاعد.' },
-  { id: 'easycal', g: 'proj', w: ['easycal', 'calorie', 'maui', 'mobile app', 'android', 'سعرات', 'تطبيق جوال', 'اندرويد'],
-    en: () => 'EasyCal is an Android calorie-tracking app Ahmed built with C# and .NET MAUI, from the UI to debugging and testing.',
-    ar: () => 'EasyCal تطبيق أندرويد لحساب السعرات، سوّاه بـ C# و.NET MAUI من الواجهة لين الاختبار.' },
+  { id: 'tableau', g: 'proj', w: ['tableau', 'dashboard', 'data viz', 'visualization', 'تابلو', 'لوحة بيانات', 'داشبورد'],
+    en: () => 'Ahmed has an interactive dashboard on Tableau Public: charts, filters and key numbers built from raw data. It’s in the Projects section.',
+    ar: () => 'عنده داشبورد تفاعلي على Tableau Public، رسوم وفلاتر وأرقام مرتبة من بيانات خام. تلقاه مع المشاريع 👇' },
+  { id: 'easycal', g: 'proj', w: ['mycal', 'easycal', 'calorie', 'flutter', 'dart', 'riverpod', 'mobile app', 'android', 'سعرات', 'تطبيق جوال', 'اندرويد'],
+    en: () => 'MyCal is a calorie-tracking app Ahmed is building in Flutter for iOS and Android, in Arabic and English: food search with local dishes, barcode scanning, daily goals, water and weight tracking, and progress charts.',
+    ar: () => 'MyCal تطبيق سعرات يشتغل عليه أحمد بـ Flutter للآيفون والأندرويد، بالعربي والإنجليزي: تدوّر أكلك حتى الأكلات المحلية، تمسح الباركود، تحط هدف يومي، وتتابع الماء والوزن برسوم واضحة.' },
   { id: 'skills', g: 'skills', w: ['skill', 'stack', 'tech', 'technologies', 'languages does he', 'programming', 'react', 'java', 'javascript', 'php', 'sql', 'node', 'docker', 'good at', 'frameworks', 'tools', 'مهارات', 'المهارات', 'مهاراته', 'وش يعرف', 'ايش يعرف', 'وش يجيد', 'يتقن', 'تقنيات', 'لغات البرمجه', 'برمجه', 'يبرمج', 'ادواته'],
-    en: () => 'He codes in Java, C#, C++, JavaScript and PHP, builds with React, Next.js, Node.js and Tailwind, and works with PostgreSQL, MySQL, Oracle and Supabase. Plus Docker, Figma and Tableau.',
-    ar: () => 'يبرمج بـ Java وC# وC++ وJavaScript وPHP، ويبني بـ React وNext.js وNode.js، وقواعد بياناته PostgreSQL وMySQL وOracle وSupabase. ويستخدم Docker وFigma وTableau بعد.' },
+    en: () => 'He codes in Java, Dart, C#, C++, JavaScript and PHP, builds with Flutter, React, Next.js, Node.js and Tailwind, and works with PostgreSQL, MySQL, SQLite, Oracle and Supabase. Plus Git, GitHub Actions, Codemagic, Docker and Figma. He also has a Tableau Public dashboard, listed with his projects.',
+    ar: () => 'يبرمج بـ Java وDart وC# وC++ وJavaScript وPHP، ويبني بـ Flutter وReact وNext.js وNode.js، وقواعد بياناته PostgreSQL وMySQL وOracle وSupabase. ويستخدم Git وGitHub Actions وCodemagic وDocker وFigma، وعنده لوحة بيانات على Tableau Public تلقاها في المشاريع.' },
   { id: 'langs', g: 'langs', w: ['speak', 'arabic', 'english', 'spoken languages', 'bilingual', 'يتكلم', 'لغاته', 'عربي', 'انجليزي', 'انقليزي', 'يتحدث'],
     en: () => 'Arabic is his native language, and his English is professional.',
     ar: () => 'العربي لغته الأم، وإنجليزيته ممتازة وبمستوى مهني.' },
@@ -173,7 +176,7 @@ const NOMORE = {
   ar: 'هذا أهم شي. تبي أكلمك عن شغله، أو مشاريعه، أو كيف توصله؟',
 };
 const TECH = ['python', 'django', 'flask', 'angular', 'vue', 'svelte', 'kotlin', 'swift', 'flutter', 'go', 'golang', 'rust', 'ruby', 'rails', 'laravel', 'aws', 'azure', 'gcp', 'kubernetes', 'sap', 'salesforce', 'بايثون', 'جافا سكربت', 'فلاتر', 'سويفت', 'كوتلن'];
-const KNOWN = ['java', 'javascript', 'c#', 'c++', 'php', 'react', 'next', 'node', 'tailwind', 'postgres', 'mysql', 'oracle', 'supabase', 'docker', 'figma', 'tableau', 'sql', 'maui', 'firebase', 'groovy', 'جافا', 'رياكت'];
+const KNOWN = ['java', 'javascript', 'c#', 'c++', 'php', 'react', 'next', 'node', 'tailwind', 'postgres', 'mysql', 'oracle', 'supabase', 'docker', 'figma', 'tableau', 'sql', 'maui', 'firebase', 'groovy', 'flutter', 'dart', 'riverpod', 'git', 'github', 'codemagic', 'sqlite', 'gemini', 'فلاتر', 'جافا', 'رياكت'];
 const NOTECH = { en: 'That one isn’t in Ahmed’s listed stack. He works with Java, C#, JavaScript, PHP, React, Next.js, Node.js and SQL databases, and he picks up new tools fast.', ar: 'هذي مو من الأدوات اللي ذكرها أحمد. هو يشتغل بـ Java وC# وJavaScript وPHP وReact وNext.js وقواعد بيانات SQL، ويتعلّم الجديد بسرعة.' };
 export const SUGGEST = {
   en: ['Who is Ahmed?', 'Where did he study?', 'His experience', 'Projects', 'Is he available?', 'Contact'],
@@ -189,7 +192,7 @@ function rank(t) {
 function offTopic(t, ranked) {
   if (has(NEVER, t) || otherPerson(t)) return true;
   // a specific thing of Ahmed's (Codai, UNITEN, Macquires…) keeps a general-sounding question on topic
-  const specific = ranked.some(x => ['codai', 'ufc', 'easycal', 'sifr', 'hcm', 'cmd'].includes(x.tp.id) || x.tp.g === 'cmd');
+  const specific = ranked.some(x => ['codai', 'ufc', 'easycal', 'tableau', 'sifr', 'hcm', 'cmd'].includes(x.tp.id) || x.tp.g === 'cmd');
   const strong = ranked.some(x => x.tp.g !== 'chat' && x.s >= 7); // clearly about one of Ahmed's topics
   return has(GENERAL, t) && !ABOUT.test(t) && !specific && !strong;
 }

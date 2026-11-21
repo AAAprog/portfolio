@@ -29,8 +29,25 @@ function splitWords() {
 
 /* ───────────── Hero letters ───────────── */
 function splitHero() {
-  if (isAr()) return; // keep Arabic letters joined
   let n = 0;
+  if (isAr()) {
+    // Arabic letters must stay joined, so the name animates word by word instead of letter by letter
+    $$('.hero-title .line').forEach(line => {
+      [...line.childNodes].forEach(node => {
+        if (node.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          node.textContent.split(/(\s+)/).forEach(w => {
+            if (!w) return;
+            if (/^\s+$/.test(w)) { frag.append(w); return; }
+            const s = document.createElement('span'); s.className = 'ch'; s.style.setProperty('--i', n++ * 3); s.textContent = w; frag.append(s);
+          });
+          node.replaceWith(frag);
+        } else if (node.nodeType === 1) { node.classList.add('ch'); node.style.setProperty('--i', n++ * 3); }
+      });
+      line.setAttribute('aria-label', line.textContent);
+    });
+    return;
+  }
   $$('.hero-title .line').forEach(line => {
     [...line.childNodes].forEach(node => {
       if (node.nodeType === 3) {

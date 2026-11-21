@@ -101,13 +101,14 @@ function applyTheme(next, origin, quiet) {
     root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
       { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' });
   }).catch(() => {});
-  vt.finished.finally(() => root.classList.remove('vt-theme'));
+  vt.finished.catch(() => {}).finally(() => root.classList.remove('vt-theme')); vt.updateCallbackDone.catch(() => {});
 }
 // Language switch: a soft cross-fade View Transition.
 function switchLang() {
   const next = root.lang === 'ar' ? 'en' : 'ar';
   if (!document.startViewTransition || reduce) return applyLang(next);
-  document.startViewTransition(() => applyLang(next));
+  const vt = document.startViewTransition(() => applyLang(next));
+  vt.ready.catch(() => {}); vt.finished.catch(() => {}); vt.updateCallbackDone.catch(() => {});
 }
 // Motion preference toggle (saved; reload applies it to every module cleanly).
 function toggleMotion() {
