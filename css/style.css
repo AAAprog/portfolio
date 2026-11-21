@@ -1487,3 +1487,15 @@ body::after {
 .foot-links a, .foot-links button { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 2px; }
 /* the little demo windows never spill past a narrow phone screen */
 .stage-canvas .win { max-width: 100%; }
+
+/* MyCal brand */
+.project--easycal { --mc-ink: #0c2a1f; --mc-lime: #bdf46d; }
+.project--easycal .ec-h { display: flex; justify-content: space-between; align-items: center; }
+.mc-logo { display: inline-flex; align-items: center; gap: 4px; font-weight: 800; letter-spacing: -.04em; color: var(--mc-ink); }
+.mc-mark { width: 18px; height: 12px; fill: var(--mc-ink); flex: none; }
+.project--easycal .ec-h > span:last-child { font-weight: 500; font-size: 11px; opacity: .6; }
+.project--easycal .ec-ring .fg { stroke: #7cc932; }
+.project--easycal .ec-toast b { color: #4e9a12; }
+.project--easycal .stage { background: radial-gradient(70% 80% at 60% 40%, color-mix(in srgb, var(--mc-lime) 45%, transparent), transparent 70%); }
+.mc-title { display: inline-flex; align-items: center; gap: .3em; }
+.mc-mark--title { width: 1.05em; height: .7em; padding: .12em .14em; box-sizing: content-box; border-radius: .22em; background: var(--mc-lime); fill: var(--mc-ink); }
